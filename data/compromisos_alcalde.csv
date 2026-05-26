@@ -1,0 +1,6 @@
+ID_Compromiso,Fecha_Disposicion,Fuente,Compromiso,Direccion,Director,Prioridad,Fecha_Limite,Estado,Avance,Ultima_Actualizacion,Requiere_Decision_Alcalde,Observacion
+COM-001,2026-05-10,Disposición del Alcalde,Presentar informe de avance de mantenimiento vial,Obras Públicas,Director Obras,Alta,2026-05-28,En proceso,70,2026-05-24,No,Informe en elaboración
+COM-002,2026-05-09,Recorrido territorial,Emitir informe técnico de factibilidad para intervención urbana,Planificación Hábitat y Desarrollo Urbanístico,Director PHDU,Alta,2026-05-24,Atrasado,40,2026-05-20,Sí,Falta validación de información catastral
+COM-003,2026-05-08,Pedido ciudadano,Coordinar limpieza de quebrada prioritaria,Gestión Ambiental,Director Ambiental,Media,2026-05-30,En proceso,60,2026-05-21,No,Actividad planificada
+COM-004,2026-05-15,Reunión de gabinete,Presentar propuesta de control de estacionamientos,Movilidad Tránsito y Transporte,Director Movilidad,Media,2026-06-02,En proceso,30,2026-05-19,No,Propuesta inicial
+COM-005,2026-05-05,Disposición del Alcalde,Coordinar agenda cultural barrial,Gestión Cultural Deportes y Recreación,Director Cultura,Baja,2026-05-18,Cumplido,100,2026-05-18,No,Actividad cumplida

@@ -1,0 +1,6 @@
+ID_Reunion,Fecha,Tipo_Reunion,Tema,Direccion,Director,Resultado_Asistencia,Puntaje_Asistencia,Puntualidad,Compromisos_Generados,Compromisos_Cumplidos,Ultima_Actualizacion,Observacion
+REU-001,2026-05-12,Convocatoria de Comisión,Seguimiento de proyectos estratégicos,Obras Públicas,Director Obras,Asiste Director/a,100,Puntual,2,1,2026-05-13,Participación completa
+REU-002,2026-05-12,Convocatoria de Comisión,Seguimiento de proyectos estratégicos,Gestión Ambiental,Director Ambiental,Asiste delegado/a autorizado/a,75,Puntual,1,0,2026-05-13,Delegado con informe
+REU-003,2026-05-18,Reunión solicitada por el Alcalde,Intervención territorial prioritaria,Planificación Hábitat y Desarrollo Urbanístico,Director PHDU,Asiste Director/a,100,Puntual,3,2,2026-05-19,Se generaron compromisos
+REU-004,2026-05-18,Reunión solicitada por el Alcalde,Intervención territorial prioritaria,Movilidad Tránsito y Transporte,Director Movilidad,No asiste,0,No asistió,1,0,2026-05-18,No registra justificación
+REU-005,2026-05-22,Mesa de trabajo solicitada por Asesores,Rendición de cuentas 2025,Gestión Cultural Deportes y Recreación,Director Cultura,Justifica ausencia,50,No aplica,0,0,2026-05-22,Justificación presentada

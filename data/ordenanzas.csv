@@ -1,0 +1,5 @@
+ID_Ordenanza,Direccion,Director,Nombre_Ordenanza,Tema,Etapa_Ordenanza,Porcentaje_Ordenanza,Estado,Prioridad,Fecha_Limite,Ultima_Actualizacion,Requiere_Decision_Alcalde,Observacion
+ORD-001,Planificación Hábitat y Desarrollo Urbanístico,Director PHDU,Reforma de uso y ocupación del suelo,Uso de suelo,Primer debate,60,En proceso,Alta,2026-06-20,2026-05-22,Sí,Pendiente criterio jurídico final
+ORD-002,Gestión Ambiental,Director Ambiental,Ordenanza de gestión integral de residuos,Ambiente,En elaboración técnica,25,En proceso,Alta,2026-06-10,2026-05-17,No,Equipo técnico elaborando propuesta
+ORD-003,Movilidad Tránsito y Transporte,Director Movilidad,Ordenanza de estacionamientos regulados,Movilidad,No empieza el proceso,0,Atrasado,Media,2026-05-25,2026-05-09,No,Sin borrador registrado
+ORD-004,Gestión Cultural Deportes y Recreación,Director Cultura,Ordenanza de fomento cultural,Cultura,Segundo debate,90,En proceso,Media,2026-06-30,2026-05-24,No,Lista para sesión

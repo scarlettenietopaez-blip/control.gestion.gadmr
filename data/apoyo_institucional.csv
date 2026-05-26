@@ -1,0 +1,6 @@
+ID_Apoyo,Fecha,Tipo_Apoyo,Actividad,Direccion,Director,Meta_Solicitada,Apoyo_Entregado,Porcentaje_Cumplimiento,Prioridad,Ultima_Actualizacion,Observacion
+APO-001,2026-05-14,Asistencia a evento,Rendición de cuentas territorial,Obras Públicas,Director Obras,10,8,80,Media,2026-05-15,Asistencia parcial
+APO-002,2026-05-14,Asistencia a evento,Rendición de cuentas territorial,Planificación Hábitat y Desarrollo Urbanístico,Director PHDU,8,8,100,Media,2026-05-15,Cumplimiento total
+APO-003,2026-05-16,Apoyo logístico,Pintura de postes en eje urbano,Gestión Ambiental,Director Ambiental,12,5,42,Alta,2026-05-16,Bajo cumplimiento
+APO-004,2026-05-17,Difusión institucional,Publicación oficial de Alcaldía,Movilidad Tránsito y Transporte,Director Movilidad,20,16,80,Baja,2026-05-17,Interacciones reportadas
+APO-005,2026-05-20,Campaña ciudadana,Activación cultural comunitaria,Gestión Cultural Deportes y Recreación,Director Cultura,15,15,100,Media,2026-05-20,Cumplimiento total
