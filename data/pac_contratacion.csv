@@ -1,6 +1,1 @@
-ID_Proyecto,Direccion,Director,Proyecto,Tipo_Contratacion,Monto_Presupuestado,Etapa_PAC,Porcentaje_PAC,Estado,Prioridad,Fecha_Limite,Ultima_Actualizacion,Requiere_Decision_Alcalde,Observacion
-PAC-001,Obras Públicas,Director Obras,Mantenimiento vial urbano,Obra,250000,Precontractual,50,En proceso,Alta,2026-06-15,2026-05-20,No,Proceso en revisión de pliegos
-PAC-002,Planificación Hábitat y Desarrollo Urbanístico,Director PHDU,Actualización cartográfica urbana,Consultoría,80000,Preparatoria,25,En proceso,Alta,2026-06-05,2026-05-22,Sí,Requiere definición de alcance
-PAC-003,Gestión Ambiental,Director Ambiental,Adquisición de contenedores,Bien,120000,No empieza el proceso,0,Atrasado,Media,2026-05-18,2026-05-10,No,No se registra inicio del proceso
-PAC-004,Movilidad Tránsito y Transporte,Director Movilidad,Señalización horizontal y vertical,Servicio,90000,Contractual,75,En proceso,Alta,2026-07-01,2026-05-24,No,Contrato suscrito
-PAC-005,Gestión Cultural Deportes y Recreación,Director Cultura,Equipamiento para eventos culturales,Bien,45000,Finalizado / recibido / cerrado,100,Cumplido,Media,2026-05-20,2026-05-21,No,Proceso cerrado
+Nombre del Proyecto,Dirección Responsable,Objeto de contratación,Tipo de Contratación,Monto Presupuestado,Monto Contratado,Monto devengado,Etapa Actual,Fecha de inicio,Fecha límite,Observaciones,Evidencias
