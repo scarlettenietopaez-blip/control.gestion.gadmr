@@ -1,29 +1,24 @@
-# Dashboard Ejecutivo Alcaldía - versión 3 pestañas
+# Dashboard Ejecutivo de Gestión Directiva Municipal - GADM Riobamba
 
-Esta versión mantiene la lectura desde los 6 CSV generados desde la matriz Excel:
+Versión corregida con 3 pestañas:
 
-- `data/pac_contratacion.csv`
-- `data/ordenanzas.csv`
-- `data/reuniones.csv`
-- `data/redes_institucionales.csv`
-- `data/eventos.csv`
-- `data/apoyo_institucional.csv`
+1. Resumen general
+2. Mejores direcciones
+3. Buscador por dirección
 
-## Pestañas principales
+Esta versión tiene CSS y JavaScript incrustados en `index.html` para evitar problemas de carga de estilos o scripts en GitHub Pages.
 
-1. **Resumen general**  
-   Indicadores consolidados del municipio, avance por módulo y alertas principales.
+## Archivos de datos requeridos
 
-2. **Mejores direcciones**  
-   Ranking general por Dirección, considerando PAC, ordenanzas, reuniones, redes, eventos, apoyo institucional y actualización.
+La carpeta `data` debe contener:
 
-3. **Buscador por dirección**  
-   Selector individual para consultar el resumen de una Dirección: índice, semáforo, desempeño por módulo, alertas y registros asociados.
+- `pac_contratacion.csv`
+- `ordenanzas.csv`
+- `reuniones.csv`
+- `redes_institucionales.csv`
+- `eventos.csv`
+- `apoyo_institucional.csv`
 
-## Identidad visual
+## Actualización
 
-La interfaz usa una imagen más institucional basada en azul y rojo, colores asociados a Riobamba.
-
-## Actualización de datos
-
-La información se actualiza reemplazando los CSV de la carpeta `data`, generados automáticamente desde el archivo Excel institucional mediante el actualizador Node.
+El actualizador Node sigue generando y subiendo los CSV a la carpeta `data`.
