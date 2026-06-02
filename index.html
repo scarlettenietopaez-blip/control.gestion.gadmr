@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Ejecutivo Alcaldía</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div>
+          <p class="eyebrow">GADM Riobamba</p>
+          <h1>Dashboard Alcaldía</h1>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#resumen" class="active">Resumen Ejecutivo</a>
+        <a href="#direcciones">Direcciones</a>
+        <a href="#alertas">Alertas</a>
+        <a href="#modulos">Módulos</a>
+      </nav>
+
+      <div class="sidebar-card">
+        <p class="eyebrow">Fuente de datos</p>
+        <strong>CSV desde GitHub</strong>
+        <span>Reemplaza los archivos de la carpeta <code>data</code> con los CSV oficiales.</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Seguimiento de Directores</p>
+          <h2>Panel Ejecutivo de Gestión Directiva Municipal</h2>
+        </div>
+        <div class="filters">
+          <label for="direccionFilter">Dirección</label>
+          <select id="direccionFilter">
+            <option value="TODAS">Todas las direcciones</option>
+          </select>
+        </div>
+      </header>
+
+      <section id="resumen" class="section">
+        <div class="section-title">
+          <h3>Resumen general</h3>
+          <p>Indicadores principales calculados desde PAC, ordenanzas, reuniones, redes institucionales, eventos y apoyo institucional.</p>
+        </div>
+        <div id="kpiGrid" class="kpi-grid"></div>
+      </section>
+
+      <section id="direcciones" class="section grid-2">
+        <div class="panel large">
+          <div class="panel-header">
+            <div>
+              <h3>Índice General de Gestión Directiva</h3>
+              <p>Promedio ponderado por Dirección. Sirve como semáforo de seguimiento, no como sanción automática.</p>
+            </div>
+          </div>
+          <div id="rankingTable" class="table-wrap"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>Semáforo por Dirección</h3>
+              <p>Clasificación ejecutiva según el índice general.</p>
+            </div>
+          </div>
+          <div id="semaforoList" class="semaforo-list"></div>
+        </div>
+      </section>
+
+      <section id="alertas" class="section">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>Alertas críticas</h3>
+              <p>Procesos vencidos, sin avance, inasistencias o apoyos con bajo cumplimiento.</p>
+            </div>
+          </div>
+          <div id="alertsTable" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="modulos" class="section grid-2">
+        <div class="panel">
+          <h3>Avance PAC / Contratación</h3>
+          <div id="pacBars" class="bar-list"></div>
+        </div>
+        <div class="panel">
+          <h3>Avance Ordenanzas</h3>
+          <div id="ordenanzaBars" class="bar-list"></div>
+        </div>
+        <div class="panel">
+          <h3>Asistencia a reuniones</h3>
+          <div id="reunionBars" class="bar-list"></div>
+        </div>
+        <div class="panel">
+          <h3>Redes institucionales</h3>
+          <div id="redesBars" class="bar-list"></div>
+        </div>
+        <div class="panel">
+          <h3>Eventos institucionales</h3>
+          <div id="eventosBars" class="bar-list"></div>
+        </div>
+        <div class="panel">
+          <h3>Apoyo institucional</h3>
+          <div id="apoyoBars" class="bar-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
