@@ -1,1 +1,1 @@
-// JavaScript integrado en index.html para evitar problemas de carga en GitHub Pages.
+// V9: lógica incrustada en index.html

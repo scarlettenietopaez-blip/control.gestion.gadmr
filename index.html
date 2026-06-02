@@ -6,1213 +6,414 @@
   <title>Dashboard Ejecutivo Alcaldía | GADM Riobamba</title>
   <style>
     :root{
-      --azul:#073B6D;
-      --azul-2:#0E5A9C;
-      --azul-3:#EAF3FC;
-      --rojo:#C92027;
-      --rojo-2:#FDEBED;
-      --fondo:#F4F7FB;
-      --card:#FFFFFF;
-      --texto:#102033;
-      --muted:#65758B;
-      --borde:#D9E2EC;
-      --verde:#16834A;
-      --amarillo:#F4A100;
-      --gris:#8A98A8;
-      --shadow: 0 18px 42px rgba(7,59,109,.10);
+      --blue:#083c70;
+      --blue2:#0f5a9c;
+      --blue3:#eaf3fb;
+      --red:#c62828;
+      --red2:#e04444;
+      --dark:#102033;
+      --muted:#607087;
+      --bg:#f3f7fb;
+      --card:#ffffff;
+      --line:#dbe4ef;
+      --green:#2e7d32;
+      --yellow:#f9a825;
+      --orange:#ef6c00;
+      --shadow:0 14px 35px rgba(8,60,112,.10);
       --radius:22px;
     }
-
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      color:var(--texto);
-      background:
-        radial-gradient(circle at top left, rgba(201,32,39,.10), transparent 30%),
-        linear-gradient(135deg, #F6FAFF 0%, #EEF4FA 55%, #F8FAFC 100%);
-      min-height:100vh;
-    }
-
-    .shell{
-      width:min(1480px, calc(100% - 36px));
-      margin:18px auto 36px;
-    }
-
-    .topbar{
-      background:linear-gradient(135deg, var(--azul) 0%, #0B4F8C 62%, var(--rojo) 100%);
-      border-radius:28px;
-      padding:22px 28px;
-      color:white;
-      box-shadow:var(--shadow);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      position:relative;
-      overflow:hidden;
-    }
-    .topbar:after{
-      content:"";
-      position:absolute;
-      width:360px;height:360px;
-      right:-120px;top:-180px;
-      border-radius:50%;
-      background:rgba(255,255,255,.10);
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:18px;
-      position:relative;
-      z-index:1;
-    }
-    .seal{
-      width:64px;height:64px;
-      border-radius:18px;
-      background:white;
-      color:var(--azul);
-      display:grid;
-      place-items:center;
-      box-shadow: inset 0 0 0 1px rgba(7,59,109,.12);
-      flex:0 0 auto;
-    }
-    .seal svg{width:38px;height:38px}
-    .brand small{
-      display:block;
-      text-transform:uppercase;
-      letter-spacing:.16em;
-      font-size:12px;
-      color:#DDEBFA;
-      margin-bottom:3px;
-    }
-    .brand h1{
-      margin:0;
-      font-size:clamp(24px, 3vw, 36px);
-      letter-spacing:-.03em;
-      line-height:1.05;
-    }
-    .brand p{
-      margin:8px 0 0;
-      color:#E7F1FB;
-      max-width:830px;
-      font-size:15px;
-      line-height:1.45;
-    }
-
-    .top-actions{
-      position:relative;
-      z-index:1;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .pill{
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.22);
-      padding:10px 14px;
-      border-radius:999px;
-      font-size:13px;
-      color:white;
-      backdrop-filter:blur(8px);
-      white-space:nowrap;
-    }
-
-    .tabs{
-      display:flex;
-      gap:10px;
-      margin:18px 0 22px;
-      padding:8px;
-      background:white;
-      border:1px solid var(--borde);
-      border-radius:20px;
-      box-shadow:0 10px 26px rgba(15,35,55,.06);
-      position:sticky;
-      top:10px;
-      z-index:10;
-    }
-    .tab-btn{
-      appearance:none;
-      border:0;
-      cursor:pointer;
-      padding:14px 18px;
-      border-radius:14px;
-      background:transparent;
-      color:var(--azul);
-      font-weight:800;
-      letter-spacing:.01em;
-      transition:.18s ease;
-      flex:1;
-      min-width:180px;
-      text-align:center;
-    }
-    .tab-btn:hover{background:var(--azul-3)}
-    .tab-btn.active{
-      color:white;
-      background:linear-gradient(135deg, var(--azul), var(--azul-2));
-      box-shadow:0 10px 24px rgba(7,59,109,.22);
-    }
-    .tab-btn.active .accent{color:#FFDCE1}
-    .accent{color:var(--rojo);font-weight:900}
-
-    .view{display:none}
-    .view.active{display:block}
-
-    .section-title{
-      display:flex;
-      align-items:end;
-      justify-content:space-between;
-      gap:18px;
-      margin:14px 2px 16px;
-    }
-    .section-title h2{
-      margin:0;
-      font-size:26px;
-      letter-spacing:-.03em;
-      color:#061B33;
-    }
-    .section-title .tagline{
-      color:var(--muted);
-      font-size:14px;
-      text-align:right;
-    }
-
-    .grid{
-      display:grid;
-      gap:16px;
-    }
-    .kpi-grid{
-      grid-template-columns: repeat(4, minmax(220px, 1fr));
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--borde);
-      border-radius:var(--radius);
-      box-shadow:0 14px 34px rgba(10,40,70,.07);
-      padding:18px;
-      min-width:0;
-    }
-    .card.clickable{
-      cursor:pointer;
-      transition:.18s ease;
-    }
-    .card.clickable:hover{
-      transform:translateY(-2px);
-      box-shadow:0 18px 44px rgba(201,32,39,.14);
-      border-color:#F2B6BC;
-    }
-    .kpi-title{
-      font-size:13px;
-      color:#5B6B7F;
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.04em;
-      margin-bottom:10px;
-    }
-    .kpi-main{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .big-number{
-      font-size:34px;
-      font-weight:900;
-      color:#061B33;
-      letter-spacing:-.05em;
-      line-height:1;
-    }
-    .subtext{
-      margin-top:7px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.35;
-    }
-
-    .mini-list{
-      display:grid;
-      gap:8px;
-      margin-top:12px;
-    }
-    .mini-row{
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap:10px;
-      font-size:13px;
-      color:#4C5F73;
-      align-items:center;
-    }
-    .bar-bg{
-      height:10px;
-      background:#ECF1F7;
-      border-radius:999px;
-      overflow:hidden;
-      margin-top:4px;
-    }
-    .bar-fill{
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg, var(--azul-2), var(--rojo));
-      width:0%;
-      transition:.3s;
-    }
-
-    .donut{
-      --p:0;
-      width:72px;height:72px;
-      border-radius:50%;
-      background:
-        radial-gradient(circle, #fff 0 56%, transparent 57%),
-        conic-gradient(var(--rojo) calc(var(--p)*1%), #E8EEF5 0);
-      display:grid;
-      place-items:center;
-      color:var(--azul);
-      font-size:16px;
-      font-weight:900;
-      flex:0 0 auto;
-      border:1px solid #E6EDF5;
-    }
-
-    .charts-grid{
-      grid-template-columns: 1.2fr .8fr;
-      margin-top:16px;
-    }
-    .chart-title{
-      font-weight:900;
-      color:#061B33;
-      font-size:18px;
-      margin:0 0 14px;
-    }
-    .bar-chart{
-      display:grid;
-      gap:12px;
-    }
-    .bar-item{
-      display:grid;
-      grid-template-columns: 180px 1fr 58px;
-      gap:12px;
-      align-items:center;
-      font-size:13px;
-    }
-    .bar-label{
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      color:#3F5065;
-      font-weight:700;
-    }
-    .bar-value{text-align:right;font-weight:900;color:var(--azul)}
-    .hbar{
-      height:14px;
-      background:#EEF3F8;
-      border-radius:999px;
-      overflow:hidden;
-      position:relative;
-    }
-    .hbar span{
-      display:block;height:100%;border-radius:999px;
-      width:0%;
-      background:linear-gradient(90deg, #0E5A9C, #C92027);
-    }
-
-    .table-wrap{
-      overflow:auto;
-      border:1px solid var(--borde);
-      border-radius:16px;
-      background:white;
-    }
-    .table-wrap.compact-scroll{max-height:330px}
-    .table-wrap.four-scroll{max-height:260px}
-    table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      font-size:13px;
-      min-width:820px;
-    }
-    thead th{
-      position:sticky;
-      top:0;
-      z-index:2;
-      text-align:left;
-      color:white;
-      background:var(--azul);
-      padding:12px 12px;
-      font-weight:850;
-      white-space:nowrap;
-    }
-    tbody td{
-      padding:11px 12px;
-      border-bottom:1px solid #E7EEF5;
-      color:#26384C;
-      vertical-align:top;
-    }
-    tbody tr:hover td{background:#F8FBFE}
-    .status{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      border-radius:999px;
-      padding:5px 9px;
-      font-size:12px;
-      font-weight:850;
-      white-space:nowrap;
-    }
-    .status:before{
-      content:"";
-      width:8px;height:8px;border-radius:50%;
-      background:currentColor;
-    }
-    .green{color:var(--verde);background:#EAF7F0}
-    .yellow{color:#A05F00;background:#FFF5D8}
-    .red{color:var(--rojo);background:#FDEBED}
-    .gray{color:#64748B;background:#F1F5F9}
-
-    .hidden{display:none !important}
-    .alert-panel{
-      margin-top:16px;
-      border:1px solid #F0B8BD;
-      background:#FFF8F8;
-      border-radius:20px;
-      padding:16px;
-    }
-
-    .ranking-grid{
-      display:grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap:16px;
-      align-items:start;
-    }
-    .rank-card{
-      display:grid;
-      gap:12px;
-    }
-    .rank-row{
-      display:grid;
-      grid-template-columns: auto 1fr auto;
-      gap:12px;
-      align-items:center;
-      padding:12px;
-      border:1px solid #E1E9F2;
-      border-radius:16px;
-      background:#FBFDFF;
-    }
-    .rank-num{
-      width:34px;height:34px;border-radius:12px;
-      background:linear-gradient(135deg,var(--azul),var(--rojo));
-      color:white;
-      display:grid;place-items:center;
-      font-weight:950;
-    }
-    .rank-name{
-      font-weight:850;
-      color:#123250;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-
-    .search-row{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:16px;
-      flex-wrap:wrap;
-    }
-    label{font-weight:850;color:#183854}
-    select{
-      appearance:none;
-      min-width:360px;
-      padding:13px 44px 13px 14px;
-      border:1px solid var(--borde);
-      border-radius:14px;
-      background:
-        linear-gradient(45deg, transparent 50%, var(--azul) 50%) right 16px center/7px 7px no-repeat,
-        linear-gradient(135deg, var(--azul) 50%, transparent 50%) right 10px center/7px 7px no-repeat,
-        white;
-      color:#142B44;
-      font-weight:700;
-    }
-
-    .empty{
-      color:var(--muted);
-      padding:20px;
-      text-align:center;
-      border:1px dashed #C8D4E3;
-      border-radius:16px;
-      background:#FAFCFE;
-    }
-
-    .footer-note{
-      margin:18px 0 0;
-      color:#728096;
-      font-size:12px;
-      text-align:right;
-    }
-
-    @media (max-width: 1100px){
-      .kpi-grid{grid-template-columns:repeat(2, minmax(220px, 1fr))}
-      .charts-grid,.ranking-grid{grid-template-columns:1fr}
-      .bar-item{grid-template-columns:140px 1fr 48px}
-      .topbar{align-items:flex-start;flex-direction:column}
-      .tabs{overflow:auto}
-      .tab-btn{min-width:190px;flex:0 0 auto}
-    }
-    @media (max-width: 680px){
-      .shell{width:calc(100% - 18px);margin:10px auto 24px}
-      .topbar{border-radius:20px;padding:18px}
-      .brand{align-items:flex-start}
-      .seal{width:50px;height:50px;border-radius:15px}
-      .brand h1{font-size:24px}
-      .kpi-grid{grid-template-columns:1fr}
-      select{min-width:100%;width:100%}
-      .section-title{align-items:flex-start;flex-direction:column}
-      .section-title .tagline{text-align:left}
-      .bar-item{grid-template-columns:1fr;gap:6px}
-      .bar-value{text-align:left}
-    }
+    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#f6f9fd 0%,#edf4fb 52%,#fff5f5 100%);color:var(--dark)}
+    .page{max-width:1540px;margin:0 auto;padding:20px 22px 44px}
+    .hero{position:relative;overflow:hidden;border-radius:28px;padding:26px 30px;background:linear-gradient(110deg,var(--blue),#165a99 56%,var(--red));box-shadow:var(--shadow);color:#fff;display:flex;align-items:center;gap:22px;min-height:132px}
+    .hero:after{content:"";position:absolute;right:-80px;top:-100px;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.12)}
+    .hero:before{content:"";position:absolute;right:140px;bottom:-160px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.10)}
+    .logoBox{width:66px;height:66px;border-radius:18px;background:#fff;color:var(--blue);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(0,0,0,.14);flex:0 0 auto}
+    .logoBox svg{width:38px;height:38px}
+    .heroText{position:relative;z-index:1;flex:1}
+    .eyebrow{font-size:12px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:#ffe7e7;margin-bottom:8px}
+    h1{font-size:34px;line-height:1.05;margin:0 0 9px;font-weight:900;letter-spacing:-.03em}
+    .hero p{margin:0;font-size:15.5px;color:#f4f7fb;max-width:900px;line-height:1.5}
+    .heroBadges{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+    .badge{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);border-radius:999px;padding:10px 14px;font-weight:700;font-size:12px;white-space:nowrap}
+    .tabs{margin:18px 0 26px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;box-shadow:0 8px 22px rgba(8,60,112,.07)}
+    .tabBtn{border:0;background:transparent;border-radius:14px;padding:15px 14px;font-weight:900;color:var(--blue);cursor:pointer;letter-spacing:.01em;transition:.2s;font-size:15px}
+    .tabBtn .num{color:var(--red);font-weight:900;margin-right:6px}
+    .tabBtn.active{background:var(--blue);color:#fff;box-shadow:0 9px 20px rgba(8,60,112,.20)}
+    .tabBtn.active .num{color:#fff}
+    .tabPanel{display:none}
+    .tabPanel.active{display:block}
+    .sectionHead{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:6px 2px 16px}
+    h2{margin:0;font-size:26px;letter-spacing:-.02em;color:#061c34}
+    .sectionNote{margin:0;color:var(--muted);font-size:14px;line-height:1.45;text-align:right}
+    .grid{display:grid;gap:16px}
+    .grid.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .grid.two{grid-template-columns:1.15fr .85fr}
+    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;min-width:0}
+    .kpi{min-height:126px;display:flex;flex-direction:column;justify-content:space-between;cursor:default;position:relative;overflow:hidden}
+    .kpi.clickable{cursor:pointer}
+    .kpi.clickable:hover{transform:translateY(-1px);border-color:#b7c6d8}
+    .kpiTitle{font-size:13px;font-weight:900;color:#52647a;margin-bottom:10px;line-height:1.2}
+    .kpiValue{font-size:34px;font-weight:950;letter-spacing:-.04em;color:#061c34;line-height:1}
+    .kpiSub{font-size:12px;color:var(--muted);margin-top:9px;line-height:1.35}
+    .kpiPair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
+    .miniMetric{padding:10px;border-radius:16px;background:var(--blue3)}
+    .miniMetric.red{background:#fff1f1}
+    .miniMetric strong{display:block;font-size:28px;color:#061c34;line-height:1;font-weight:950}
+    .miniMetric span{display:block;font-size:12px;color:var(--muted);font-weight:800;margin-top:6px}
+    .chartTitle{font-size:17px;font-weight:950;margin:0 0 13px;color:#061c34}
+    .bars{display:flex;flex-direction:column;gap:11px}
+    .barRow{display:grid;grid-template-columns:180px 1fr 54px;gap:12px;align-items:center;font-size:13px;color:#34465a}
+    .barLabel{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .barTrack{height:12px;background:#e8eef6;border-radius:999px;overflow:hidden}
+    .barFill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue2),var(--red));min-width:2px}
+    .barValue{text-align:right;font-weight:900;color:#061c34}
+    .donutWrap{display:flex;align-items:center;justify-content:center;gap:20px;min-height:210px}
+    .donut{--p:0;width:168px;height:168px;border-radius:50%;background:conic-gradient(var(--blue) calc(var(--p)*1%),#e5edf6 0);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(8,60,112,.1)}
+    .donut:after{content:attr(data-value);width:112px;height:112px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:950;color:#061c34;box-shadow:0 0 0 1px #e2e8f0}
+    .legend{display:flex;flex-direction:column;gap:9px;color:var(--muted);font-size:13px}
+    .legend b{color:var(--dark)}
+    .tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line);background:#fff}
+    table{width:100%;border-collapse:collapse;font-size:13px;min-width:760px}
+    th{background:#f1f6fc;color:#0b315a;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}
+    td{padding:11px 12px;border-bottom:1px solid #edf2f8;color:#26384d;vertical-align:top}
+    tr:last-child td{border-bottom:0}
+    .pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;background:#eef5fc;color:var(--blue)}
+    .pill.red{background:#fff0f0;color:var(--red)}
+    .pill.green{background:#edf8ef;color:var(--green)}
+    .pill.yellow{background:#fff8df;color:#8a6400}
+    .pill.gray{background:#f0f2f5;color:#56616f}
+    .rankList{display:flex;flex-direction:column;gap:12px}
+    .rankItem{display:grid;grid-template-columns:46px 1fr 76px;gap:14px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#fbfdff)}
+    .rankNo{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:950;color:#fff;background:linear-gradient(135deg,var(--blue),var(--red))}
+    .rankName{font-weight:950;color:#102033;line-height:1.25}
+    .rankMeta{font-size:12px;color:var(--muted);margin-top:4px}
+    .score{text-align:right;font-size:24px;font-weight:950;color:#061c34}
+    .selectRow{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-bottom:16px}
+    select{border:1px solid #cdd9e7;border-radius:15px;padding:12px 14px;min-width:320px;background:#fff;color:#102033;font-weight:800;outline:none}
+    .hidden{display:none!important}
+    .scroll4{max-height:245px;overflow:auto}
+    .alertBox{border-left:5px solid var(--red);background:#fff7f7;border-radius:14px;padding:12px 14px;margin-bottom:10px;color:#3a2630;font-size:13px}
+    .status{font-size:13px;color:var(--muted);margin-top:8px}
+    .empty{padding:22px;border:1px dashed #c9d6e5;border-radius:16px;text-align:center;color:var(--muted);background:#fbfdff}
+    .footer{margin-top:22px;text-align:center;color:#6b7a8d;font-size:12px}
+    @media(max-width:1050px){.grid.kpis{grid-template-columns:repeat(2,1fr)}.grid.two,.grid.three{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.heroBadges{justify-content:flex-start}.barRow{grid-template-columns:130px 1fr 48px}.tabs{grid-template-columns:1fr}.sectionHead{align-items:start;flex-direction:column}.sectionNote{text-align:left}select{min-width:100%;width:100%}.selectRow{justify-content:stretch;flex-direction:column;align-items:stretch}}
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="seal" title="Icono institucional">
-          <svg viewBox="0 0 64 64" aria-hidden="true">
-            <path fill="currentColor" d="M32 7 8 20v5h48v-5L32 7Zm-13 22h7v22h-7V29Zm12 0h7v22h-7V29Zm12 0h7v22h-7V29ZM10 54h44v4H10v-4Z"/>
-            <path fill="currentColor" opacity=".85" d="M28 17h8v5h-8z"/>
-          </svg>
-        </div>
-        <div>
-          <small>Seguimiento institucional de directores</small>
-          <h1>Panel de control para Alcaldía</h1>
-          <p>Resumen ejecutivo de PAC, ordenanzas, reuniones, redes institucionales, eventos y apoyo institucional.</p>
-        </div>
+  <div class="page">
+    <header class="hero">
+      <div class="logoBox" title="Ícono institucional">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M32 7 8 20v5h48v-5L32 7Zm-17 22v21H9v6h46v-6h-6V29h-7v21h-7V29h-7v21h-7V29h-6Zm-2-7 19-10 19 10H13Z"/></svg>
       </div>
-      <div class="top-actions">
-        <span class="pill">GADM Riobamba</span>
-        <span class="pill" id="lastUpdate">Actualización: matriz institucional</span>
+      <div class="heroText">
+        <div class="eyebrow">Seguimiento institucional de directores</div>
+        <h1>Panel de control para Alcaldía</h1>
+        <p>Resumen ejecutivo de PAC, ordenanzas, reuniones, redes institucionales, eventos y apoyo institucional. Los datos se actualizan desde la matriz Excel institucional.</p>
+      </div>
+      <div class="heroBadges">
+        <span class="badge">GADM Riobamba</span>
+        <span class="badge">Dashboard Ejecutivo</span>
       </div>
     </header>
 
-    <nav class="tabs" role="tablist" aria-label="Pestañas del dashboard">
-      <button class="tab-btn active" data-tab="resumen"><span class="accent">01</span> Resumen general</button>
-      <button class="tab-btn" data-tab="seguimiento"><span class="accent">02</span> Seguimiento por Dirección</button>
-      <button class="tab-btn" data-tab="buscador"><span class="accent">03</span> Buscador por Dirección</button>
+    <nav class="tabs" aria-label="Pestañas principales">
+      <button class="tabBtn active" data-tab="resumen"><span class="num">01</span> Resumen general</button>
+      <button class="tabBtn" data-tab="seguimiento"><span class="num">02</span> Seguimiento por Dirección</button>
+      <button class="tabBtn" data-tab="buscador"><span class="num">03</span> Buscador por Dirección</button>
     </nav>
 
-    <main>
-      <section id="tab-resumen" class="view active">
-        <div class="section-title">
+    <main id="app">
+      <section id="tab-resumen" class="tabPanel active">
+        <div class="sectionHead">
           <h2>Resumen general</h2>
-          <div class="tagline">Indicadores consolidados calculados desde las hojas de la matriz.</div>
+          <p class="sectionNote">Indicadores consolidados calculados desde las hojas de la matriz.</p>
         </div>
-
-        <div class="grid kpi-grid" id="summaryKpis"></div>
-
-        <div class="grid charts-grid">
-          <div class="card">
-            <h3 class="chart-title">Avance por módulo</h3>
-            <div id="moduleBars" class="bar-chart"></div>
-          </div>
-          <div class="card">
-            <h3 class="chart-title">Distribución del índice general</h3>
-            <div id="indexDonutBox"></div>
-          </div>
+        <div id="summaryKpis" class="grid kpis"></div>
+        <div class="grid two" style="margin-top:16px">
+          <div class="card"><h3 class="chartTitle">Avance por módulo</h3><div id="moduleBars" class="bars"></div></div>
+          <div class="card"><h3 class="chartTitle">Distribución del índice general</h3><div id="indexDonut"></div></div>
         </div>
-
-        <div id="alertsPanel" class="alert-panel hidden">
-          <h3 class="chart-title">Alertas principales</h3>
-          <div id="alertsTable" class="table-wrap compact-scroll"></div>
+        <div id="alertsPanel" class="card hidden" style="margin-top:16px">
+          <h3 class="chartTitle">Alertas principales</h3>
+          <div id="alertsList"></div>
         </div>
       </section>
 
-      <section id="tab-seguimiento" class="view">
-        <div class="section-title">
-          <h2>Seguimiento por Dirección</h2>
-          <div class="tagline">Cada hoja representa el 16,67% del índice total.</div>
+      <section id="tab-seguimiento" class="tabPanel">
+        <div class="sectionHead"><h2>Seguimiento por Dirección</h2></div>
+        <div class="grid two">
+          <div class="card"><h3 class="chartTitle">Índice general por Dirección</h3><div id="rankingBars" class="bars"></div></div>
+          <div class="card"><h3 class="chartTitle">Direcciones destacadas</h3><div id="topDirections" class="rankList"></div></div>
         </div>
-
-        <div class="ranking-grid">
-          <div class="card">
-            <h3 class="chart-title">Direcciones con mayor avance</h3>
-            <div id="topDirections" class="rank-card"></div>
-          </div>
-          <div class="card">
-            <h3 class="chart-title">Comparativo de porcentaje general</h3>
-            <div id="rankingBars" class="bar-chart"></div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:16px">
-          <h3 class="chart-title">Tabla de seguimiento institucional</h3>
-          <div id="rankingTable" class="table-wrap compact-scroll"></div>
-        </div>
+        <div class="card" style="margin-top:16px"><h3 class="chartTitle">Detalle de seguimiento</h3><div id="rankingTable" class="tableWrap"></div></div>
       </section>
 
-      <section id="tab-buscador" class="view">
-        <div class="section-title">
+      <section id="tab-buscador" class="tabPanel">
+        <div class="sectionHead">
           <h2>Buscador por Dirección</h2>
-          <div class="tagline">Consulta individual de desempeño, alertas y registros asociados.</div>
+          <div class="selectRow"><label for="directionSelect"><b>Seleccione una Dirección</b></label><select id="directionSelect"><option value="">Seleccione una dirección</option></select></div>
         </div>
-
-        <div class="card">
-          <div class="search-row">
-            <label for="directionSelect">Seleccione una Dirección</label>
-            <select id="directionSelect">
-              <option value="">Seleccione una dirección</option>
-            </select>
-          </div>
-          <div id="directionDetail" class="empty">Seleccione una Dirección para ver su resumen ejecutivo.</div>
-        </div>
+        <div id="directionContent" class="empty">Seleccione una Dirección para ver su resumen ejecutivo, desempeño por módulo, alertas y registros asociados.</div>
       </section>
     </main>
 
-    <div class="footer-note">Dashboard Ejecutivo Alcaldía · datos desde CSV publicados en GitHub Pages</div>
+    <div class="footer">Dashboard Ejecutivo Alcaldía · datos desde CSV publicados en GitHub Pages</div>
   </div>
 
-  <script>
-    const FILES = {
-      pac: "data/pac_contratacion.csv",
-      ordenanzas: "data/ordenanzas.csv",
-      reuniones: "data/reuniones.csv",
-      redes: "data/redes_institucionales.csv",
-      eventos: "data/eventos.csv",
-      apoyo: "data/apoyo_institucional.csv"
+<script>
+(() => {
+  const DATA = {
+    pac: 'data/pac_contratacion.csv',
+    ordenanzas: 'data/ordenanzas.csv',
+    reuniones: 'data/reuniones.csv',
+    redes: 'data/redes_institucionales.csv',
+    eventos: 'data/eventos.csv',
+    apoyo: 'data/apoyo_institucional.csv'
+  };
+  const MODULES = [
+    ['pac','PAC'], ['ordenanzas','Ordenanzas'], ['reuniones','Reuniones'],
+    ['redes','Redes institucionales'], ['eventos','Eventos'], ['apoyo','Apoyo institucional']
+  ];
+  const state = {raw:{}, directions:new Map(), dirStats:new Map(), alerts:[], moduleAverages:{}};
+
+  const $ = id => document.getElementById(id);
+  const fmtPct = n => `${Math.round(Number(n)||0)}%`;
+  const money = n => new Intl.NumberFormat('es-EC',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number(n)||0);
+  const clean = v => String(v ?? '').replace(/^\uFEFF/,'').trim();
+  const norm = v => clean(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[#º°]/g,'').replace(/\s+/g,' ').trim();
+  const toKey = d => norm(d);
+  const addDir = d => { d=clean(d); if(!d) return ''; const k=toKey(d); if(!state.directions.has(k)) state.directions.set(k,d); return k; };
+  const get = (row, names) => { for(const n of names){ const v = row[norm(n)]; if(v !== undefined && clean(v) !== '') return clean(v); } return ''; };
+  const splitDirs = v => clean(v).split(/[;|\n]+/).map(x=>clean(x)).filter(Boolean);
+  const unique = arr => [...new Set(arr.filter(Boolean))];
+  const avg = arr => arr.length ? arr.reduce((a,b)=>a+(Number(b)||0),0)/arr.length : 0;
+  const sum = arr => arr.reduce((a,b)=>a+(Number(b)||0),0);
+  const num = v => {
+    let s=clean(v).replace(/\$/g,'').replace(/\s/g,'');
+    if(!s) return 0;
+    if(s.includes(',') && s.includes('.')) s=s.replace(/,/g,'');
+    else if(s.includes(',') && !s.includes('.')) s=s.replace(',', '.');
+    const m=s.match(/-?\d+(\.\d+)?/);
+    return m ? Number(m[0]) : 0;
+  };
+  const persons = v => {
+    const s=clean(v);
+    const m=s.match(/(\d+(?:[.,]\d+)?)\s*(personas|persona|asistentes|funcionarios)/i);
+    if(m) return num(m[1]);
+    const nums=[...s.matchAll(/\d+(?:[.,]\d+)?/g)].map(x=>num(x[0]));
+    return nums.length ? Math.max(...nums) : 0;
+  };
+  const parseDate = v => {
+    v=clean(v); if(!v) return null;
+    let m=v.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+    if(m){ let y=Number(m[3]); if(y<100) y+=2000; return new Date(y,Number(m[2])-1,Number(m[1])); }
+    m=v.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+    if(m) return new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));
+    const d=new Date(v); return isNaN(d) ? null : d;
+  };
+  const expired = v => { const d=parseDate(v); if(!d) return false; const today=new Date(); today.setHours(0,0,0,0); return d < today; };
+  const stagePAC = v => { v=norm(v); if(!v) return 0; if(/final|recibid|cerrad|liquidad/.test(v)) return 100; if(/contractual/.test(v)) return 75; if(/precontractual/.test(v)) return 50; if(/preparatoria/.test(v)) return 25; if(/no empieza|no inicia|sin iniciar/.test(v)) return 0; return num(v)||0; };
+  const stageORD = v => { v=norm(v); if(!v) return 0; if(/aprob|sancion|segundo/.test(v)) return 100; if(/ajuste|subsan/.test(v)) return 75; if(/primer/.test(v)) return 50; if(/jurid/.test(v)) return 40; if(/elabor/.test(v)) return 25; if(/no empieza|no inicia|sin iniciar/.test(v)) return 0; return num(v)||0; };
+  const asistScore = v => { v=norm(v); if(!v) return 0; if(/no asiste|inasistencia/.test(v)) return 0; if(/justifica/.test(v)) return 50; if(/delegad/.test(v)) return 75; if(/asiste|presente|director|si|sí/.test(v)) return 100; return 0; };
+  const isCompleteStage = v => /final|recibid|cerrad|liquidad|aprob|sancion|segundo/.test(norm(v));
+
+  function parseCSV(text){
+    text = text.replace(/^\uFEFF/,'');
+    const first = text.split(/\r?\n/)[0] || '';
+    const delimiter = (first.match(/;/g)||[]).length > (first.match(/,/g)||[]).length ? ';' : ',';
+    const rows=[]; let row=[], field='', inQuotes=false;
+    for(let i=0;i<text.length;i++){
+      const c=text[i], next=text[i+1];
+      if(c==='"'){
+        if(inQuotes && next==='"'){ field+='"'; i++; }
+        else inQuotes=!inQuotes;
+      } else if(c===delimiter && !inQuotes){ row.push(field); field=''; }
+      else if((c==='\n' || c==='\r') && !inQuotes){
+        if(c==='\r' && next==='\n') i++;
+        row.push(field); field='';
+        if(row.some(x=>clean(x)!=='')) rows.push(row);
+        row=[];
+      } else field+=c;
+    }
+    row.push(field); if(row.some(x=>clean(x)!=='')) rows.push(row);
+    if(!rows.length) return [];
+    const headers=rows.shift().map(h=>norm(h));
+    return rows.map(r=>{ const o={}; headers.forEach((h,i)=>o[h]=clean(r[i])); return o; });
+  }
+
+  async function loadData(){
+    const entries = await Promise.all(Object.entries(DATA).map(async ([k,path])=>{
+      const res = await fetch(`${path}?v=${Date.now()}`, {cache:'no-store'});
+      if(!res.ok) throw new Error(`No se pudo cargar ${path}`);
+      const text = await res.text();
+      return [k, parseCSV(text)];
+    }));
+    entries.forEach(([k,v])=>state.raw[k]=v);
+    console.log('Dashboard V9 - filas cargadas', Object.fromEntries(entries.map(([k,v])=>[k,v.length])));
+    compute(); render();
+  }
+
+  function initDir(k){
+    if(!state.dirStats.has(k)) state.dirStats.set(k,{scores:{pac:0,ordenanzas:0,reuniones:0,redes:0,eventos:0,apoyo:0},counts:{},extras:{interacciones:0,personasEventos:0,personasApoyo:0},records:[],alerts:[]});
+    return state.dirStats.get(k);
+  }
+
+  function compute(){
+    state.directions.clear(); state.dirStats.clear(); state.alerts=[];
+    // collect all directions
+    state.raw.pac.forEach(r=>addDir(get(r,['Dirección Responsable'])));
+    state.raw.ordenanzas.forEach(r=>addDir(get(r,['Dirección Responsable'])));
+    state.raw.reuniones.forEach(r=>splitDirs(get(r,['Direcciones Convocadas'])).forEach(addDir));
+    state.raw.redes.forEach(r=>addDir(get(r,['Dirección que comparte','Direcciones que comparten'])));
+    state.raw.eventos.forEach(r=>addDir(get(r,['Dirección que Asiste','Direcciones que Asisten'])));
+    state.raw.apoyo.forEach(r=>addDir(get(r,['Dirección que apoya','Direcciones que apoyan'])));
+    state.directions.forEach((_,k)=>initDir(k));
+
+    const temp={pac:new Map(),ordenanzas:new Map(),reuniones:new Map(),redes:new Map(),eventos:new Map(),apoyo:new Map()};
+    const addTemp=(module,k,val,rec)=>{ if(!k) return; if(!temp[module].has(k)) temp[module].set(k,[]); temp[module].get(k).push(val); const s=initDir(k); s.records.push(rec); };
+
+    state.raw.pac.forEach(r=>{
+      const d=get(r,['Dirección Responsable']); const k=addDir(d); const st=get(r,['Etapa Actual']); const val=stagePAC(st);
+      addTemp('pac',k,val,{mod:'PAC',codigo:get(r,['Código']),tema:get(r,['Nombre del Proyecto']),estado:st,obs:get(r,['Observaciones'])});
+      if(k){
+        const s=initDir(k); s.extras.presupuesto=(s.extras.presupuesto||0)+num(get(r,['Monto Presupuestado'])); s.extras.contratado=(s.extras.contratado||0)+num(get(r,['Monto Contratado'])); s.extras.devengado=(s.extras.devengado||0)+num(get(r,['Monto Devengado','Monto devengado']));
+      }
+      const nombre=get(r,['Nombre del Proyecto'])||get(r,['Código'])||'Proyecto PAC';
+      if(norm(st).includes('no empieza')||norm(st).includes('no inicia')) pushAlert(k,'PAC',nombre,'Proceso sin iniciar');
+      if(expired(get(r,['Fecha límite'])) && !isCompleteStage(st)) pushAlert(k,'PAC',nombre,'Fecha límite vencida');
+      if(!get(r,['Evidencias'])) pushAlert(k,'PAC',nombre,'Sin evidencia registrada');
+    });
+
+    state.raw.ordenanzas.forEach(r=>{
+      const d=get(r,['Dirección Responsable']); const k=addDir(d); const st=get(r,['Etapa Actual']); const val=stageORD(st);
+      addTemp('ordenanzas',k,val,{mod:'Ordenanzas',codigo:get(r,['Nro. Ordenanza','# Trámite','Nro Ordenanza']),tema:get(r,['Tema']),estado:st,obs:get(r,['Observaciones'])});
+      const nombre=get(r,['Tema'])||get(r,['Nro. Ordenanza'])||'Ordenanza';
+      if(norm(st).includes('no empieza')||norm(st).includes('no inicia')) pushAlert(k,'Ordenanzas',nombre,'Ordenanza sin iniciar');
+      if(expired(get(r,['Fecha de finalización'])) && !isCompleteStage(st)) pushAlert(k,'Ordenanzas',nombre,'Fecha de finalización vencida');
+      if(!get(r,['Evidencias'])) pushAlert(k,'Ordenanzas',nombre,'Sin evidencia registrada');
+    });
+
+    state.raw.reuniones.forEach(r=>{
+      const dirs=splitDirs(get(r,['Direcciones Convocadas'])); const val=asistScore(get(r,['Asistencia']));
+      dirs.forEach(d=>{ const k=addDir(d); addTemp('reuniones',k,val,{mod:'Reuniones',codigo:get(r,['Código']),tema:get(r,['Tema Tratado']),estado:get(r,['Asistencia']),obs:get(r,['Observaciones'])}); if(val===0) pushAlert(k,'Reuniones',get(r,['Tema Tratado'])||get(r,['Código'])||'Reunión','Inasistencia o sin asistencia registrada'); });
+    });
+
+    const calcCodeParticipation=(module, rows, codeNames, dirNames, personField, interactionField) => {
+      const allCodes=unique(rows.map(r=>get(r,codeNames))).filter(Boolean);
+      const total=allCodes.length;
+      const byDir=new Map();
+      rows.forEach(r=>{
+        const code=get(r,codeNames); const dir=get(r,dirNames); const k=addDir(dir); if(!k || !code) return;
+        if(!byDir.has(k)) byDir.set(k,new Set()); byDir.get(k).add(code);
+        const s=initDir(k);
+        if(module==='redes') s.extras.interacciones += num(get(r,interactionField));
+        if(module==='eventos') s.extras.personasEventos += num(get(r,personField));
+        if(module==='apoyo') s.extras.personasApoyo += persons(get(r,personField));
+        s.records.push({mod: module==='redes'?'Redes institucionales':module==='eventos'?'Eventos':'Apoyo institucional',codigo:code,tema:get(r,['Tema de publicación','Nombre del evento','Actividad']),estado:'Registrado',obs:get(r,['Observaciones'])});
+        if(!get(r,['Evidencias'])) pushAlert(k, module==='redes'?'Redes':module==='eventos'?'Eventos':'Apoyo', get(r,['Tema de publicación','Nombre del evento','Actividad'])||code,'Sin evidencia registrada');
+      });
+      state.directions.forEach((_,k)=>{
+        const pct = total ? ((byDir.get(k)?.size || 0) / total) * 100 : 0;
+        initDir(k).scores[module]=pct;
+      });
+      state.moduleAverages[module]=avg([...state.directions.keys()].map(k=>initDir(k).scores[module]));
     };
 
-    const MODULE_NAMES = {
-      pac: "PAC",
-      ordenanzas: "Ordenanzas",
-      reuniones: "Reuniones",
-      redes: "Redes Institucionales",
-      eventos: "Eventos",
-      apoyo: "Apoyo Institucional"
-    };
+    // Average record-based modules
+    ['pac','ordenanzas','reuniones'].forEach(m=>{
+      state.directions.forEach((_,k)=>{ initDir(k).scores[m]=avg(temp[m].get(k)||[]); initDir(k).counts[m]=(temp[m].get(k)||[]).length; });
+      state.moduleAverages[m]=avg([...state.directions.keys()].map(k=>initDir(k).scores[m]));
+    });
+    calcCodeParticipation('redes',state.raw.redes,['Código'],['Dirección que comparte','Direcciones que comparten'],[],['Nro de Interacciones','Número de Interacciones']);
+    calcCodeParticipation('eventos',state.raw.eventos,['Código'],['Dirección que Asiste','Direcciones que Asisten'],['Cantidad de personas'],[]);
+    calcCodeParticipation('apoyo',state.raw.apoyo,['Código'],['Dirección que apoya','Direcciones que apoyan'],['Apoyo Entregado'],[]);
 
-    const MODULE_KEYS = ["pac","ordenanzas","reuniones","redes","eventos","apoyo"];
+    state.directions.forEach((name,k)=>{
+      const s=initDir(k); s.index=MODULES.reduce((acc,[m])=>acc+(Number(s.scores[m])||0),0)/MODULES.length;
+      s.name=name;
+    });
+  }
 
-    let raw = {};
-    let state = {};
+  function pushAlert(k,module,tema,msg){
+    const a={dirKey:k,module,tema,msg}; state.alerts.push(a); if(k) initDir(k).alerts.push(a);
+  }
 
-    const fmtPct = n => `${Math.round(Number(n || 0))}%`;
-    const fmtMoney = n => new Intl.NumberFormat("es-EC", {style:"currency", currency:"USD", maximumFractionDigits:0}).format(Number(n || 0));
-    const fmtNum = n => new Intl.NumberFormat("es-EC", {maximumFractionDigits:0}).format(Number(n || 0));
+  function render(){
+    renderTabs(); renderSummary(); renderRanking(); renderSearch();
+  }
+  function renderTabs(){
+    document.querySelectorAll('.tabBtn').forEach(btn=>btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tabBtn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tabPanel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active'); $('tab-'+btn.dataset.tab).classList.add('active');
+    }));
+  }
+  function renderSummary(){
+    const dirs=[...state.dirStats.values()];
+    const general=avg(dirs.map(d=>d.index));
+    const presup=sum(dirs.map(d=>d.extras.presupuesto||0)); const dev=sum(dirs.map(d=>d.extras.devengado||0)); const ejec=presup?dev/presup*100:0;
+    const inter=sum(dirs.map(d=>d.extras.interacciones||0)); const personasEventos=sum(dirs.map(d=>d.extras.personasEventos||0));
+    $('summaryKpis').innerHTML = `
+      <div class="card kpi"><div class="kpiTitle">Índice general municipal</div><div class="kpiValue">${fmtPct(general)}</div><div class="kpiSub">${dirs.length} direcciones monitoreadas</div></div>
+      <div class="card kpi"><div class="kpiTitle">PAC y ejecución presupuestaria</div><div class="kpiPair"><div class="miniMetric"><strong>${fmtPct(state.moduleAverages.pac)}</strong><span>Avance PAC</span></div><div class="miniMetric red"><strong>${fmtPct(ejec)}</strong><span>Devengado de ${money(presup)}</span></div></div></div>
+      <div class="card kpi"><div class="kpiTitle">Ordenanzas</div><div class="kpiValue">${fmtPct(state.moduleAverages.ordenanzas)}</div><div class="kpiSub">${state.raw.ordenanzas.length} registros</div></div>
+      <div class="card kpi"><div class="kpiTitle">Reuniones y eventos</div><div class="kpiPair"><div class="miniMetric"><strong>${fmtPct(state.moduleAverages.reuniones)}</strong><span>Reuniones</span></div><div class="miniMetric red"><strong>${fmtPct(state.moduleAverages.eventos)}</strong><span>Eventos · ${personasEventos} personas</span></div></div></div>
+      <div class="card kpi"><div class="kpiTitle">Interacción en Redes Institucionales</div><div class="kpiValue">${inter}</div><div class="kpiSub">${state.raw.redes.length} registros de difusión</div></div>
+      <div class="card kpi"><div class="kpiTitle">Apoyo institucional</div><div class="kpiValue">${fmtPct(state.moduleAverages.apoyo)}</div><div class="kpiSub">${state.raw.apoyo.length} actividades reportadas</div></div>
+      <div class="card kpi clickable" id="alertKpi"><div class="kpiTitle">Alertas principales</div><div class="kpiValue">${state.alerts.length}</div><div class="kpiSub">Haga clic para desplegar la tabla</div></div>
+      <div class="card kpi"><div class="kpiTitle">Módulos activos</div><div class="kpiValue">6</div><div class="kpiSub">Cada hoja equivale al 16,67% del índice</div></div>
+    `;
+    $('alertKpi').onclick=()=> $('alertsPanel').classList.toggle('hidden');
+    $('moduleBars').innerHTML = MODULES.map(([m,label])=>bar(label,state.moduleAverages[m])).join('');
+    $('indexDonut').innerHTML = `<div class="donutWrap"><div class="donut" style="--p:${Math.round(general)}" data-value="${fmtPct(general)}"></div><div class="legend"><div><b>Índice general</b><br>Promedio de las seis hojas de seguimiento.</div><div><b>Valor de cada hoja:</b> 16,67%</div><div><b>Direcciones:</b> ${dirs.length}</div></div></div>`;
+    $('alertsList').innerHTML = state.alerts.length ? makeAlerts(state.alerts) : '<div class="empty">No hay alertas registradas.</div>';
+  }
+  function bar(label,val){ return `<div class="barRow"><div class="barLabel" title="${label}">${label}</div><div class="barTrack"><div class="barFill" style="width:${Math.max(0,Math.min(100,val||0))}%"></div></div><div class="barValue">${fmtPct(val)}</div></div>`; }
+  function renderRanking(){
+    const dirs=[...state.dirStats.values()].sort((a,b)=>b.index-a.index);
+    $('rankingBars').innerHTML = dirs.length ? dirs.map(d=>bar(d.name,d.index)).join('') : '<div class="empty">No hay datos.</div>';
+    $('topDirections').innerHTML = dirs.slice(0,5).map((d,i)=>`<div class="rankItem"><div class="rankNo">${i+1}</div><div><div class="rankName">${d.name}</div><div class="rankMeta">PAC ${fmtPct(d.scores.pac)} · Ord. ${fmtPct(d.scores.ordenanzas)} · Reun. ${fmtPct(d.scores.reuniones)}</div></div><div class="score">${fmtPct(d.index)}</div></div>`).join('') || '<div class="empty">No hay datos.</div>';
+    $('rankingTable').innerHTML = `<table><thead><tr><th>Dirección</th>${MODULES.map(([_,l])=>`<th>${l}</th>`).join('')}<th>Índice</th><th>Alertas</th></tr></thead><tbody>${dirs.map(d=>`<tr><td><b>${d.name}</b></td>${MODULES.map(([m])=>`<td>${fmtPct(d.scores[m])}</td>`).join('')}<td><span class="pill ${pillClass(d.index)}">${fmtPct(d.index)}</span></td><td>${d.alerts.length}</td></tr>`).join('')}</tbody></table>`;
+  }
+  function pillClass(v){ return v>=85?'green':v>=70?'yellow':v>=50?'gray':'red'; }
+  function renderSearch(){
+    const sel=$('directionSelect');
+    const dirs=[...state.dirStats.values()].sort((a,b)=>a.name.localeCompare(b.name,'es'));
+    sel.innerHTML='<option value="">Seleccione una dirección</option>'+dirs.map(d=>`<option value="${toKey(d.name)}">${d.name}</option>`).join('');
+    sel.onchange=()=>renderDirection(sel.value);
+  }
+  function renderDirection(k){
+    const d=state.dirStats.get(k); if(!d){ $('directionContent').className='empty'; $('directionContent').innerHTML='Seleccione una Dirección para ver su resumen ejecutivo.'; return; }
+    $('directionContent').className='';
+    $('directionContent').innerHTML = `
+      <div class="grid kpis">
+        <div class="card kpi"><div class="kpiTitle">Índice general</div><div class="kpiValue">${fmtPct(d.index)}</div><div class="kpiSub">Promedio de 6 módulos</div></div>
+        <div class="card kpi"><div class="kpiTitle">PAC</div><div class="kpiValue">${fmtPct(d.scores.pac)}</div><div class="kpiSub">Presupuesto: ${money(d.extras.presupuesto||0)} · Devengado: ${money(d.extras.devengado||0)}</div></div>
+        <div class="card kpi"><div class="kpiTitle">Reuniones y eventos</div><div class="kpiPair"><div class="miniMetric"><strong>${fmtPct(d.scores.reuniones)}</strong><span>Reuniones</span></div><div class="miniMetric red"><strong>${fmtPct(d.scores.eventos)}</strong><span>Eventos</span></div></div></div>
+        <div class="card kpi"><div class="kpiTitle">Alertas</div><div class="kpiValue">${d.alerts.length}</div><div class="kpiSub">Casos de seguimiento</div></div>
+      </div>
+      <div class="grid two" style="margin-top:16px">
+        <div class="card"><h3 class="chartTitle">Desempeño por módulo</h3><div class="bars">${MODULES.map(([m,l])=>bar(l,d.scores[m])).join('')}</div></div>
+        <div class="card"><h3 class="chartTitle">Resumen visual</h3><div class="donutWrap"><div class="donut" style="--p:${Math.round(d.index)}" data-value="${fmtPct(d.index)}"></div><div class="legend"><div><b>${d.name}</b></div><div>Interacciones redes: <b>${d.extras.interacciones||0}</b></div><div>Personas en eventos: <b>${d.extras.personasEventos||0}</b></div><div>Personas apoyo: <b>${d.extras.personasApoyo||0}</b></div></div></div></div>
+      </div>
+      <div class="grid two" style="margin-top:16px">
+        <div class="card"><h3 class="chartTitle">Registros asociados</h3><div class="tableWrap scroll4">${recordsTable(d.records)}</div></div>
+        <div class="card"><h3 class="chartTitle">Alertas de la Dirección</h3><div class="scroll4">${d.alerts.length?makeAlerts(d.alerts):'<div class="empty">No hay alertas para esta Dirección.</div>'}</div></div>
+      </div>`;
+  }
+  function recordsTable(records){
+    if(!records.length) return '<div class="empty">No hay registros asociados.</div>';
+    return `<table><thead><tr><th>Módulo</th><th>Código</th><th>Tema</th><th>Estado</th><th>Observación</th></tr></thead><tbody>${records.map(r=>`<tr><td>${r.mod||''}</td><td>${r.codigo||''}</td><td>${r.tema||''}</td><td>${r.estado||''}</td><td>${r.obs||''}</td></tr>`).join('')}</tbody></table>`;
+  }
+  function makeAlerts(alerts){ return alerts.map(a=>`<div class="alertBox"><b>${a.module}</b> · ${a.tema||'Registro'}<br><span>${a.msg}</span></div>`).join(''); }
 
-    function normalizeText(s){
-      return String(s ?? "")
-        .replace(/\uFEFF/g, "")
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase().trim().replace(/\s+/g," ");
-    }
-    function displayClean(s){
-      return String(s ?? "").replace(/\s+/g," ").trim();
-    }
-    function normalizeHeader(s){
-      return normalizeText(s);
-    }
-    function rowValue(row, candidates){
-      for(const c of candidates){
-        const k = normalizeHeader(c);
-        if(Object.prototype.hasOwnProperty.call(row, k)) return row[k];
-      }
-      return "";
-    }
-    function toNumber(v){
-      if(v === null || v === undefined) return 0;
-      let s = String(v).trim();
-      if(!s) return 0;
-      s = s.replace(/\$/g,"").replace(/\s/g,"");
-      const hasComma = s.includes(",");
-      const hasDot = s.includes(".");
-      if(hasComma && hasDot){
-        if(s.lastIndexOf(",") > s.lastIndexOf(".")) s = s.replace(/\./g,"").replace(",",".");
-        else s = s.replace(/,/g,"");
-      } else if(hasComma && !hasDot){
-        s = s.replace(",",".");
-      }
-      const n = parseFloat(s);
-      return Number.isFinite(n) ? n : 0;
-    }
-    function extractPeople(v){
-      const s = String(v ?? "");
-      const personMatches = [...s.matchAll(/(\d+(?:[.,]\d+)?)\s*(personas?|asistentes?|funcionarios?)/gi)]
-        .map(m => toNumber(m[1]));
-      if(personMatches.length) return personMatches.reduce((a,b)=>a+b,0);
-      const nums = [...s.matchAll(/\d+(?:[.,]\d+)?/g)].map(m => toNumber(m[0]));
-      return nums.length ? Math.max(...nums) : 0;
-    }
-    function excelDateToText(v){
-      if(v === null || v === undefined || v === "") return "";
-      if(typeof v === "number" || /^\d{5}$/.test(String(v).trim())){
-        const serial = Number(v);
-        if(serial > 20000 && serial < 70000){
-          const date = new Date(Math.round((serial - 25569) * 86400 * 1000));
-          return date.toLocaleDateString("es-EC", {day:"2-digit", month:"2-digit", year:"numeric"});
-        }
-      }
-      return String(v);
-    }
-    function excelDateToDate(v){
-      if(!v) return null;
-      if(typeof v === "number" || /^\d{5}$/.test(String(v).trim())){
-        const serial = Number(v);
-        if(serial > 20000 && serial < 70000){
-          return new Date(Math.round((serial - 25569) * 86400 * 1000));
-        }
-      }
-      const s = String(v).trim();
-      const parts = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-      if(parts){
-        let y = Number(parts[3]);
-        if(y < 100) y += 2000;
-        return new Date(y, Number(parts[2])-1, Number(parts[1]));
-      }
-      const d = new Date(s);
-      return isNaN(d.getTime()) ? null : d;
-    }
-    function splitDirections(value){
-      return String(value ?? "")
-        .split(/\n|;|\|/g)
-        .map(displayClean)
-        .filter(Boolean);
-    }
-
-    function parseCSV(text){
-      const rows = [];
-      let row = [], cell = "", inQuotes = false;
-      for(let i=0;i<text.length;i++){
-        const ch = text[i];
-        const next = text[i+1];
-        if(ch === '"' && inQuotes && next === '"'){ cell += '"'; i++; continue; }
-        if(ch === '"'){ inQuotes = !inQuotes; continue; }
-        if((ch === "," || ch === ";") && !inQuotes){ row.push(cell); cell = ""; continue; }
-        if((ch === "\n" || ch === "\r") && !inQuotes){
-          if(ch === "\r" && next === "\n") i++;
-          row.push(cell); cell = "";
-          if(row.some(x => String(x).trim() !== "")) rows.push(row);
-          row = [];
-          continue;
-        }
-        cell += ch;
-      }
-      row.push(cell);
-      if(row.some(x => String(x).trim() !== "")) rows.push(row);
-      if(!rows.length) return [];
-      const headers = rows[0].map(h => normalizeHeader(h));
-      return rows.slice(1).map(r => {
-        const obj = {};
-        headers.forEach((h, idx) => obj[h] = r[idx] ?? "");
-        return obj;
-      }).filter(obj => Object.values(obj).some(v => String(v).trim() !== ""));
-    }
-
-    async function loadCSV(path){
-      const response = await fetch(`${path}?t=${Date.now()}`, {cache:"no-store"});
-      if(!response.ok) throw new Error(`No se pudo cargar ${path}`);
-      return parseCSV(await response.text());
-    }
-
-    function stageScorePAC(stage){
-      const s = normalizeText(stage);
-      if(!s) return 0;
-      if(s.includes("finalizado") || s.includes("recibido") || s.includes("cerrado") || s.includes("liquidado")) return 100;
-      if(s.includes("contractual")) return 75;
-      if(s.includes("precontractual")) return 50;
-      if(s.includes("preparatoria")) return 25;
-      if(s.includes("no empieza") || s.includes("no inicia")) return 0;
-      return 0;
-    }
-    function stageScoreOrdenanza(stage){
-      const s = normalizeText(stage);
-      if(!s) return 0;
-      if(s.includes("aprobada") || s.includes("sancionada") || s.includes("publicada")) return 100;
-      if(s.includes("segundo debate")) return 90;
-      if(s.includes("ajuste") || s.includes("subsan")) return 75;
-      if(s.includes("primer debate")) return 60;
-      if(s.includes("revision juridica") || s.includes("juridica")) return 40;
-      if(s.includes("elaboracion")) return 25;
-      if(s.includes("no empieza") || s.includes("no inicia")) return 0;
-      return 0;
-    }
-    function attendanceScore(value){
-      const s = normalizeText(value);
-      if(!s) return 0;
-      if(s === "si" || s.includes("asiste director")) return 100;
-      if(s.includes("delegado")) return 75;
-      if(s.includes("justifica")) return 50;
-      if(s === "no" || s.includes("no asiste")) return 0;
-      return s.includes("si") ? 100 : 0;
-    }
-
-    function addScore(map, dir, module, score){
-      const key = displayClean(dir);
-      if(!key) return;
-      if(!map[key]) map[key] = { direction:key, scores:{}, records:{}, alerts:[] };
-      if(!map[key].records[module]) map[key].records[module] = [];
-      if(!map[key].scores[module]) map[key].scores[module] = [];
-      map[key].scores[module].push(Number(score || 0));
-    }
-
-    function addRecord(map, dir, module, record){
-      const key = displayClean(dir);
-      if(!key) return;
-      if(!map[key]) map[key] = { direction:key, scores:{}, records:{}, alerts:[] };
-      if(!map[key].records[module]) map[key].records[module] = [];
-      map[key].records[module].push(record);
-    }
-
-    function getRowsByDirection(rows, fieldNames){
-      const expanded = [];
-      rows.forEach(row => {
-        const dirs = splitDirections(rowValue(row, fieldNames));
-        dirs.forEach(dir => expanded.push({dir, row}));
-      });
-      return expanded;
-    }
-
-    function uniqueCodes(rows, fieldNames){
-      return new Set(rows.map(r => displayClean(rowValue(r, fieldNames))).filter(Boolean));
-    }
-
-    function buildState(){
-      const directions = {};
-      const allAlerts = [];
-      const moduleGlobal = {};
-      const today = new Date();
-
-      // PAC
-      const pacExpanded = getRowsByDirection(raw.pac, ["Dirección Responsable","Direccion Responsable"]);
-      let pacScoreSum = 0;
-      let totalPres = 0, totalContratado = 0, totalDevengado = 0;
-      pacExpanded.forEach(({dir,row}) => {
-        const score = stageScorePAC(rowValue(row, ["Etapa Actual"]));
-        const nombre = rowValue(row, ["Nombre del Proyecto","Proyecto","Objeto de contratación"]);
-        const codigo = rowValue(row, ["Código","Codigo"]);
-        const fechaLimite = rowValue(row, ["Fecha límite","Fecha Limite"]);
-        const evidencia = rowValue(row, ["Evidencias","Evidencia"]);
-        pacScoreSum += score;
-        totalPres += toNumber(rowValue(row, ["Monto Presupuestado"]));
-        totalContratado += toNumber(rowValue(row, ["Monto Contratado"]));
-        totalDevengado += toNumber(rowValue(row, ["Monto Devengado","Monto devengado"]));
-        addScore(directions, dir, "pac", score);
-        addRecord(directions, dir, "pac", {module:"PAC", codigo, tema:nombre, estado:rowValue(row,["Etapa Actual"]), fecha:fechaLimite, evidencia});
-
-        const due = excelDateToDate(fechaLimite);
-        if(score === 0) allAlerts.push({dir, module:"PAC", asunto:nombre || codigo, alerta:"Proceso no iniciado", prioridad:"Alta"});
-        if(due && due < today && score < 100) allAlerts.push({dir, module:"PAC", asunto:nombre || codigo, alerta:"Fecha límite vencida", prioridad:"Alta"});
-        if(!displayClean(evidencia)) allAlerts.push({dir, module:"PAC", asunto:nombre || codigo, alerta:"Sin evidencia registrada", prioridad:"Media"});
-      });
-      moduleGlobal.pac = pacExpanded.length ? pacScoreSum / pacExpanded.length : 0;
-
-      // Ordenanzas
-      const ordExpanded = getRowsByDirection(raw.ordenanzas, ["Dirección Responsable","Direccion Responsable"]);
-      let ordScoreSum = 0;
-      ordExpanded.forEach(({dir,row}) => {
-        const score = stageScoreOrdenanza(rowValue(row, ["Etapa Actual"]));
-        const tema = rowValue(row, ["Tema","Nro. Ordenanza","Nro Ordenanza"]);
-        const codigo = rowValue(row, ["# Trámite","# Tramite","Código","Codigo"]);
-        const fechaFin = rowValue(row, ["Fecha de finalización","Fecha de finalizacion"]);
-        const evidencia = rowValue(row, ["Evidencias","Evidencia"]);
-        ordScoreSum += score;
-        addScore(directions, dir, "ordenanzas", score);
-        addRecord(directions, dir, "ordenanzas", {module:"Ordenanzas", codigo, tema, estado:rowValue(row,["Etapa Actual"]), fecha:fechaFin, evidencia});
-        const due = excelDateToDate(fechaFin);
-        if(score === 0) allAlerts.push({dir, module:"Ordenanzas", asunto:tema || codigo, alerta:"Ordenanza sin iniciar", prioridad:"Alta"});
-        if(due && due < today && score < 100) allAlerts.push({dir, module:"Ordenanzas", asunto:tema || codigo, alerta:"Fecha de finalización vencida", prioridad:"Alta"});
-        if(!displayClean(evidencia)) allAlerts.push({dir, module:"Ordenanzas", asunto:tema || codigo, alerta:"Sin evidencia registrada", prioridad:"Media"});
-      });
-      moduleGlobal.ordenanzas = ordExpanded.length ? ordScoreSum / ordExpanded.length : 0;
-
-      // Reuniones
-      const reuExpanded = getRowsByDirection(raw.reuniones, ["Direcciones Convocadas","Dirección Convocada","Direccion Convocada"]);
-      let reuScoreSum = 0;
-      reuExpanded.forEach(({dir,row}) => {
-        const score = attendanceScore(rowValue(row, ["Asistencia"]));
-        const tema = rowValue(row, ["Tema Tratado"]);
-        const codigo = rowValue(row, ["Código","Codigo"]);
-        const fecha = rowValue(row, ["Fecha"]);
-        const evidencia = rowValue(row, ["Evidencias","Evidencia"]);
-        reuScoreSum += score;
-        addScore(directions, dir, "reuniones", score);
-        addRecord(directions, dir, "reuniones", {module:"Reuniones", codigo, tema, estado:rowValue(row,["Asistencia"]), fecha, evidencia});
-        if(score < 100) allAlerts.push({dir, module:"Reuniones", asunto:tema || codigo, alerta:"Asistencia parcial o no confirmada", prioridad: score === 0 ? "Alta" : "Media"});
-        if(!displayClean(evidencia)) allAlerts.push({dir, module:"Reuniones", asunto:tema || codigo, alerta:"Sin evidencia registrada", prioridad:"Media"});
-      });
-      moduleGlobal.reuniones = reuExpanded.length ? reuScoreSum / reuExpanded.length : 0;
-
-      // Redes, Eventos, Apoyo: score by unique code coverage
-      function coverageModule(module, dirFields, codeFields, recordMapper){
-        const rows = raw[module] || [];
-        const codes = uniqueCodes(rows, codeFields);
-        const codeCount = codes.size || 0;
-        const dirToCodes = {};
-        rows.forEach(row => {
-          const code = displayClean(rowValue(row, codeFields));
-          const dirs = splitDirections(rowValue(row, dirFields));
-          dirs.forEach(dir => {
-            const key = displayClean(dir);
-            if(!dirToCodes[key]) dirToCodes[key] = new Set();
-            if(code) dirToCodes[key].add(code);
-            if(!directions[key]) directions[key] = {direction:key, scores:{}, records:{}, alerts:[]};
-            addRecord(directions, key, module, recordMapper(row));
-          });
-        });
-        Object.keys(directions).forEach(dir => {
-          const score = codeCount ? ((dirToCodes[dir]?.size || 0) / codeCount * 100) : 0;
-          if(!directions[dir].scores[module]) directions[dir].scores[module] = [];
-          directions[dir].scores[module] = [score];
-        });
-        const scores = Object.keys(dirToCodes).map(d => codeCount ? (dirToCodes[d].size / codeCount * 100) : 0);
-        moduleGlobal[module] = scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : 0;
-      }
-
-      coverageModule("redes",
-        ["Dirección que comparte","Direcciones que comparten","Direccion que comparte"],
-        ["Código","Codigo"],
-        row => ({module:"Redes Institucionales", codigo:rowValue(row,["Código","Codigo"]), tema:rowValue(row,["Tema de publicación","Tema de publicacion"]), estado:`${fmtNum(toNumber(rowValue(row,["Nro de Interacciones","Nro. Interacciones","Interacciones"]))} interacciones`, fecha:rowValue(row,["Fecha de Publicación","Fecha de Publicacion"]), evidencia:rowValue(row,["Evidencias","Evidencia"])})
-      );
-
-      coverageModule("eventos",
-        ["Dirección que Asiste","Direcciones que Asisten","Direccion que Asiste"],
-        ["Código","Codigo"],
-        row => ({module:"Eventos", codigo:rowValue(row,["Código","Codigo"]), tema:rowValue(row,["Nombre del evento","Evento"]), estado:`${fmtNum(toNumber(rowValue(row,["Cantidad de personas","Personas"]))) } personas`, fecha:rowValue(row,["Fecha"]), evidencia:rowValue(row,["Evidencias","Evidencia"])})
-      );
-
-      coverageModule("apoyo",
-        ["Dirección que apoya","Direcciones que apoyan","Direccion que apoya"],
-        ["Código","Codigo"],
-        row => ({module:"Apoyo Institucional", codigo:rowValue(row,["Código","Codigo"]), tema:rowValue(row,["Actividad"]), estado:rowValue(row,["Apoyo Entregado"]), fecha:rowValue(row,["Fecha"]), evidencia:rowValue(row,["Evidencias","Evidencia"])})
-      );
-
-      // Alerts for missing evidence in coverage modules
-      ["redes","eventos","apoyo"].forEach(module => {
-        (raw[module] || []).forEach(row => {
-          const evidencia = rowValue(row,["Evidencias","Evidencia"]);
-          if(!displayClean(evidencia)){
-            const dirs = splitDirections(rowValue(row, module==="redes" ? ["Dirección que comparte","Direcciones que comparten"] : module==="eventos" ? ["Dirección que Asiste","Direcciones que Asisten"] : ["Dirección que apoya","Direcciones que apoyan"]));
-            dirs.forEach(dir => allAlerts.push({dir, module:MODULE_NAMES[module], asunto:rowValue(row,["Código","Codigo","Actividad","Nombre del evento","Tema de publicación"]), alerta:"Sin evidencia registrada", prioridad:"Media"}));
-          }
-        });
-      });
-
-      const directionList = Object.keys(directions).sort((a,b)=>a.localeCompare(b, "es"));
-      directionList.forEach(dir => {
-        MODULE_KEYS.forEach(m => {
-          const arr = directions[dir].scores[m] || [];
-          directions[dir].scoreByModule = directions[dir].scoreByModule || {};
-          directions[dir].scoreByModule[m] = arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0;
-        });
-        directions[dir].index = MODULE_KEYS.reduce((sum,m)=>sum + directions[dir].scoreByModule[m], 0) / MODULE_KEYS.length;
-        directions[dir].alerts = allAlerts.filter(a => displayClean(a.dir) === dir);
-      });
-
-      const ranking = directionList.map(d => directions[d]).sort((a,b)=>b.index-a.index);
-      const avgIndex = ranking.length ? ranking.reduce((a,b)=>a+b.index,0)/ranking.length : 0;
-
-      const redInteractions = (raw.redes || []).reduce((sum,row)=>sum + toNumber(rowValue(row,["Nro de Interacciones","Nro. Interacciones","Interacciones"])),0);
-      const eventPeople = (raw.eventos || []).reduce((sum,row)=>sum + toNumber(rowValue(row,["Cantidad de personas","Personas"])),0);
-      const apoyoPeople = (raw.apoyo || []).reduce((sum,row)=>sum + extractPeople(rowValue(row,["Apoyo Entregado"])),0);
-
-      return {
-        directions,
-        directionList,
-        ranking,
-        moduleGlobal,
-        avgIndex,
-        alerts: allAlerts,
-        totals: {
-          pacRows: raw.pac.length,
-          ordenanzasRows: raw.ordenanzas.length,
-          reunionesRows: raw.reuniones.length,
-          redesCodes: uniqueCodes(raw.redes, ["Código","Codigo"]).size,
-          eventosCodes: uniqueCodes(raw.eventos, ["Código","Codigo"]).size,
-          apoyoCodes: uniqueCodes(raw.apoyo, ["Código","Codigo"]).size,
-          totalPres, totalContratado, totalDevengado,
-          presupuestoPct: totalPres ? totalDevengado / totalPres * 100 : 0,
-          redInteractions,
-          eventPeople,
-          apoyoPeople
-        }
-      };
-    }
-
-    function statusClass(score){
-      if(score >= 85) return "green";
-      if(score >= 70) return "yellow";
-      if(score > 0) return "red";
-      return "gray";
-    }
-    function statusText(score){
-      if(score >= 85) return "Sólido";
-      if(score >= 70) return "Seguimiento";
-      if(score > 0) return "En riesgo";
-      return "Sin avance";
-    }
-    function table(headers, rows){
-      if(!rows.length) return `<div class="empty">No hay datos para mostrar.</div>`;
-      return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c ?? ""}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
-    }
-    function progressBar(label, value){
-      const v = Math.max(0, Math.min(100, Number(value || 0)));
-      return `<div class="bar-item"><div class="bar-label" title="${label}">${label}</div><div class="hbar"><span style="width:${v}%"></span></div><div class="bar-value">${fmtPct(v)}</div></div>`;
-    }
-    function donut(value, label=""){
-      const v = Math.max(0, Math.min(100, Number(value || 0)));
-      return `<div class="donut" style="--p:${v}">${Math.round(v)}%</div>${label ? `<div class="subtext">${label}</div>` : ""}`;
-    }
-
-    function renderSummary(){
-      const t = state.totals;
-      const m = state.moduleGlobal;
-      const kpis = [
-        {
-          title:"PAC y ejecución presupuestaria",
-          main:fmtPct(m.pac),
-          donut:m.pac,
-          sub:`${t.pacRows} proyectos registrados`,
-          extra:[
-            ["Avance PAC", fmtPct(m.pac)],
-            ["Ejecución presupuestaria", fmtPct(t.presupuestoPct)],
-            ["Devengado / presupuestado", `${fmtMoney(t.totalDevengado)} de ${fmtMoney(t.totalPres)}`]
-          ]
-        },
-        {
-          title:"Ordenanzas",
-          main:fmtPct(m.ordenanzas),
-          donut:m.ordenanzas,
-          sub:`${t.ordenanzasRows} ordenanzas registradas`,
-          extra:[["Avance normativo", fmtPct(m.ordenanzas)]]
-        },
-        {
-          title:"Reuniones y eventos",
-          main:fmtPct((m.reuniones + m.eventos)/2),
-          donut:(m.reuniones + m.eventos)/2,
-          sub:`${t.reunionesRows} reuniones · ${t.eventosCodes} eventos`,
-          extra:[
-            ["Asistencia a reuniones", fmtPct(m.reuniones)],
-            ["Cobertura en eventos", fmtPct(m.eventos)],
-            ["Personas en eventos", fmtNum(t.eventPeople)]
-          ]
-        },
-        {
-          title:"Interacción en Redes Institucionales",
-          main:fmtNum(t.redInteractions),
-          donut:m.redes,
-          sub:`${t.redesCodes} publicaciones registradas`,
-          extra:[["Cobertura por publicación", fmtPct(m.redes)]]
-        },
-        {
-          title:"Apoyo institucional",
-          main:fmtPct(m.apoyo),
-          donut:m.apoyo,
-          sub:`${t.apoyoCodes} actividades reportadas`,
-          extra:[
-            ["Cobertura por actividad", fmtPct(m.apoyo)],
-            ["Personas identificadas", fmtNum(t.apoyoPeople)]
-          ]
-        },
-        {
-          title:"Alertas principales",
-          main:fmtNum(state.alerts.length),
-          donut: state.alerts.length ? 100 : 0,
-          sub:"Clic para desplegar la tabla de alertas",
-          extra:[["Casos críticos", fmtNum(state.alerts.filter(a=>a.prioridad==="Alta").length)]],
-          clickable:true
-        },
-        {
-          title:"Direcciones monitoreadas",
-          main:fmtNum(state.directionList.length),
-          donut:state.avgIndex,
-          sub:"Con datos en al menos un módulo",
-          extra:[["Índice general promedio", fmtPct(state.avgIndex)]]
-        }
-      ];
-      document.getElementById("summaryKpis").innerHTML = kpis.map((k,idx)=>`
-        <div class="card ${k.clickable ? "clickable" : ""}" ${k.clickable ? 'id="alertKpi"' : ""}>
-          <div class="kpi-title">${k.title}</div>
-          <div class="kpi-main">
-            <div>
-              <div class="big-number">${k.main}</div>
-              <div class="subtext">${k.sub}</div>
-            </div>
-            ${donut(k.donut)}
-          </div>
-          <div class="mini-list">
-            ${k.extra.map(([l,v])=>`<div class="mini-row"><span>${l}</span><strong>${v}</strong></div>`).join("")}
-          </div>
-        </div>
-      `).join("");
-      document.getElementById("alertKpi")?.addEventListener("click", () => {
-        document.getElementById("alertsPanel").classList.toggle("hidden");
-      });
-
-      document.getElementById("moduleBars").innerHTML = MODULE_KEYS.map(k => progressBar(MODULE_NAMES[k], m[k])).join("");
-      document.getElementById("indexDonutBox").innerHTML = `
-        <div style="display:flex;align-items:center;gap:18px;justify-content:center;padding:10px 0 16px">${donut(state.avgIndex)}
-          <div><div class="big-number">${fmtPct(state.avgIndex)}</div><div class="subtext">Índice general promedio de las direcciones monitoreadas.</div></div>
-        </div>
-        <div class="mini-list">
-          <div class="mini-row"><span>Mayor índice</span><strong>${state.ranking[0] ? fmtPct(state.ranking[0].index) : "0%"}</strong></div>
-          <div class="mini-row"><span>Direcciones con alertas</span><strong>${fmtNum(new Set(state.alerts.map(a=>displayClean(a.dir))).size)}</strong></div>
-        </div>
-      `;
-
-      renderAlerts();
-    }
-
-    function renderAlerts(){
-      const rows = state.alerts.slice(0, 200).map(a => [
-        a.dir,
-        a.module,
-        a.asunto,
-        a.alerta,
-        `<span class="status ${a.prioridad==="Alta"?"red":"yellow"}">${a.prioridad}</span>`
-      ]);
-      document.getElementById("alertsTable").innerHTML = table(["Dirección","Módulo","Asunto","Alerta","Prioridad"], rows);
-    }
-
-    function renderRanking(){
-      const top = state.ranking.slice(0, 5);
-      document.getElementById("topDirections").innerHTML = top.length ? top.map((r, i)=>`
-        <div class="rank-row">
-          <div class="rank-num">${i+1}</div>
-          <div class="rank-name" title="${r.direction}">${r.direction}</div>
-          <span class="status ${statusClass(r.index)}">${fmtPct(r.index)}</span>
-        </div>
-      `).join("") : `<div class="empty">No hay datos.</div>`;
-
-      document.getElementById("rankingBars").innerHTML = state.ranking.slice(0, 12).map(r => progressBar(r.direction, r.index)).join("") || `<div class="empty">No hay datos.</div>`;
-
-      const rows = state.ranking.map(r => [
-        r.direction,
-        `<strong>${fmtPct(r.index)}</strong>`,
-        fmtPct(r.scoreByModule.pac),
-        fmtPct(r.scoreByModule.ordenanzas),
-        fmtPct(r.scoreByModule.reuniones),
-        fmtPct(r.scoreByModule.redes),
-        fmtPct(r.scoreByModule.eventos),
-        fmtPct(r.scoreByModule.apoyo),
-        `<span class="status ${statusClass(r.index)}">${statusText(r.index)}</span>`
-      ]);
-      document.getElementById("rankingTable").innerHTML = table(["Dirección","Índice","PAC","Ordenanzas","Reuniones","Redes","Eventos","Apoyo","Estado"], rows);
-    }
-
-    function renderDirectionSelect(){
-      const select = document.getElementById("directionSelect");
-      select.innerHTML = `<option value="">Seleccione una dirección</option>` + state.directionList.map(d => `<option value="${d}">${d}</option>`).join("");
-      select.addEventListener("change", () => renderDirectionDetail(select.value));
-    }
-
-    function renderDirectionDetail(dir){
-      const box = document.getElementById("directionDetail");
-      if(!dir){ box.className = "empty"; box.innerHTML = "Seleccione una Dirección para ver su resumen ejecutivo."; return; }
-      const d = state.directions[dir];
-      if(!d){ box.className = "empty"; box.innerHTML = "No hay datos para esta Dirección."; return; }
-      box.className = "";
-      const cards = [
-        ["Índice general", d.index],
-        ["PAC", d.scoreByModule.pac],
-        ["Ordenanzas", d.scoreByModule.ordenanzas],
-        ["Reuniones", d.scoreByModule.reuniones],
-        ["Redes", d.scoreByModule.redes],
-        ["Eventos", d.scoreByModule.eventos],
-        ["Apoyo", d.scoreByModule.apoyo],
-        ["Alertas", d.alerts.length]
-      ];
-      const allRecords = MODULE_KEYS.flatMap(k => (d.records[k] || []));
-      const recordRows = allRecords.map(r => [
-        r.module,
-        r.codigo || "",
-        r.tema || "",
-        r.estado || "",
-        excelDateToText(r.fecha),
-        r.evidencia || ""
-      ]);
-      const alertRows = d.alerts.map(a => [
-        a.module,
-        a.asunto,
-        a.alerta,
-        `<span class="status ${a.prioridad==="Alta"?"red":"yellow"}">${a.prioridad}</span>`
-      ]);
-
-      box.innerHTML = `
-        <div class="grid kpi-grid">
-          ${cards.map(([label,value]) => `
-            <div class="card">
-              <div class="kpi-title">${label}</div>
-              <div class="kpi-main">
-                <div class="big-number">${label === "Alertas" ? fmtNum(value) : fmtPct(value)}</div>
-                ${label === "Alertas" ? "" : donut(value)}
-              </div>
-            </div>
-          `).join("")}
-        </div>
-        <div class="grid charts-grid" style="margin-top:16px">
-          <div class="card">
-            <h3 class="chart-title">Desempeño por módulo</h3>
-            <div class="bar-chart">
-              ${MODULE_KEYS.map(k => progressBar(MODULE_NAMES[k], d.scoreByModule[k])).join("")}
-            </div>
-          </div>
-          <div class="card">
-            <h3 class="chart-title">Semáforo de la Dirección</h3>
-            <div style="display:flex;align-items:center;gap:18px;justify-content:center;padding:14px">
-              ${donut(d.index)}
-              <div>
-                <div class="big-number">${fmtPct(d.index)}</div>
-                <div class="subtext"><span class="status ${statusClass(d.index)}">${statusText(d.index)}</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="grid charts-grid" style="margin-top:16px">
-          <div class="card">
-            <h3 class="chart-title">Registros asociados</h3>
-            <div class="table-wrap four-scroll">${table(["Módulo","Código","Tema","Estado / Resultado","Fecha","Evidencia"], recordRows)}</div>
-          </div>
-          <div class="card">
-            <h3 class="chart-title">Alertas de la Dirección</h3>
-            <div class="table-wrap four-scroll">${table(["Módulo","Asunto","Alerta","Prioridad"], alertRows)}</div>
-          </div>
-        </div>
-      `;
-    }
-
-    function setupTabs(){
-      document.querySelectorAll(".tab-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-          document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-          btn.classList.add("active");
-          document.getElementById(`tab-${btn.dataset.tab}`).classList.add("active");
-        });
-      });
-    }
-
-    async function init(){
-      setupTabs();
-      try{
-        raw = {};
-        for(const [key,path] of Object.entries(FILES)){
-          raw[key] = await loadCSV(path);
-        }
-        console.log("Dashboard Alcaldía V8 - filas cargadas", Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,v.length])));
-        state = buildState();
-        renderSummary();
-        renderRanking();
-        renderDirectionSelect();
-        document.getElementById("lastUpdate").textContent = "Actualizado desde CSV institucional";
-      }catch(err){
-        console.error(err);
-        document.querySelector("main").innerHTML = `<div class="card"><h2>No se pudieron cargar los datos</h2><p>${err.message}</p><p class="subtext">Revise que la carpeta data tenga los 6 CSV oficiales.</p></div>`;
-      }
-    }
-
-    init();
-  </script>
+  loadData().catch(err=>{
+    console.error(err);
+    document.body.innerHTML = `<div class="page"><div class="card"><h2>No se pudieron cargar los datos</h2><p>${err.message}</p><p>Verifique que los CSV existan en la carpeta <b>data</b> y actualice con Ctrl + F5.</p></div></div>`;
+  });
+})();
+</script>
 </body>
 </html>
