@@ -1,1 +1,1 @@
-// V9: lógica incrustada en index.html
+// JavaScript integrado en index.html - V10

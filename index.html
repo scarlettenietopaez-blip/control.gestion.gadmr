@@ -25,7 +25,7 @@
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#f6f9fd 0%,#edf4fb 52%,#fff5f5 100%);color:var(--dark)}
     .page{max-width:1540px;margin:0 auto;padding:20px 22px 44px}
-    .hero{position:relative;overflow:hidden;border-radius:28px;padding:26px 30px;background:linear-gradient(110deg,var(--blue),#165a99 56%,var(--red));box-shadow:var(--shadow);color:#fff;display:flex;align-items:center;gap:22px;min-height:132px}
+    .hero{position:relative;overflow:hidden;border-radius:28px;padding:22px 30px;background:linear-gradient(110deg,var(--blue),#165a99 56%,var(--red));box-shadow:var(--shadow);color:#fff;display:flex;align-items:center;gap:22px;min-height:104px}
     .hero:after{content:"";position:absolute;right:-80px;top:-100px;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.12)}
     .hero:before{content:"";position:absolute;right:140px;bottom:-160px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.10)}
     .logoBox{width:66px;height:66px;border-radius:18px;background:#fff;color:var(--blue);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(0,0,0,.14);flex:0 0 auto}
@@ -33,14 +33,14 @@
     .heroText{position:relative;z-index:1;flex:1}
     .eyebrow{font-size:12px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:#ffe7e7;margin-bottom:8px}
     h1{font-size:34px;line-height:1.05;margin:0 0 9px;font-weight:900;letter-spacing:-.03em}
-    .hero p{margin:0;font-size:15.5px;color:#f4f7fb;max-width:900px;line-height:1.5}
-    .heroBadges{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
-    .badge{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);border-radius:999px;padding:10px 14px;font-weight:700;font-size:12px;white-space:nowrap}
-    .tabs{margin:18px 0 26px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;box-shadow:0 8px 22px rgba(8,60,112,.07)}
-    .tabBtn{border:0;background:transparent;border-radius:14px;padding:15px 14px;font-weight:900;color:var(--blue);cursor:pointer;letter-spacing:.01em;transition:.2s;font-size:15px}
-    .tabBtn .num{color:var(--red);font-weight:900;margin-right:6px}
-    .tabBtn.active{background:var(--blue);color:#fff;box-shadow:0 9px 20px rgba(8,60,112,.20)}
-    .tabBtn.active .num{color:#fff}
+    .hero p{display:none}
+    .heroBadges{display:none}
+    .badge{display:none}
+    .tabs{margin:18px 0 26px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:0 14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;box-shadow:0 8px 22px rgba(8,60,112,.07)}
+    .tabBtn{border:0;background:transparent;border-radius:0;padding:18px 14px 15px;font-weight:950;color:var(--blue);cursor:pointer;letter-spacing:.01em;transition:.2s;font-size:15px;border-bottom:4px solid transparent}
+    .tabBtn .num{display:none}
+    .tabBtn.active{background:transparent;color:var(--blue);box-shadow:none;border-bottom-color:var(--red)}
+    .tabBtn.active .num{display:none}
     .tabPanel{display:none}
     .tabPanel.active{display:block}
     .sectionHead{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:6px 2px 16px}
@@ -51,14 +51,14 @@
     .grid.two{grid-template-columns:1.15fr .85fr}
     .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;min-width:0}
-    .kpi{min-height:126px;display:flex;flex-direction:column;justify-content:space-between;cursor:default;position:relative;overflow:hidden}
+    .kpi{min-height:132px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:default;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff,#fbfdff)}
     .kpi.clickable{cursor:pointer}
     .kpi.clickable:hover{transform:translateY(-1px);border-color:#b7c6d8}
-    .kpiTitle{font-size:13px;font-weight:900;color:#52647a;margin-bottom:10px;line-height:1.2}
-    .kpiValue{font-size:34px;font-weight:950;letter-spacing:-.04em;color:#061c34;line-height:1}
-    .kpiSub{font-size:12px;color:var(--muted);margin-top:9px;line-height:1.35}
-    .kpiPair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
-    .miniMetric{padding:10px;border-radius:16px;background:var(--blue3)}
+    .kpiTitle{font-size:13px;font-weight:950;color:#52647a;margin-bottom:12px;line-height:1.2;text-transform:uppercase;letter-spacing:.03em}
+    .kpiValue{font-size:38px;font-weight:950;letter-spacing:-.04em;color:#061c34;line-height:1}
+    .kpiSub{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.35;max-width:92%}
+    .kpiPair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch;width:100%}
+    .miniMetric{padding:13px 10px;border-radius:16px;background:var(--blue3);text-align:center}
     .miniMetric.red{background:#fff1f1}
     .miniMetric strong{display:block;font-size:28px;color:#061c34;line-height:1;font-weight:950}
     .miniMetric span{display:block;font-size:12px;color:var(--muted);font-weight:800;margin-top:6px}
@@ -90,6 +90,11 @@
     .rankName{font-weight:950;color:#102033;line-height:1.25}
     .rankMeta{font-size:12px;color:var(--muted);margin-top:4px}
     .score{text-align:right;font-size:24px;font-weight:950;color:#061c34}
+    .combinedRank{display:flex;flex-direction:column;gap:12px}
+    .combinedRow{display:grid;grid-template-columns:44px 280px 1fr 62px;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#fbfdff)}
+    .combinedName{font-weight:950;color:#102033;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .combinedMeta{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:3px}
+    @media(max-width:850px){.combinedRow{grid-template-columns:40px 1fr;}.combinedRow .barTrack,.combinedRow .score{grid-column:2}.combinedName{white-space:normal}}
     .selectRow{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-bottom:16px}
     select{border:1px solid #cdd9e7;border-radius:15px;padding:12px 14px;min-width:320px;background:#fff;color:#102033;font-weight:800;outline:none}
     .hidden{display:none!important}
@@ -110,18 +115,15 @@
       <div class="heroText">
         <div class="eyebrow">Seguimiento institucional de directores</div>
         <h1>Panel de control para Alcaldía</h1>
-        <p>Resumen ejecutivo de PAC, ordenanzas, reuniones, redes institucionales, eventos y apoyo institucional. Los datos se actualizan desde la matriz Excel institucional.</p>
+
       </div>
-      <div class="heroBadges">
-        <span class="badge">GADM Riobamba</span>
-        <span class="badge">Dashboard Ejecutivo</span>
-      </div>
+
     </header>
 
     <nav class="tabs" aria-label="Pestañas principales">
-      <button class="tabBtn active" data-tab="resumen"><span class="num">01</span> Resumen general</button>
-      <button class="tabBtn" data-tab="seguimiento"><span class="num">02</span> Seguimiento por Dirección</button>
-      <button class="tabBtn" data-tab="buscador"><span class="num">03</span> Buscador por Dirección</button>
+      <button class="tabBtn active" data-tab="resumen">Resumen general</button>
+      <button class="tabBtn" data-tab="seguimiento">Seguimiento por Dirección</button>
+      <button class="tabBtn" data-tab="buscador">Buscador por Dirección</button>
     </nav>
 
     <main id="app">
@@ -130,11 +132,11 @@
           <h2>Resumen general</h2>
           <p class="sectionNote">Indicadores consolidados calculados desde las hojas de la matriz.</p>
         </div>
-        <div id="summaryKpis" class="grid kpis"></div>
         <div class="grid two" style="margin-top:16px">
-          <div class="card"><h3 class="chartTitle">Avance por módulo</h3><div id="moduleBars" class="bars"></div></div>
           <div class="card"><h3 class="chartTitle">Distribución del índice general</h3><div id="indexDonut"></div></div>
+          <div class="card"><h3 class="chartTitle">Avance por módulo</h3><div id="moduleBars" class="bars"></div></div>
         </div>
+        <div id="summaryKpis" class="grid kpis" style="margin-top:16px"></div>
         <div id="alertsPanel" class="card hidden" style="margin-top:16px">
           <h3 class="chartTitle">Alertas principales</h3>
           <div id="alertsList"></div>
@@ -143,10 +145,7 @@
 
       <section id="tab-seguimiento" class="tabPanel">
         <div class="sectionHead"><h2>Seguimiento por Dirección</h2></div>
-        <div class="grid two">
-          <div class="card"><h3 class="chartTitle">Índice general por Dirección</h3><div id="rankingBars" class="bars"></div></div>
-          <div class="card"><h3 class="chartTitle">Direcciones destacadas</h3><div id="topDirections" class="rankList"></div></div>
-        </div>
+        <div class="card"><h3 class="chartTitle">Seguimiento porcentual por Dirección</h3><div id="combinedRanking" class="combinedRank"></div></div>
         <div class="card" style="margin-top:16px"><h3 class="chartTitle">Detalle de seguimiento</h3><div id="rankingTable" class="tableWrap"></div></div>
       </section>
 
@@ -159,7 +158,7 @@
       </section>
     </main>
 
-    <div class="footer">Dashboard Ejecutivo Alcaldía · datos desde CSV publicados en GitHub Pages</div>
+    <div class="footer">Dashboard Ejecutivo Alcaldía · GADM Riobamba</div>
   </div>
 
 <script>
@@ -251,7 +250,7 @@
       return [k, parseCSV(text)];
     }));
     entries.forEach(([k,v])=>state.raw[k]=v);
-    console.log('Dashboard V9 - filas cargadas', Object.fromEntries(entries.map(([k,v])=>[k,v.length])));
+    console.log('Dashboard V10 - filas cargadas', Object.fromEntries(entries.map(([k,v])=>[k,v.length])));
     compute(); render();
   }
 
@@ -287,12 +286,20 @@
     });
 
     state.raw.ordenanzas.forEach(r=>{
-      const d=get(r,['Dirección Responsable']); const k=addDir(d); const st=get(r,['Etapa Actual']); const val=stageORD(st);
-      addTemp('ordenanzas',k,val,{mod:'Ordenanzas',codigo:get(r,['Nro. Ordenanza','# Trámite','Nro Ordenanza']),tema:get(r,['Tema']),estado:st,obs:get(r,['Observaciones'])});
-      const nombre=get(r,['Tema'])||get(r,['Nro. Ordenanza'])||'Ordenanza';
-      if(norm(st).includes('no empieza')||norm(st).includes('no inicia')) pushAlert(k,'Ordenanzas',nombre,'Ordenanza sin iniciar');
-      if(expired(get(r,['Fecha de finalización'])) && !isCompleteStage(st)) pushAlert(k,'Ordenanzas',nombre,'Fecha de finalización vencida');
-      if(!get(r,['Evidencias'])) pushAlert(k,'Ordenanzas',nombre,'Sin evidencia registrada');
+      const st=get(r,['Etapa Actual']); const val=stageORD(st);
+      const principal=get(r,['Dirección Responsable']);
+      const coop=splitDirs(get(r,['Direcciones Cooperando','Dirección Cooperando']));
+      const dirs=unique([principal, ...coop]);
+      const codigo=get(r,['Nro. Ordenanza','# Trámite','Nro Ordenanza']);
+      const tema=get(r,['Tema']);
+      const nombre=tema||codigo||'Ordenanza';
+      dirs.forEach(d=>{
+        const k=addDir(d);
+        addTemp('ordenanzas',k,val,{mod:'Ordenanzas',codigo,tema,estado:`${st} · avance del registro ${fmtPct(val)}`,obs:get(r,['Observaciones'])});
+        if(norm(st).includes('no empieza')||norm(st).includes('no inicia')) pushAlert(k,'Ordenanzas',nombre,'Ordenanza sin iniciar');
+        if(expired(get(r,['Fecha de finalización'])) && !isCompleteStage(st)) pushAlert(k,'Ordenanzas',nombre,'Fecha de finalización vencida');
+        if(!get(r,['Evidencias'])) pushAlert(k,'Ordenanzas',nombre,'Sin evidencia registrada');
+      });
     });
 
     state.raw.reuniones.forEach(r=>{
@@ -356,14 +363,13 @@
     const presup=sum(dirs.map(d=>d.extras.presupuesto||0)); const dev=sum(dirs.map(d=>d.extras.devengado||0)); const ejec=presup?dev/presup*100:0;
     const inter=sum(dirs.map(d=>d.extras.interacciones||0)); const personasEventos=sum(dirs.map(d=>d.extras.personasEventos||0));
     $('summaryKpis').innerHTML = `
-      <div class="card kpi"><div class="kpiTitle">Índice general municipal</div><div class="kpiValue">${fmtPct(general)}</div><div class="kpiSub">${dirs.length} direcciones monitoreadas</div></div>
       <div class="card kpi"><div class="kpiTitle">PAC y ejecución presupuestaria</div><div class="kpiPair"><div class="miniMetric"><strong>${fmtPct(state.moduleAverages.pac)}</strong><span>Avance PAC</span></div><div class="miniMetric red"><strong>${fmtPct(ejec)}</strong><span>Devengado de ${money(presup)}</span></div></div></div>
-      <div class="card kpi"><div class="kpiTitle">Ordenanzas</div><div class="kpiValue">${fmtPct(state.moduleAverages.ordenanzas)}</div><div class="kpiSub">${state.raw.ordenanzas.length} registros</div></div>
+      <div class="card kpi"><div class="kpiTitle">Ordenanzas</div><div class="kpiValue">${fmtPct(state.moduleAverages.ordenanzas)}</div><div class="kpiSub">Incluye Dirección Responsable y Direcciones Cooperando</div></div>
       <div class="card kpi"><div class="kpiTitle">Reuniones y eventos</div><div class="kpiPair"><div class="miniMetric"><strong>${fmtPct(state.moduleAverages.reuniones)}</strong><span>Reuniones</span></div><div class="miniMetric red"><strong>${fmtPct(state.moduleAverages.eventos)}</strong><span>Eventos · ${personasEventos} personas</span></div></div></div>
       <div class="card kpi"><div class="kpiTitle">Interacción en Redes Institucionales</div><div class="kpiValue">${inter}</div><div class="kpiSub">${state.raw.redes.length} registros de difusión</div></div>
       <div class="card kpi"><div class="kpiTitle">Apoyo institucional</div><div class="kpiValue">${fmtPct(state.moduleAverages.apoyo)}</div><div class="kpiSub">${state.raw.apoyo.length} actividades reportadas</div></div>
       <div class="card kpi clickable" id="alertKpi"><div class="kpiTitle">Alertas principales</div><div class="kpiValue">${state.alerts.length}</div><div class="kpiSub">Haga clic para desplegar la tabla</div></div>
-      <div class="card kpi"><div class="kpiTitle">Módulos activos</div><div class="kpiValue">6</div><div class="kpiSub">Cada hoja equivale al 16,67% del índice</div></div>
+      <div class="card kpi"><div class="kpiTitle">Módulos activos</div><div class="kpiValue">6</div><div class="kpiSub">Cada hoja equivale al 16,67% del índice total</div></div>
     `;
     $('alertKpi').onclick=()=> $('alertsPanel').classList.toggle('hidden');
     $('moduleBars').innerHTML = MODULES.map(([m,label])=>bar(label,state.moduleAverages[m])).join('');
@@ -373,8 +379,7 @@
   function bar(label,val){ return `<div class="barRow"><div class="barLabel" title="${label}">${label}</div><div class="barTrack"><div class="barFill" style="width:${Math.max(0,Math.min(100,val||0))}%"></div></div><div class="barValue">${fmtPct(val)}</div></div>`; }
   function renderRanking(){
     const dirs=[...state.dirStats.values()].sort((a,b)=>b.index-a.index);
-    $('rankingBars').innerHTML = dirs.length ? dirs.map(d=>bar(d.name,d.index)).join('') : '<div class="empty">No hay datos.</div>';
-    $('topDirections').innerHTML = dirs.slice(0,5).map((d,i)=>`<div class="rankItem"><div class="rankNo">${i+1}</div><div><div class="rankName">${d.name}</div><div class="rankMeta">PAC ${fmtPct(d.scores.pac)} · Ord. ${fmtPct(d.scores.ordenanzas)} · Reun. ${fmtPct(d.scores.reuniones)}</div></div><div class="score">${fmtPct(d.index)}</div></div>`).join('') || '<div class="empty">No hay datos.</div>';
+    $('combinedRanking').innerHTML = dirs.length ? dirs.map((d,i)=>`<div class="combinedRow"><div class="rankNo">${i+1}</div><div><div class="combinedName" title="${d.name}">${d.name}</div><div class="combinedMeta">PAC ${fmtPct(d.scores.pac)} · Ord. ${fmtPct(d.scores.ordenanzas)} · Reun. ${fmtPct(d.scores.reuniones)} · Redes ${fmtPct(d.scores.redes)}</div></div><div class="barTrack"><div class="barFill" style="width:${Math.max(0,Math.min(100,d.index||0))}%"></div></div><div class="score">${fmtPct(d.index)}</div></div>`).join('') : '<div class="empty">No hay datos.</div>';
     $('rankingTable').innerHTML = `<table><thead><tr><th>Dirección</th>${MODULES.map(([_,l])=>`<th>${l}</th>`).join('')}<th>Índice</th><th>Alertas</th></tr></thead><tbody>${dirs.map(d=>`<tr><td><b>${d.name}</b></td>${MODULES.map(([m])=>`<td>${fmtPct(d.scores[m])}</td>`).join('')}<td><span class="pill ${pillClass(d.index)}">${fmtPct(d.index)}</span></td><td>${d.alerts.length}</td></tr>`).join('')}</tbody></table>`;
   }
   function pillClass(v){ return v>=85?'green':v>=70?'yellow':v>=50?'gray':'red'; }

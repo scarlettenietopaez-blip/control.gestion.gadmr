@@ -1,3 +1,3 @@
-# Dashboard Ejecutivo Alcaldía - V9
+# Dashboard Ejecutivo Alcaldía - V10
 
-Versión de un solo archivo `index.html`, con diseño institucional azul/rojo, tres pestañas y cálculo desde seis CSV publicados en la carpeta `data`.
+Versión con ajustes visuales finales, cálculo de ordenanzas por Dirección Responsable y Direcciones Cooperando, pestañas sin numeración e índice combinado por Dirección.
