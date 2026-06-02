@@ -1,24 +1,17 @@
-# Dashboard Ejecutivo Alcaldía | GADM Riobamba
+# Dashboard Ejecutivo Alcaldía - V8
 
-Versión V7. Dashboard de 3 pestañas, con CSS y JavaScript incrustados directamente en `index.html` para evitar problemas de carga en GitHub Pages.
+Versión con:
+- 3 pestañas: Resumen general, Seguimiento por Dirección y Buscador por Dirección.
+- Diseño institucional azul/rojo.
+- Cálculo por módulos con peso igual: 6 hojas = 16,67% cada una.
+- Lectura de 6 CSV desde la carpeta `data`.
+- Pestaña de alertas desplegable al hacer clic en el KPI de alertas.
+- Buscador por Dirección con tablas desplazables.
 
-## Archivos requeridos
-
-En la raíz del repositorio:
-
-- `index.html`
-- `README.md`
-- carpeta `data/`
-
-Dentro de `data/`:
-
-- `pac_contratacion.csv`
-- `ordenanzas.csv`
-- `reuniones.csv`
-- `redes_institucionales.csv`
-- `eventos.csv`
-- `apoyo_institucional.csv`
-
-## Importante
-
-Después de subir cambios a GitHub Pages, abrir el dashboard con Ctrl + F5 o agregar `?v=7` al final de la URL para evitar caché.
+Archivos requeridos en `data`:
+- pac_contratacion.csv
+- ordenanzas.csv
+- reuniones.csv
+- redes_institucionales.csv
+- eventos.csv
+- apoyo_institucional.csv

@@ -1,1 +1,1 @@
-// No se usa en V7. El JavaScript está incrustado dentro de index.html.
+// JavaScript integrado en index.html para evitar problemas de carga en GitHub Pages.

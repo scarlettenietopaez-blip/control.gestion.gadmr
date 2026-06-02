@@ -1,594 +1,1214 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Ejecutivo Alcaldía | GADM Riobamba</title>
   <style>
     :root{
       --azul:#073B6D;
-      --azul-2:#0E5BA6;
-      --azul-3:#E8F2FC;
-      --rojo:#C42026;
-      --rojo-2:#E84A4F;
-      --fondo:#F3F6FA;
-      --tarjeta:#FFFFFF;
-      --texto:#152235;
-      --muted:#64748B;
-      --borde:#D8E1EC;
-      --verde:#2E7D32;
-      --amarillo:#F9A825;
-      --naranja:#EF6C00;
-      --gris:#90A4AE;
-      --sombra:0 14px 30px rgba(7,59,109,.10);
-      --radius:18px;
+      --azul-2:#0E5A9C;
+      --azul-3:#EAF3FC;
+      --rojo:#C92027;
+      --rojo-2:#FDEBED;
+      --fondo:#F4F7FB;
+      --card:#FFFFFF;
+      --texto:#102033;
+      --muted:#65758B;
+      --borde:#D9E2EC;
+      --verde:#16834A;
+      --amarillo:#F4A100;
+      --gris:#8A98A8;
+      --shadow: 0 18px 42px rgba(7,59,109,.10);
+      --radius:22px;
     }
+
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(135deg,#edf4fb 0%,#f7f8fb 55%,#fff 100%);color:var(--texto)}
-    .topbar{background:linear-gradient(90deg,var(--azul),#092F55 70%,var(--rojo));color:white;padding:18px 30px;box-shadow:var(--sombra);position:sticky;top:0;z-index:20}
-    .topbar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
-    .brand{display:flex;align-items:center;gap:16px}
-    .logo{width:54px;height:54px;border-radius:16px;background:white;color:var(--azul);display:grid;place-items:center;font-size:30px;font-weight:900;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
-    .brand small{display:block;text-transform:uppercase;letter-spacing:.18em;font-size:12px;opacity:.82;margin-bottom:3px}
-    .brand h1{font-size:24px;margin:0;line-height:1.1}
-    .badge{border:1px solid rgba(255,255,255,.4);padding:8px 12px;border-radius:999px;font-size:13px;background:rgba(255,255,255,.12)}
-    .wrap{max-width:1400px;margin:26px auto;padding:0 24px 40px}
-    .hero{background:var(--tarjeta);border:1px solid var(--borde);border-radius:26px;padding:24px;box-shadow:var(--sombra);display:grid;grid-template-columns:1fr minmax(260px,360px);gap:18px;align-items:center;margin-bottom:18px}
-    .hero .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--rojo);font-weight:800;margin-bottom:8px}
-    .hero h2{font-size:34px;line-height:1.1;margin:0 0 8px;color:#0d243d}
-    .hero p{margin:0;color:var(--muted);font-size:16px;line-height:1.5}
-    .data-card{background:linear-gradient(180deg,var(--azul-3),#fff);border:1px solid var(--borde);border-radius:18px;padding:14px 16px}
-    .data-card strong{color:var(--azul);display:block;margin-bottom:4px}
-    .data-card span{font-size:13px;color:var(--muted)}
-    .tabs{display:flex;gap:10px;flex-wrap:wrap;background:white;border:1px solid var(--borde);padding:10px;border-radius:18px;box-shadow:0 8px 20px rgba(7,59,109,.07);position:sticky;top:94px;z-index:15;margin-bottom:20px}
-    .tab-btn{appearance:none;border:0;border-radius:13px;padding:12px 18px;background:transparent;color:var(--azul);font-weight:800;cursor:pointer;transition:.15s ease;font-size:14px}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color:var(--texto);
+      background:
+        radial-gradient(circle at top left, rgba(201,32,39,.10), transparent 30%),
+        linear-gradient(135deg, #F6FAFF 0%, #EEF4FA 55%, #F8FAFC 100%);
+      min-height:100vh;
+    }
+
+    .shell{
+      width:min(1480px, calc(100% - 36px));
+      margin:18px auto 36px;
+    }
+
+    .topbar{
+      background:linear-gradient(135deg, var(--azul) 0%, #0B4F8C 62%, var(--rojo) 100%);
+      border-radius:28px;
+      padding:22px 28px;
+      color:white;
+      box-shadow:var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      position:relative;
+      overflow:hidden;
+    }
+    .topbar:after{
+      content:"";
+      position:absolute;
+      width:360px;height:360px;
+      right:-120px;top:-180px;
+      border-radius:50%;
+      background:rgba(255,255,255,.10);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      position:relative;
+      z-index:1;
+    }
+    .seal{
+      width:64px;height:64px;
+      border-radius:18px;
+      background:white;
+      color:var(--azul);
+      display:grid;
+      place-items:center;
+      box-shadow: inset 0 0 0 1px rgba(7,59,109,.12);
+      flex:0 0 auto;
+    }
+    .seal svg{width:38px;height:38px}
+    .brand small{
+      display:block;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:12px;
+      color:#DDEBFA;
+      margin-bottom:3px;
+    }
+    .brand h1{
+      margin:0;
+      font-size:clamp(24px, 3vw, 36px);
+      letter-spacing:-.03em;
+      line-height:1.05;
+    }
+    .brand p{
+      margin:8px 0 0;
+      color:#E7F1FB;
+      max-width:830px;
+      font-size:15px;
+      line-height:1.45;
+    }
+
+    .top-actions{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.22);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:13px;
+      color:white;
+      backdrop-filter:blur(8px);
+      white-space:nowrap;
+    }
+
+    .tabs{
+      display:flex;
+      gap:10px;
+      margin:18px 0 22px;
+      padding:8px;
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:20px;
+      box-shadow:0 10px 26px rgba(15,35,55,.06);
+      position:sticky;
+      top:10px;
+      z-index:10;
+    }
+    .tab-btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      padding:14px 18px;
+      border-radius:14px;
+      background:transparent;
+      color:var(--azul);
+      font-weight:800;
+      letter-spacing:.01em;
+      transition:.18s ease;
+      flex:1;
+      min-width:180px;
+      text-align:center;
+    }
     .tab-btn:hover{background:var(--azul-3)}
-    .tab-btn.active{background:linear-gradient(90deg,var(--azul),var(--azul-2));color:white;box-shadow:0 8px 18px rgba(14,91,166,.24)}
-    .tab-btn.active::after{content:"";display:block;height:3px;background:var(--rojo);border-radius:6px;margin-top:8px}
-    .tab-panel{display:none;animation:fade .18s ease}
-    .tab-panel.active{display:block}
-    @keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}
-    .section-title{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:22px 0 14px}
-    .section-title h3{font-size:25px;margin:0;color:#0d243d}
-    .section-title p{margin:0;color:var(--muted);font-size:15px;text-align:right}
-    .grid-kpi{display:grid;grid-template-columns:repeat(4,minmax(170px,1fr));gap:16px}
-    .kpi{background:white;border:1px solid var(--borde);border-radius:var(--radius);padding:18px;box-shadow:0 10px 24px rgba(15,23,42,.06);position:relative;overflow:hidden;min-height:130px}
-    .kpi::before{content:"";position:absolute;left:0;top:0;width:6px;height:100%;background:var(--azul)}
-    .kpi.red::before{background:var(--rojo)}
-    .kpi h4{margin:0 0 10px;color:#526173;font-size:13px;font-weight:800}
-    .kpi .value{font-size:34px;font-weight:900;letter-spacing:-.03em;color:#0d243d}
-    .kpi small{display:block;color:var(--muted);margin-top:8px;line-height:1.35}
-    .two-col{display:grid;grid-template-columns:1.4fr .9fr;gap:16px;margin-top:18px}
-    .card{background:white;border:1px solid var(--borde);border-radius:var(--radius);padding:18px;box-shadow:0 10px 24px rgba(15,23,42,.06)}
-    .card h4{margin:0 0 6px;font-size:18px;color:#0d243d}
-    .card p{margin:0 0 14px;color:var(--muted);line-height:1.45}
-    .module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .module-card{border:1px solid var(--borde);border-radius:16px;padding:14px;background:#fbfdff}
-    .module-card .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
-    .module-card .score{font-size:26px;font-weight:900;color:var(--azul);margin:6px 0}
-    .bar{height:10px;background:#e9eef5;border-radius:999px;overflow:hidden;margin-top:8px}
-    .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--azul-2),var(--rojo));border-radius:999px;width:0%}
-    .table-wrap{overflow:auto;border:1px solid var(--borde);border-radius:16px;margin-top:12px}
-    table{width:100%;border-collapse:collapse;background:white;min-width:760px}
-    th,td{padding:12px 14px;border-bottom:1px solid #edf2f7;text-align:left;font-size:13px;vertical-align:top}
-    th{background:#f8fbff;color:var(--azul);font-weight:900;position:sticky;top:0;z-index:2}
-    tr:hover td{background:#fbfdff}
-    .rank-number{width:34px;height:34px;border-radius:11px;display:inline-grid;place-items:center;background:var(--azul-3);color:var(--azul);font-weight:900}
-    .pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 10px;font-weight:800;font-size:12px;border:1px solid transparent;white-space:nowrap}
-    .pill.green{background:#e7f6eb;color:var(--verde);border-color:#c9ebd0}
-    .pill.yellow{background:#fff8e1;color:#9a6800;border-color:#f6e5a5}
-    .pill.orange{background:#fff0e3;color:var(--naranja);border-color:#ffd7b8}
-    .pill.red{background:#ffe9ea;color:var(--rojo);border-color:#ffc8cc}
-    .pill.gray{background:#eef2f7;color:#526173;border-color:#d8e1ec}
-    .search-panel{display:grid;grid-template-columns:360px 1fr;gap:16px;align-items:start}
-    .selector-card{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid var(--borde);border-radius:var(--radius);padding:18px;box-shadow:0 10px 24px rgba(15,23,42,.06);position:sticky;top:172px}
-    label{display:block;font-weight:900;color:var(--azul);margin-bottom:8px}
-    select{width:100%;border:1px solid var(--borde);border-radius:14px;padding:13px 14px;font-size:15px;background:white;color:var(--texto);outline:none}
-    select:focus{border-color:var(--azul-2);box-shadow:0 0 0 4px rgba(14,91,166,.12)}
-    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-    .mini{border:1px solid var(--borde);border-radius:14px;background:#fbfdff;padding:12px}
-    .mini strong{display:block;font-size:22px;color:#0d243d;margin-bottom:2px}
-    .mini span{color:var(--muted);font-size:12px}
-    .empty{border:1px dashed #cbd5e1;border-radius:16px;padding:28px;text-align:center;color:var(--muted);background:#fbfdff}
-    .loading{padding:20px;border-radius:18px;background:#fff7e8;border:1px solid #ffe0a3;color:#7c4a00;margin-bottom:14px}
-    .error{padding:20px;border-radius:18px;background:#fff0f0;border:1px solid #ffc9c9;color:#8a1717;margin-bottom:14px}
-    .debug{font-size:12px;color:var(--muted);margin-top:8px}
-    @media(max-width:1050px){.hero,.two-col,.search-panel{grid-template-columns:1fr}.grid-kpi{grid-template-columns:repeat(2,1fr)}.module-grid{grid-template-columns:repeat(2,1fr)}.section-title{display:block}.section-title p{text-align:left;margin-top:6px}.selector-card{position:static}}
-    @media(max-width:640px){.topbar-inner{display:block}.badge{display:inline-block;margin-top:12px}.grid-kpi,.module-grid,.mini-grid{grid-template-columns:1fr}.hero h2{font-size:26px}.wrap{padding:0 14px 28px}.tabs{top:84px}}
+    .tab-btn.active{
+      color:white;
+      background:linear-gradient(135deg, var(--azul), var(--azul-2));
+      box-shadow:0 10px 24px rgba(7,59,109,.22);
+    }
+    .tab-btn.active .accent{color:#FFDCE1}
+    .accent{color:var(--rojo);font-weight:900}
+
+    .view{display:none}
+    .view.active{display:block}
+
+    .section-title{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      margin:14px 2px 16px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:26px;
+      letter-spacing:-.03em;
+      color:#061B33;
+    }
+    .section-title .tagline{
+      color:var(--muted);
+      font-size:14px;
+      text-align:right;
+    }
+
+    .grid{
+      display:grid;
+      gap:16px;
+    }
+    .kpi-grid{
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--borde);
+      border-radius:var(--radius);
+      box-shadow:0 14px 34px rgba(10,40,70,.07);
+      padding:18px;
+      min-width:0;
+    }
+    .card.clickable{
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .card.clickable:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 44px rgba(201,32,39,.14);
+      border-color:#F2B6BC;
+    }
+    .kpi-title{
+      font-size:13px;
+      color:#5B6B7F;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      margin-bottom:10px;
+    }
+    .kpi-main{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .big-number{
+      font-size:34px;
+      font-weight:900;
+      color:#061B33;
+      letter-spacing:-.05em;
+      line-height:1;
+    }
+    .subtext{
+      margin-top:7px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    .mini-list{
+      display:grid;
+      gap:8px;
+      margin-top:12px;
+    }
+    .mini-row{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
+      font-size:13px;
+      color:#4C5F73;
+      align-items:center;
+    }
+    .bar-bg{
+      height:10px;
+      background:#ECF1F7;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:4px;
+    }
+    .bar-fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--azul-2), var(--rojo));
+      width:0%;
+      transition:.3s;
+    }
+
+    .donut{
+      --p:0;
+      width:72px;height:72px;
+      border-radius:50%;
+      background:
+        radial-gradient(circle, #fff 0 56%, transparent 57%),
+        conic-gradient(var(--rojo) calc(var(--p)*1%), #E8EEF5 0);
+      display:grid;
+      place-items:center;
+      color:var(--azul);
+      font-size:16px;
+      font-weight:900;
+      flex:0 0 auto;
+      border:1px solid #E6EDF5;
+    }
+
+    .charts-grid{
+      grid-template-columns: 1.2fr .8fr;
+      margin-top:16px;
+    }
+    .chart-title{
+      font-weight:900;
+      color:#061B33;
+      font-size:18px;
+      margin:0 0 14px;
+    }
+    .bar-chart{
+      display:grid;
+      gap:12px;
+    }
+    .bar-item{
+      display:grid;
+      grid-template-columns: 180px 1fr 58px;
+      gap:12px;
+      align-items:center;
+      font-size:13px;
+    }
+    .bar-label{
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      color:#3F5065;
+      font-weight:700;
+    }
+    .bar-value{text-align:right;font-weight:900;color:var(--azul)}
+    .hbar{
+      height:14px;
+      background:#EEF3F8;
+      border-radius:999px;
+      overflow:hidden;
+      position:relative;
+    }
+    .hbar span{
+      display:block;height:100%;border-radius:999px;
+      width:0%;
+      background:linear-gradient(90deg, #0E5A9C, #C92027);
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--borde);
+      border-radius:16px;
+      background:white;
+    }
+    .table-wrap.compact-scroll{max-height:330px}
+    .table-wrap.four-scroll{max-height:260px}
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      font-size:13px;
+      min-width:820px;
+    }
+    thead th{
+      position:sticky;
+      top:0;
+      z-index:2;
+      text-align:left;
+      color:white;
+      background:var(--azul);
+      padding:12px 12px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    tbody td{
+      padding:11px 12px;
+      border-bottom:1px solid #E7EEF5;
+      color:#26384C;
+      vertical-align:top;
+    }
+    tbody tr:hover td{background:#F8FBFE}
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:12px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .status:before{
+      content:"";
+      width:8px;height:8px;border-radius:50%;
+      background:currentColor;
+    }
+    .green{color:var(--verde);background:#EAF7F0}
+    .yellow{color:#A05F00;background:#FFF5D8}
+    .red{color:var(--rojo);background:#FDEBED}
+    .gray{color:#64748B;background:#F1F5F9}
+
+    .hidden{display:none !important}
+    .alert-panel{
+      margin-top:16px;
+      border:1px solid #F0B8BD;
+      background:#FFF8F8;
+      border-radius:20px;
+      padding:16px;
+    }
+
+    .ranking-grid{
+      display:grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap:16px;
+      align-items:start;
+    }
+    .rank-card{
+      display:grid;
+      gap:12px;
+    }
+    .rank-row{
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:12px;
+      border:1px solid #E1E9F2;
+      border-radius:16px;
+      background:#FBFDFF;
+    }
+    .rank-num{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg,var(--azul),var(--rojo));
+      color:white;
+      display:grid;place-items:center;
+      font-weight:950;
+    }
+    .rank-name{
+      font-weight:850;
+      color:#123250;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .search-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:16px;
+      flex-wrap:wrap;
+    }
+    label{font-weight:850;color:#183854}
+    select{
+      appearance:none;
+      min-width:360px;
+      padding:13px 44px 13px 14px;
+      border:1px solid var(--borde);
+      border-radius:14px;
+      background:
+        linear-gradient(45deg, transparent 50%, var(--azul) 50%) right 16px center/7px 7px no-repeat,
+        linear-gradient(135deg, var(--azul) 50%, transparent 50%) right 10px center/7px 7px no-repeat,
+        white;
+      color:#142B44;
+      font-weight:700;
+    }
+
+    .empty{
+      color:var(--muted);
+      padding:20px;
+      text-align:center;
+      border:1px dashed #C8D4E3;
+      border-radius:16px;
+      background:#FAFCFE;
+    }
+
+    .footer-note{
+      margin:18px 0 0;
+      color:#728096;
+      font-size:12px;
+      text-align:right;
+    }
+
+    @media (max-width: 1100px){
+      .kpi-grid{grid-template-columns:repeat(2, minmax(220px, 1fr))}
+      .charts-grid,.ranking-grid{grid-template-columns:1fr}
+      .bar-item{grid-template-columns:140px 1fr 48px}
+      .topbar{align-items:flex-start;flex-direction:column}
+      .tabs{overflow:auto}
+      .tab-btn{min-width:190px;flex:0 0 auto}
+    }
+    @media (max-width: 680px){
+      .shell{width:calc(100% - 18px);margin:10px auto 24px}
+      .topbar{border-radius:20px;padding:18px}
+      .brand{align-items:flex-start}
+      .seal{width:50px;height:50px;border-radius:15px}
+      .brand h1{font-size:24px}
+      .kpi-grid{grid-template-columns:1fr}
+      select{min-width:100%;width:100%}
+      .section-title{align-items:flex-start;flex-direction:column}
+      .section-title .tagline{text-align:left}
+      .bar-item{grid-template-columns:1fr;gap:6px}
+      .bar-value{text-align:left}
+    }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
+  <div class="shell">
+    <header class="topbar">
       <div class="brand">
-        <div class="logo">A</div>
+        <div class="seal" title="Icono institucional">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <path fill="currentColor" d="M32 7 8 20v5h48v-5L32 7Zm-13 22h7v22h-7V29Zm12 0h7v22h-7V29Zm12 0h7v22h-7V29ZM10 54h44v4H10v-4Z"/>
+            <path fill="currentColor" opacity=".85" d="M28 17h8v5h-8z"/>
+          </svg>
+        </div>
         <div>
-          <small>GADM Riobamba</small>
-          <h1>Dashboard Ejecutivo de Gestión Directiva Municipal</h1>
+          <small>Seguimiento institucional de directores</small>
+          <h1>Panel de control para Alcaldía</h1>
+          <p>Resumen ejecutivo de PAC, ordenanzas, reuniones, redes institucionales, eventos y apoyo institucional.</p>
         </div>
       </div>
-      <div class="badge">Fuente de datos: CSV desde GitHub · Versión V7</div>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <section class="hero">
-      <div>
-        <div class="eyebrow">Seguimiento institucional de directores</div>
-        <h2>Panel de control para Alcaldía</h2>
-        <p>Resumen ejecutivo de PAC, ordenanzas, reuniones, redes institucionales, eventos y apoyo institucional. Los datos se actualizan desde la matriz Excel institucional.</p>
+      <div class="top-actions">
+        <span class="pill">GADM Riobamba</span>
+        <span class="pill" id="lastUpdate">Actualización: matriz institucional</span>
       </div>
-      <div class="data-card">
-        <strong>Estado de conexión</strong>
-        <span id="loadStatus">Cargando archivos CSV...</span>
-        <div class="debug" id="debugStatus"></div>
-      </div>
-    </section>
+    </header>
 
-    <nav class="tabs" aria-label="Pestañas del dashboard">
-      <button class="tab-btn active" data-tab="resumen">Resumen general</button>
-      <button class="tab-btn" data-tab="ranking">Mejores direcciones</button>
-      <button class="tab-btn" data-tab="buscador">Buscador por dirección</button>
+    <nav class="tabs" role="tablist" aria-label="Pestañas del dashboard">
+      <button class="tab-btn active" data-tab="resumen"><span class="accent">01</span> Resumen general</button>
+      <button class="tab-btn" data-tab="seguimiento"><span class="accent">02</span> Seguimiento por Dirección</button>
+      <button class="tab-btn" data-tab="buscador"><span class="accent">03</span> Buscador por Dirección</button>
     </nav>
 
-    <div id="messages"></div>
+    <main>
+      <section id="tab-resumen" class="view active">
+        <div class="section-title">
+          <h2>Resumen general</h2>
+          <div class="tagline">Indicadores consolidados calculados desde las hojas de la matriz.</div>
+        </div>
 
-    <section id="tab-resumen" class="tab-panel active">
-      <div class="section-title">
-        <h3>Resumen general</h3>
-        <p>Indicadores consolidados de todos los módulos de seguimiento.</p>
-      </div>
-      <div class="grid-kpi" id="kpiGeneral"></div>
-      <div class="two-col">
+        <div class="grid kpi-grid" id="summaryKpis"></div>
+
+        <div class="grid charts-grid">
+          <div class="card">
+            <h3 class="chart-title">Avance por módulo</h3>
+            <div id="moduleBars" class="bar-chart"></div>
+          </div>
+          <div class="card">
+            <h3 class="chart-title">Distribución del índice general</h3>
+            <div id="indexDonutBox"></div>
+          </div>
+        </div>
+
+        <div id="alertsPanel" class="alert-panel hidden">
+          <h3 class="chart-title">Alertas principales</h3>
+          <div id="alertsTable" class="table-wrap compact-scroll"></div>
+        </div>
+      </section>
+
+      <section id="tab-seguimiento" class="view">
+        <div class="section-title">
+          <h2>Seguimiento por Dirección</h2>
+          <div class="tagline">Cada hoja representa el 16,67% del índice total.</div>
+        </div>
+
+        <div class="ranking-grid">
+          <div class="card">
+            <h3 class="chart-title">Direcciones con mayor avance</h3>
+            <div id="topDirections" class="rank-card"></div>
+          </div>
+          <div class="card">
+            <h3 class="chart-title">Comparativo de porcentaje general</h3>
+            <div id="rankingBars" class="bar-chart"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3 class="chart-title">Tabla de seguimiento institucional</h3>
+          <div id="rankingTable" class="table-wrap compact-scroll"></div>
+        </div>
+      </section>
+
+      <section id="tab-buscador" class="view">
+        <div class="section-title">
+          <h2>Buscador por Dirección</h2>
+          <div class="tagline">Consulta individual de desempeño, alertas y registros asociados.</div>
+        </div>
+
         <div class="card">
-          <h4>Avance por módulo</h4>
-          <p>Promedios calculados desde cada hoja de la matriz.</p>
-          <div class="module-grid" id="moduleSummary"></div>
+          <div class="search-row">
+            <label for="directionSelect">Seleccione una Dirección</label>
+            <select id="directionSelect">
+              <option value="">Seleccione una dirección</option>
+            </select>
+          </div>
+          <div id="directionDetail" class="empty">Seleccione una Dirección para ver su resumen ejecutivo.</div>
         </div>
-        <div class="card">
-          <h4>Alertas principales</h4>
-          <p>Casos que requieren revisión o actualización.</p>
-          <div id="alertSummary"></div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <section id="tab-ranking" class="tab-panel">
-      <div class="section-title">
-        <h3>Mejores direcciones</h3>
-        <p>Ranking calculado con el índice general y los resultados de cada módulo.</p>
-      </div>
-      <div class="card">
-        <h4>Ranking completo de direcciones</h4>
-        <p>El índice es un semáforo de seguimiento; no reemplaza la revisión técnica de cada caso.</p>
-        <div id="rankingTable"></div>
-      </div>
-    </section>
-
-    <section id="tab-buscador" class="tab-panel">
-      <div class="section-title">
-        <h3>Buscador por dirección</h3>
-        <p>Consulta individual para ver el desempeño resumido de una Dirección.</p>
-      </div>
-      <div class="search-panel">
-        <aside class="selector-card">
-          <label for="directionSelect">Seleccione una Dirección</label>
-          <select id="directionSelect">
-            <option value="">Seleccione una dirección</option>
-          </select>
-          <div class="debug">La lista se genera automáticamente desde los CSV.</div>
-        </aside>
-        <div id="directionDetail" class="card">
-          <h4>Resumen individual</h4>
-          <p>Seleccione una Dirección para ver su resumen ejecutivo, desempeño por módulo, alertas y registros asociados.</p>
-          <div class="empty">No se ha seleccionado una Dirección.</div>
-        </div>
-      </div>
-    </section>
-  </main>
+    <div class="footer-note">Dashboard Ejecutivo Alcaldía · datos desde CSV publicados en GitHub Pages</div>
+  </div>
 
   <script>
-    'use strict';
-
-    const CSV_FILES = {
-      pac: 'data/pac_contratacion.csv',
-      ordenanzas: 'data/ordenanzas.csv',
-      reuniones: 'data/reuniones.csv',
-      redes: 'data/redes_institucionales.csv',
-      eventos: 'data/eventos.csv',
-      apoyo: 'data/apoyo_institucional.csv'
+    const FILES = {
+      pac: "data/pac_contratacion.csv",
+      ordenanzas: "data/ordenanzas.csv",
+      reuniones: "data/reuniones.csv",
+      redes: "data/redes_institucionales.csv",
+      eventos: "data/eventos.csv",
+      apoyo: "data/apoyo_institucional.csv"
     };
 
-    const MODULE_LABELS = {
-      pac: 'PAC / contratación',
-      ordenanzas: 'Ordenanzas',
-      reuniones: 'Reuniones',
-      redes: 'Redes institucionales',
-      eventos: 'Eventos',
-      apoyo: 'Apoyo institucional'
+    const MODULE_NAMES = {
+      pac: "PAC",
+      ordenanzas: "Ordenanzas",
+      reuniones: "Reuniones",
+      redes: "Redes Institucionales",
+      eventos: "Eventos",
+      apoyo: "Apoyo Institucional"
     };
 
-    let DATA = {};
-    let DIR_STATS = [];
-    let ALERTS = [];
+    const MODULE_KEYS = ["pac","ordenanzas","reuniones","redes","eventos","apoyo"];
 
-    const $ = (id) => document.getElementById(id);
-    const fmtPct = (n) => `${Math.round(Number(n || 0))}%`;
-    const fmtMoney = (n) => Number(n || 0).toLocaleString('es-EC', { style:'currency', currency:'USD', maximumFractionDigits:0 });
+    let raw = {};
+    let state = {};
 
-    function normalizeKey(value){
-      return String(value ?? '')
-        .replace(/^\uFEFF/, '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .replace(/\s+/g, ' ')
-        .trim();
+    const fmtPct = n => `${Math.round(Number(n || 0))}%`;
+    const fmtMoney = n => new Intl.NumberFormat("es-EC", {style:"currency", currency:"USD", maximumFractionDigits:0}).format(Number(n || 0));
+    const fmtNum = n => new Intl.NumberFormat("es-EC", {maximumFractionDigits:0}).format(Number(n || 0));
+
+    function normalizeText(s){
+      return String(s ?? "")
+        .replace(/\uFEFF/g, "")
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase().trim().replace(/\s+/g," ");
     }
-
-    function clean(value){
-      return String(value ?? '').replace(/^\uFEFF/, '').trim();
+    function displayClean(s){
+      return String(s ?? "").replace(/\s+/g," ").trim();
     }
-
-    function get(row, candidates){
-      const map = row.__map || {};
-      for(const candidate of candidates){
-        const key = normalizeKey(candidate);
-        if(Object.prototype.hasOwnProperty.call(map, key)) return clean(map[key]);
+    function normalizeHeader(s){
+      return normalizeText(s);
+    }
+    function rowValue(row, candidates){
+      for(const c of candidates){
+        const k = normalizeHeader(c);
+        if(Object.prototype.hasOwnProperty.call(row, k)) return row[k];
       }
-      return '';
+      return "";
     }
-
-    function parseNumber(value){
-      if(value === null || value === undefined) return 0;
-      let s = String(value).trim();
+    function toNumber(v){
+      if(v === null || v === undefined) return 0;
+      let s = String(v).trim();
       if(!s) return 0;
-      s = s.replace(/\$/g,'').replace(/\s/g,'');
-      if(s.includes(',') && s.includes('.')){
-        s = s.replace(/,/g,'');
-      } else if(s.includes(',') && !s.includes('.')){
-        s = s.replace(',', '.');
+      s = s.replace(/\$/g,"").replace(/\s/g,"");
+      const hasComma = s.includes(",");
+      const hasDot = s.includes(".");
+      if(hasComma && hasDot){
+        if(s.lastIndexOf(",") > s.lastIndexOf(".")) s = s.replace(/\./g,"").replace(",",".");
+        else s = s.replace(/,/g,"");
+      } else if(hasComma && !hasDot){
+        s = s.replace(",",".");
       }
-      s = s.replace(/[^0-9.\-]/g,'');
-      const n = Number(s);
+      const n = parseFloat(s);
       return Number.isFinite(n) ? n : 0;
     }
-
-    function parseDate(value){
-      const s = clean(value);
-      if(!s) return null;
-      const parts = s.split(/[\/\-]/).map(x => x.trim());
-      if(parts.length === 3){
-        let [a,b,c] = parts;
-        if(c.length === 2) c = '20' + c;
-        const d = new Date(Number(c), Number(b)-1, Number(a));
-        if(!isNaN(d.getTime())) return d;
+    function extractPeople(v){
+      const s = String(v ?? "");
+      const personMatches = [...s.matchAll(/(\d+(?:[.,]\d+)?)\s*(personas?|asistentes?|funcionarios?)/gi)]
+        .map(m => toNumber(m[1]));
+      if(personMatches.length) return personMatches.reduce((a,b)=>a+b,0);
+      const nums = [...s.matchAll(/\d+(?:[.,]\d+)?/g)].map(m => toNumber(m[0]));
+      return nums.length ? Math.max(...nums) : 0;
+    }
+    function excelDateToText(v){
+      if(v === null || v === undefined || v === "") return "";
+      if(typeof v === "number" || /^\d{5}$/.test(String(v).trim())){
+        const serial = Number(v);
+        if(serial > 20000 && serial < 70000){
+          const date = new Date(Math.round((serial - 25569) * 86400 * 1000));
+          return date.toLocaleDateString("es-EC", {day:"2-digit", month:"2-digit", year:"numeric"});
+        }
+      }
+      return String(v);
+    }
+    function excelDateToDate(v){
+      if(!v) return null;
+      if(typeof v === "number" || /^\d{5}$/.test(String(v).trim())){
+        const serial = Number(v);
+        if(serial > 20000 && serial < 70000){
+          return new Date(Math.round((serial - 25569) * 86400 * 1000));
+        }
+      }
+      const s = String(v).trim();
+      const parts = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+      if(parts){
+        let y = Number(parts[3]);
+        if(y < 100) y += 2000;
+        return new Date(y, Number(parts[2])-1, Number(parts[1]));
       }
       const d = new Date(s);
       return isNaN(d.getTime()) ? null : d;
     }
-
-    function detectDelimiter(text){
-      const first = text.split(/\r?\n/).find(line => line.trim()) || '';
-      const commas = (first.match(/,/g) || []).length;
-      const semis = (first.match(/;/g) || []).length;
-      return semis > commas ? ';' : ',';
-    }
-
-    function splitCsvLine(line, delimiter){
-      const out = [];
-      let cur = '';
-      let quoted = false;
-      for(let i=0;i<line.length;i++){
-        const ch = line[i];
-        const next = line[i+1];
-        if(ch === '"'){
-          if(quoted && next === '"') { cur += '"'; i++; }
-          else quoted = !quoted;
-        } else if(ch === delimiter && !quoted){
-          out.push(cur); cur = '';
-        } else {
-          cur += ch;
-        }
-      }
-      out.push(cur);
-      return out;
+    function splitDirections(value){
+      return String(value ?? "")
+        .split(/\n|;|\|/g)
+        .map(displayClean)
+        .filter(Boolean);
     }
 
     function parseCSV(text){
-      const delimiter = detectDelimiter(text);
-      const lines = String(text || '').replace(/^\uFEFF/, '').split(/\r?\n/).filter(line => line.trim() !== '');
-      if(lines.length === 0) return [];
-      const headers = splitCsvLine(lines[0], delimiter).map(clean);
       const rows = [];
-      for(let i=1;i<lines.length;i++){
-        const values = splitCsvLine(lines[i], delimiter);
-        const row = { __map:{} };
-        headers.forEach((h, idx) => {
-          const v = clean(values[idx] ?? '');
-          row[h] = v;
-          row.__map[normalizeKey(h)] = v;
-        });
-        if(Object.values(row.__map).some(v => clean(v) !== '')) rows.push(row);
+      let row = [], cell = "", inQuotes = false;
+      for(let i=0;i<text.length;i++){
+        const ch = text[i];
+        const next = text[i+1];
+        if(ch === '"' && inQuotes && next === '"'){ cell += '"'; i++; continue; }
+        if(ch === '"'){ inQuotes = !inQuotes; continue; }
+        if((ch === "," || ch === ";") && !inQuotes){ row.push(cell); cell = ""; continue; }
+        if((ch === "\n" || ch === "\r") && !inQuotes){
+          if(ch === "\r" && next === "\n") i++;
+          row.push(cell); cell = "";
+          if(row.some(x => String(x).trim() !== "")) rows.push(row);
+          row = [];
+          continue;
+        }
+        cell += ch;
       }
-      return rows;
+      row.push(cell);
+      if(row.some(x => String(x).trim() !== "")) rows.push(row);
+      if(!rows.length) return [];
+      const headers = rows[0].map(h => normalizeHeader(h));
+      return rows.slice(1).map(r => {
+        const obj = {};
+        headers.forEach((h, idx) => obj[h] = r[idx] ?? "");
+        return obj;
+      }).filter(obj => Object.values(obj).some(v => String(v).trim() !== ""));
     }
 
-    async function fetchCSV(url){
-      const bust = `v=${Date.now()}`;
-      const sep = url.includes('?') ? '&' : '?';
-      const response = await fetch(url + sep + bust, { cache:'no-store' });
-      if(!response.ok) throw new Error(`${url} respondió ${response.status}`);
+    async function loadCSV(path){
+      const response = await fetch(`${path}?t=${Date.now()}`, {cache:"no-store"});
+      if(!response.ok) throw new Error(`No se pudo cargar ${path}`);
       return parseCSV(await response.text());
     }
 
-    function splitDirections(value){
-      const s = clean(value);
-      if(!s) return [];
-      return s.split(/;|\n|\|/).map(x => x.trim()).filter(Boolean);
-    }
-
-    function directionForRow(module, row){
-      const value = get(row, [
-        'Dirección Responsable','Direccion Responsable','Dirección',
-        'Dirección que apoya','Direcciones que apoyan','Direccion que apoya','Direcciones que Apoyan',
-        'Dirección que comparte','Direcciones que comparten','Direccion que comparte',
-        'Dirección que Asiste','Direcciones que Asisten','Direccion que Asiste',
-        'Direcciones Convocadas','Direccion Convocada','Dirección Convocada'
-      ]);
-      return splitDirections(value);
-    }
-
-    function stageScore(module, stage){
-      const s = normalizeKey(stage);
+    function stageScorePAC(stage){
+      const s = normalizeText(stage);
       if(!s) return 0;
-      if(s.includes('finalizado') || s.includes('recibido') || s.includes('cerrado') || s.includes('aprobada') || s.includes('sancionada') || s.includes('segundo debate')) return module === 'ordenanzas' ? 90 : 100;
-      if(module === 'ordenanzas'){
-        if(s.includes('no empieza') || s.includes('no iniciado')) return 0;
-        if(s.includes('elaboracion')) return 25;
-        if(s.includes('juridica')) return 40;
-        if(s.includes('primer debate')) return 60;
-        if(s.includes('ajuste') || s.includes('subsanacion')) return 75;
-        if(s.includes('segundo debate')) return 90;
-      } else {
-        if(s.includes('no empieza') || s.includes('no iniciado')) return 0;
-        if(s.includes('preparatoria')) return 25;
-        if(s.includes('precontractual')) return 50;
-        if(s.includes('contractual')) return 75;
-      }
+      if(s.includes("finalizado") || s.includes("recibido") || s.includes("cerrado") || s.includes("liquidado")) return 100;
+      if(s.includes("contractual")) return 75;
+      if(s.includes("precontractual")) return 50;
+      if(s.includes("preparatoria")) return 25;
+      if(s.includes("no empieza") || s.includes("no inicia")) return 0;
       return 0;
     }
-
-    function asistenciaScore(value){
-      const s = normalizeKey(value);
+    function stageScoreOrdenanza(stage){
+      const s = normalizeText(stage);
       if(!s) return 0;
-      if(s.includes('director')) return 100;
-      if(s.includes('deleg')) return 75;
-      if(s.includes('justifica')) return 50;
-      if(s.includes('no asiste')) return 0;
-      if(s.includes('si') || s.includes('asiste')) return 100;
+      if(s.includes("aprobada") || s.includes("sancionada") || s.includes("publicada")) return 100;
+      if(s.includes("segundo debate")) return 90;
+      if(s.includes("ajuste") || s.includes("subsan")) return 75;
+      if(s.includes("primer debate")) return 60;
+      if(s.includes("revision juridica") || s.includes("juridica")) return 40;
+      if(s.includes("elaboracion")) return 25;
+      if(s.includes("no empieza") || s.includes("no inicia")) return 0;
       return 0;
     }
-
-    function rowScore(module,row){
-      if(module === 'pac') return stageScore(module, get(row,['Etapa Actual','Etapa']));
-      if(module === 'ordenanzas') return stageScore(module, get(row,['Etapa Actual','Etapa']));
-      if(module === 'reuniones') return asistenciaScore(get(row,['Asistencia','Resultado de asistencia','Resultado Asistencia']));
-      if(module === 'redes'){
-        const interactions = parseNumber(get(row,['N° Interacciones','No. Interacciones','Interacciones','Número de Interacciones','Numero de Interacciones']));
-        return interactions > 0 || directionForRow(module,row).length ? 100 : 0;
-      }
-      if(module === 'eventos'){
-        const asistentes = parseNumber(get(row,['N° asistentes','Numero de asistentes','Cantidad de personas','Personas asistentes','Asistencia']));
-        const meta = parseNumber(get(row,['Meta','Personas solicitadas','Número de personas solicitadas','Numero de personas solicitadas']));
-        if(meta > 0) return Math.min(100, (asistentes/meta)*100);
-        return asistentes > 0 || directionForRow(module,row).length ? 100 : 0;
-      }
-      if(module === 'apoyo'){
-        const apoyo = get(row,['Apoyo Entregado','Cantidad','Número de personas','Numero de personas']);
-        return apoyo || directionForRow(module,row).length ? 100 : 0;
-      }
-      return 0;
+    function attendanceScore(value){
+      const s = normalizeText(value);
+      if(!s) return 0;
+      if(s === "si" || s.includes("asiste director")) return 100;
+      if(s.includes("delegado")) return 75;
+      if(s.includes("justifica")) return 50;
+      if(s === "no" || s.includes("no asiste")) return 0;
+      return s.includes("si") ? 100 : 0;
     }
 
-    function semaforo(score){
-      if(score >= 85) return {text:'Verde', cls:'green'};
-      if(score >= 70) return {text:'Amarillo', cls:'yellow'};
-      if(score >= 50) return {text:'Naranja', cls:'orange'};
-      if(score > 0) return {text:'Rojo', cls:'red'};
-      return {text:'Sin datos', cls:'gray'};
+    function addScore(map, dir, module, score){
+      const key = displayClean(dir);
+      if(!key) return;
+      if(!map[key]) map[key] = { direction:key, scores:{}, records:{}, alerts:[] };
+      if(!map[key].records[module]) map[key].records[module] = [];
+      if(!map[key].scores[module]) map[key].scores[module] = [];
+      map[key].scores[module].push(Number(score || 0));
     }
 
-    function avg(values){
-      const arr = values.filter(v => Number.isFinite(Number(v)));
-      return arr.length ? arr.reduce((a,b)=>a+Number(b),0)/arr.length : 0;
+    function addRecord(map, dir, module, record){
+      const key = displayClean(dir);
+      if(!key) return;
+      if(!map[key]) map[key] = { direction:key, scores:{}, records:{}, alerts:[] };
+      if(!map[key].records[module]) map[key].records[module] = [];
+      map[key].records[module].push(record);
     }
 
-    function buildStats(){
-      const dirMap = new Map();
-      ALERTS = [];
+    function getRowsByDirection(rows, fieldNames){
+      const expanded = [];
+      rows.forEach(row => {
+        const dirs = splitDirections(rowValue(row, fieldNames));
+        dirs.forEach(dir => expanded.push({dir, row}));
+      });
+      return expanded;
+    }
 
-      function ensureDir(name){
-        const key = clean(name);
-        if(!key) return null;
-        if(!dirMap.has(key)){
-          dirMap.set(key, { direction:key, modules:{pac:[],ordenanzas:[],reuniones:[],redes:[],eventos:[],apoyo:[]}, rows:{pac:[],ordenanzas:[],reuniones:[],redes:[],eventos:[],apoyo:[]} });
-        }
-        return dirMap.get(key);
-      }
+    function uniqueCodes(rows, fieldNames){
+      return new Set(rows.map(r => displayClean(rowValue(r, fieldNames))).filter(Boolean));
+    }
 
-      for(const [module, rows] of Object.entries(DATA)){
-        for(const row of rows){
-          const dirs = directionForRow(module,row);
-          const score = rowScore(module,row);
+    function buildState(){
+      const directions = {};
+      const allAlerts = [];
+      const moduleGlobal = {};
+      const today = new Date();
+
+      // PAC
+      const pacExpanded = getRowsByDirection(raw.pac, ["Dirección Responsable","Direccion Responsable"]);
+      let pacScoreSum = 0;
+      let totalPres = 0, totalContratado = 0, totalDevengado = 0;
+      pacExpanded.forEach(({dir,row}) => {
+        const score = stageScorePAC(rowValue(row, ["Etapa Actual"]));
+        const nombre = rowValue(row, ["Nombre del Proyecto","Proyecto","Objeto de contratación"]);
+        const codigo = rowValue(row, ["Código","Codigo"]);
+        const fechaLimite = rowValue(row, ["Fecha límite","Fecha Limite"]);
+        const evidencia = rowValue(row, ["Evidencias","Evidencia"]);
+        pacScoreSum += score;
+        totalPres += toNumber(rowValue(row, ["Monto Presupuestado"]));
+        totalContratado += toNumber(rowValue(row, ["Monto Contratado"]));
+        totalDevengado += toNumber(rowValue(row, ["Monto Devengado","Monto devengado"]));
+        addScore(directions, dir, "pac", score);
+        addRecord(directions, dir, "pac", {module:"PAC", codigo, tema:nombre, estado:rowValue(row,["Etapa Actual"]), fecha:fechaLimite, evidencia});
+
+        const due = excelDateToDate(fechaLimite);
+        if(score === 0) allAlerts.push({dir, module:"PAC", asunto:nombre || codigo, alerta:"Proceso no iniciado", prioridad:"Alta"});
+        if(due && due < today && score < 100) allAlerts.push({dir, module:"PAC", asunto:nombre || codigo, alerta:"Fecha límite vencida", prioridad:"Alta"});
+        if(!displayClean(evidencia)) allAlerts.push({dir, module:"PAC", asunto:nombre || codigo, alerta:"Sin evidencia registrada", prioridad:"Media"});
+      });
+      moduleGlobal.pac = pacExpanded.length ? pacScoreSum / pacExpanded.length : 0;
+
+      // Ordenanzas
+      const ordExpanded = getRowsByDirection(raw.ordenanzas, ["Dirección Responsable","Direccion Responsable"]);
+      let ordScoreSum = 0;
+      ordExpanded.forEach(({dir,row}) => {
+        const score = stageScoreOrdenanza(rowValue(row, ["Etapa Actual"]));
+        const tema = rowValue(row, ["Tema","Nro. Ordenanza","Nro Ordenanza"]);
+        const codigo = rowValue(row, ["# Trámite","# Tramite","Código","Codigo"]);
+        const fechaFin = rowValue(row, ["Fecha de finalización","Fecha de finalizacion"]);
+        const evidencia = rowValue(row, ["Evidencias","Evidencia"]);
+        ordScoreSum += score;
+        addScore(directions, dir, "ordenanzas", score);
+        addRecord(directions, dir, "ordenanzas", {module:"Ordenanzas", codigo, tema, estado:rowValue(row,["Etapa Actual"]), fecha:fechaFin, evidencia});
+        const due = excelDateToDate(fechaFin);
+        if(score === 0) allAlerts.push({dir, module:"Ordenanzas", asunto:tema || codigo, alerta:"Ordenanza sin iniciar", prioridad:"Alta"});
+        if(due && due < today && score < 100) allAlerts.push({dir, module:"Ordenanzas", asunto:tema || codigo, alerta:"Fecha de finalización vencida", prioridad:"Alta"});
+        if(!displayClean(evidencia)) allAlerts.push({dir, module:"Ordenanzas", asunto:tema || codigo, alerta:"Sin evidencia registrada", prioridad:"Media"});
+      });
+      moduleGlobal.ordenanzas = ordExpanded.length ? ordScoreSum / ordExpanded.length : 0;
+
+      // Reuniones
+      const reuExpanded = getRowsByDirection(raw.reuniones, ["Direcciones Convocadas","Dirección Convocada","Direccion Convocada"]);
+      let reuScoreSum = 0;
+      reuExpanded.forEach(({dir,row}) => {
+        const score = attendanceScore(rowValue(row, ["Asistencia"]));
+        const tema = rowValue(row, ["Tema Tratado"]);
+        const codigo = rowValue(row, ["Código","Codigo"]);
+        const fecha = rowValue(row, ["Fecha"]);
+        const evidencia = rowValue(row, ["Evidencias","Evidencia"]);
+        reuScoreSum += score;
+        addScore(directions, dir, "reuniones", score);
+        addRecord(directions, dir, "reuniones", {module:"Reuniones", codigo, tema, estado:rowValue(row,["Asistencia"]), fecha, evidencia});
+        if(score < 100) allAlerts.push({dir, module:"Reuniones", asunto:tema || codigo, alerta:"Asistencia parcial o no confirmada", prioridad: score === 0 ? "Alta" : "Media"});
+        if(!displayClean(evidencia)) allAlerts.push({dir, module:"Reuniones", asunto:tema || codigo, alerta:"Sin evidencia registrada", prioridad:"Media"});
+      });
+      moduleGlobal.reuniones = reuExpanded.length ? reuScoreSum / reuExpanded.length : 0;
+
+      // Redes, Eventos, Apoyo: score by unique code coverage
+      function coverageModule(module, dirFields, codeFields, recordMapper){
+        const rows = raw[module] || [];
+        const codes = uniqueCodes(rows, codeFields);
+        const codeCount = codes.size || 0;
+        const dirToCodes = {};
+        rows.forEach(row => {
+          const code = displayClean(rowValue(row, codeFields));
+          const dirs = splitDirections(rowValue(row, dirFields));
           dirs.forEach(dir => {
-            const d = ensureDir(dir);
-            if(d){ d.modules[module].push(score); d.rows[module].push(row); }
+            const key = displayClean(dir);
+            if(!dirToCodes[key]) dirToCodes[key] = new Set();
+            if(code) dirToCodes[key].add(code);
+            if(!directions[key]) directions[key] = {direction:key, scores:{}, records:{}, alerts:[]};
+            addRecord(directions, key, module, recordMapper(row));
           });
-
-          const stage = get(row,['Etapa Actual','Etapa']);
-          const due = parseDate(get(row,['Fecha límite','Fecha Limite','Fecha límite estimada']));
-          const evidence = get(row,['Evidencias','Evidencia']);
-          const today = new Date(); today.setHours(0,0,0,0);
-          const name = get(row,['Nombre del Proyecto','Proyecto','Actividad','Evento','Tema Tratado','Nombre de la ordenanza','Ordenanza','Publicación','Publicacion','Tema']) || MODULE_LABELS[module];
-          if((module === 'pac' || module === 'ordenanzas') && normalizeKey(stage).includes('no empieza')){
-            ALERTS.push({module:MODULE_LABELS[module], direction:dirs.join('; ') || 'Sin dirección', issue:'Proceso no iniciado', item:name});
-          }
-          if(due && due < today && score < 100){
-            ALERTS.push({module:MODULE_LABELS[module], direction:dirs.join('; ') || 'Sin dirección', issue:'Fecha límite vencida', item:name});
-          }
-          if(!evidence){
-            ALERTS.push({module:MODULE_LABELS[module], direction:dirs.join('; ') || 'Sin dirección', issue:'Sin evidencia registrada', item:name});
-          }
-        }
+        });
+        Object.keys(directions).forEach(dir => {
+          const score = codeCount ? ((dirToCodes[dir]?.size || 0) / codeCount * 100) : 0;
+          if(!directions[dir].scores[module]) directions[dir].scores[module] = [];
+          directions[dir].scores[module] = [score];
+        });
+        const scores = Object.keys(dirToCodes).map(d => codeCount ? (dirToCodes[d].size / codeCount * 100) : 0);
+        moduleGlobal[module] = scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : 0;
       }
 
-      DIR_STATS = Array.from(dirMap.values()).map(d => {
-        const moduleScores = {};
-        Object.keys(d.modules).forEach(m => moduleScores[m] = avg(d.modules[m]));
-        const scored = Object.values(moduleScores).filter(v => v > 0);
-        const index = scored.length ? avg(scored) : 0;
-        const totalRows = Object.values(d.rows).reduce((a,arr)=>a+arr.length,0);
-        return {...d, moduleScores, index, totalRows, sem:semaforo(index)};
-      }).sort((a,b)=>b.index-a.index || b.totalRows-a.totalRows);
+      coverageModule("redes",
+        ["Dirección que comparte","Direcciones que comparten","Direccion que comparte"],
+        ["Código","Codigo"],
+        row => ({module:"Redes Institucionales", codigo:rowValue(row,["Código","Codigo"]), tema:rowValue(row,["Tema de publicación","Tema de publicacion"]), estado:`${fmtNum(toNumber(rowValue(row,["Nro de Interacciones","Nro. Interacciones","Interacciones"]))} interacciones`, fecha:rowValue(row,["Fecha de Publicación","Fecha de Publicacion"]), evidencia:rowValue(row,["Evidencias","Evidencia"])})
+      );
+
+      coverageModule("eventos",
+        ["Dirección que Asiste","Direcciones que Asisten","Direccion que Asiste"],
+        ["Código","Codigo"],
+        row => ({module:"Eventos", codigo:rowValue(row,["Código","Codigo"]), tema:rowValue(row,["Nombre del evento","Evento"]), estado:`${fmtNum(toNumber(rowValue(row,["Cantidad de personas","Personas"]))) } personas`, fecha:rowValue(row,["Fecha"]), evidencia:rowValue(row,["Evidencias","Evidencia"])})
+      );
+
+      coverageModule("apoyo",
+        ["Dirección que apoya","Direcciones que apoyan","Direccion que apoya"],
+        ["Código","Codigo"],
+        row => ({module:"Apoyo Institucional", codigo:rowValue(row,["Código","Codigo"]), tema:rowValue(row,["Actividad"]), estado:rowValue(row,["Apoyo Entregado"]), fecha:rowValue(row,["Fecha"]), evidencia:rowValue(row,["Evidencias","Evidencia"])})
+      );
+
+      // Alerts for missing evidence in coverage modules
+      ["redes","eventos","apoyo"].forEach(module => {
+        (raw[module] || []).forEach(row => {
+          const evidencia = rowValue(row,["Evidencias","Evidencia"]);
+          if(!displayClean(evidencia)){
+            const dirs = splitDirections(rowValue(row, module==="redes" ? ["Dirección que comparte","Direcciones que comparten"] : module==="eventos" ? ["Dirección que Asiste","Direcciones que Asisten"] : ["Dirección que apoya","Direcciones que apoyan"]));
+            dirs.forEach(dir => allAlerts.push({dir, module:MODULE_NAMES[module], asunto:rowValue(row,["Código","Codigo","Actividad","Nombre del evento","Tema de publicación"]), alerta:"Sin evidencia registrada", prioridad:"Media"}));
+          }
+        });
+      });
+
+      const directionList = Object.keys(directions).sort((a,b)=>a.localeCompare(b, "es"));
+      directionList.forEach(dir => {
+        MODULE_KEYS.forEach(m => {
+          const arr = directions[dir].scores[m] || [];
+          directions[dir].scoreByModule = directions[dir].scoreByModule || {};
+          directions[dir].scoreByModule[m] = arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0;
+        });
+        directions[dir].index = MODULE_KEYS.reduce((sum,m)=>sum + directions[dir].scoreByModule[m], 0) / MODULE_KEYS.length;
+        directions[dir].alerts = allAlerts.filter(a => displayClean(a.dir) === dir);
+      });
+
+      const ranking = directionList.map(d => directions[d]).sort((a,b)=>b.index-a.index);
+      const avgIndex = ranking.length ? ranking.reduce((a,b)=>a+b.index,0)/ranking.length : 0;
+
+      const redInteractions = (raw.redes || []).reduce((sum,row)=>sum + toNumber(rowValue(row,["Nro de Interacciones","Nro. Interacciones","Interacciones"])),0);
+      const eventPeople = (raw.eventos || []).reduce((sum,row)=>sum + toNumber(rowValue(row,["Cantidad de personas","Personas"])),0);
+      const apoyoPeople = (raw.apoyo || []).reduce((sum,row)=>sum + extractPeople(rowValue(row,["Apoyo Entregado"])),0);
+
+      return {
+        directions,
+        directionList,
+        ranking,
+        moduleGlobal,
+        avgIndex,
+        alerts: allAlerts,
+        totals: {
+          pacRows: raw.pac.length,
+          ordenanzasRows: raw.ordenanzas.length,
+          reunionesRows: raw.reuniones.length,
+          redesCodes: uniqueCodes(raw.redes, ["Código","Codigo"]).size,
+          eventosCodes: uniqueCodes(raw.eventos, ["Código","Codigo"]).size,
+          apoyoCodes: uniqueCodes(raw.apoyo, ["Código","Codigo"]).size,
+          totalPres, totalContratado, totalDevengado,
+          presupuestoPct: totalPres ? totalDevengado / totalPres * 100 : 0,
+          redInteractions,
+          eventPeople,
+          apoyoPeople
+        }
+      };
     }
 
-    function renderKpis(){
-      const pacRows = DATA.pac || [];
-      const ordRows = DATA.ordenanzas || [];
-      const reuRows = DATA.reuniones || [];
-      const redesRows = DATA.redes || [];
-      const eventosRows = DATA.eventos || [];
-      const apoyoRows = DATA.apoyo || [];
+    function statusClass(score){
+      if(score >= 85) return "green";
+      if(score >= 70) return "yellow";
+      if(score > 0) return "red";
+      return "gray";
+    }
+    function statusText(score){
+      if(score >= 85) return "Sólido";
+      if(score >= 70) return "Seguimiento";
+      if(score > 0) return "En riesgo";
+      return "Sin avance";
+    }
+    function table(headers, rows){
+      if(!rows.length) return `<div class="empty">No hay datos para mostrar.</div>`;
+      return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c ?? ""}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+    }
+    function progressBar(label, value){
+      const v = Math.max(0, Math.min(100, Number(value || 0)));
+      return `<div class="bar-item"><div class="bar-label" title="${label}">${label}</div><div class="hbar"><span style="width:${v}%"></span></div><div class="bar-value">${fmtPct(v)}</div></div>`;
+    }
+    function donut(value, label=""){
+      const v = Math.max(0, Math.min(100, Number(value || 0)));
+      return `<div class="donut" style="--p:${v}">${Math.round(v)}%</div>${label ? `<div class="subtext">${label}</div>` : ""}`;
+    }
 
-      const pacAvg = avg(pacRows.map(r => rowScore('pac',r)));
-      const ordAvg = avg(ordRows.map(r => rowScore('ordenanzas',r)));
-      const reuAvg = avg(reuRows.map(r => rowScore('reuniones',r)));
-      const apoyoAvg = avg(apoyoRows.map(r => rowScore('apoyo',r)));
-      const generalIndex = avg(DIR_STATS.map(d => d.index));
-      const totalPres = pacRows.reduce((a,r)=>a+parseNumber(get(r,['Monto Presupuestado'])),0);
-      const totalCont = pacRows.reduce((a,r)=>a+parseNumber(get(r,['Monto Contratado'])),0);
-      const totalDev = pacRows.reduce((a,r)=>a+parseNumber(get(r,['Monto Devengado','Monto devengado'])),0);
-      const ejec = totalPres ? (totalDev/totalPres)*100 : 0;
-      const inter = redesRows.reduce((a,r)=>a+parseNumber(get(r,['N° Interacciones','No. Interacciones','Interacciones','Número de Interacciones','Numero de Interacciones'])),0);
-
-      const items = [
-        ['Índice general municipal', fmtPct(generalIndex), `${DIR_STATS.length} direcciones monitoreadas`, ''],
-        ['Avance promedio PAC', fmtPct(pacAvg), `${pacRows.length} proyectos registrados`, ''],
-        ['Ejecución presupuestaria', fmtPct(ejec), `${fmtMoney(totalDev)} devengado de ${fmtMoney(totalPres)}`, ''],
-        ['Monto contratado PAC', fmtMoney(totalCont), `${totalPres ? Math.round(totalCont/totalPres*100) : 0}% del presupuesto registrado`, ''],
-        ['Avance ordenanzas', fmtPct(ordAvg), `${ordRows.length} ordenanzas registradas`, ''],
-        ['Asistencia a reuniones', fmtPct(reuAvg), `${reuRows.length} registros de asistencia`, ''],
-        ['Interacciones en redes', inter.toLocaleString('es-EC'), `${redesRows.length} publicaciones registradas`, ''],
-        ['Asistencia a eventos', eventosRows.length.toLocaleString('es-EC'), `${eventosRows.length} eventos registrados`, ''],
-        ['Apoyo institucional', fmtPct(apoyoAvg), `${apoyoRows.length} actividades reportadas`, ''],
-        ['Alertas principales', ALERTS.length.toLocaleString('es-EC'), 'Casos que requieren seguimiento', 'red']
+    function renderSummary(){
+      const t = state.totals;
+      const m = state.moduleGlobal;
+      const kpis = [
+        {
+          title:"PAC y ejecución presupuestaria",
+          main:fmtPct(m.pac),
+          donut:m.pac,
+          sub:`${t.pacRows} proyectos registrados`,
+          extra:[
+            ["Avance PAC", fmtPct(m.pac)],
+            ["Ejecución presupuestaria", fmtPct(t.presupuestoPct)],
+            ["Devengado / presupuestado", `${fmtMoney(t.totalDevengado)} de ${fmtMoney(t.totalPres)}`]
+          ]
+        },
+        {
+          title:"Ordenanzas",
+          main:fmtPct(m.ordenanzas),
+          donut:m.ordenanzas,
+          sub:`${t.ordenanzasRows} ordenanzas registradas`,
+          extra:[["Avance normativo", fmtPct(m.ordenanzas)]]
+        },
+        {
+          title:"Reuniones y eventos",
+          main:fmtPct((m.reuniones + m.eventos)/2),
+          donut:(m.reuniones + m.eventos)/2,
+          sub:`${t.reunionesRows} reuniones · ${t.eventosCodes} eventos`,
+          extra:[
+            ["Asistencia a reuniones", fmtPct(m.reuniones)],
+            ["Cobertura en eventos", fmtPct(m.eventos)],
+            ["Personas en eventos", fmtNum(t.eventPeople)]
+          ]
+        },
+        {
+          title:"Interacción en Redes Institucionales",
+          main:fmtNum(t.redInteractions),
+          donut:m.redes,
+          sub:`${t.redesCodes} publicaciones registradas`,
+          extra:[["Cobertura por publicación", fmtPct(m.redes)]]
+        },
+        {
+          title:"Apoyo institucional",
+          main:fmtPct(m.apoyo),
+          donut:m.apoyo,
+          sub:`${t.apoyoCodes} actividades reportadas`,
+          extra:[
+            ["Cobertura por actividad", fmtPct(m.apoyo)],
+            ["Personas identificadas", fmtNum(t.apoyoPeople)]
+          ]
+        },
+        {
+          title:"Alertas principales",
+          main:fmtNum(state.alerts.length),
+          donut: state.alerts.length ? 100 : 0,
+          sub:"Clic para desplegar la tabla de alertas",
+          extra:[["Casos críticos", fmtNum(state.alerts.filter(a=>a.prioridad==="Alta").length)]],
+          clickable:true
+        },
+        {
+          title:"Direcciones monitoreadas",
+          main:fmtNum(state.directionList.length),
+          donut:state.avgIndex,
+          sub:"Con datos en al menos un módulo",
+          extra:[["Índice general promedio", fmtPct(state.avgIndex)]]
+        }
       ];
+      document.getElementById("summaryKpis").innerHTML = kpis.map((k,idx)=>`
+        <div class="card ${k.clickable ? "clickable" : ""}" ${k.clickable ? 'id="alertKpi"' : ""}>
+          <div class="kpi-title">${k.title}</div>
+          <div class="kpi-main">
+            <div>
+              <div class="big-number">${k.main}</div>
+              <div class="subtext">${k.sub}</div>
+            </div>
+            ${donut(k.donut)}
+          </div>
+          <div class="mini-list">
+            ${k.extra.map(([l,v])=>`<div class="mini-row"><span>${l}</span><strong>${v}</strong></div>`).join("")}
+          </div>
+        </div>
+      `).join("");
+      document.getElementById("alertKpi")?.addEventListener("click", () => {
+        document.getElementById("alertsPanel").classList.toggle("hidden");
+      });
 
-      $('kpiGeneral').innerHTML = items.map(([title,val,sub,cls]) => `
-        <article class="kpi ${cls}"><h4>${escapeHtml(title)}</h4><div class="value">${escapeHtml(val)}</div><small>${escapeHtml(sub)}</small></article>
-      `).join('');
+      document.getElementById("moduleBars").innerHTML = MODULE_KEYS.map(k => progressBar(MODULE_NAMES[k], m[k])).join("");
+      document.getElementById("indexDonutBox").innerHTML = `
+        <div style="display:flex;align-items:center;gap:18px;justify-content:center;padding:10px 0 16px">${donut(state.avgIndex)}
+          <div><div class="big-number">${fmtPct(state.avgIndex)}</div><div class="subtext">Índice general promedio de las direcciones monitoreadas.</div></div>
+        </div>
+        <div class="mini-list">
+          <div class="mini-row"><span>Mayor índice</span><strong>${state.ranking[0] ? fmtPct(state.ranking[0].index) : "0%"}</strong></div>
+          <div class="mini-row"><span>Direcciones con alertas</span><strong>${fmtNum(new Set(state.alerts.map(a=>displayClean(a.dir))).size)}</strong></div>
+        </div>
+      `;
+
+      renderAlerts();
     }
 
-    function renderModules(){
-      const scores = Object.keys(MODULE_LABELS).map(m => ({m, score: avg((DATA[m]||[]).map(r => rowScore(m,r))), count:(DATA[m]||[]).length}));
-      $('moduleSummary').innerHTML = scores.map(x => `
-        <div class="module-card">
-          <div class="label">${escapeHtml(MODULE_LABELS[x.m])}</div>
-          <div class="score">${fmtPct(x.score)}</div>
-          <small>${x.count} registros</small>
-          <div class="bar"><span style="width:${Math.max(0,Math.min(100,x.score))}%"></span></div>
-        </div>
-      `).join('');
-
-      const topAlerts = ALERTS.slice(0,8);
-      $('alertSummary').innerHTML = topAlerts.length ? `<div class="table-wrap"><table><thead><tr><th>Módulo</th><th>Dirección</th><th>Alerta</th></tr></thead><tbody>${topAlerts.map(a=>`<tr><td>${escapeHtml(a.module)}</td><td>${escapeHtml(a.direction)}</td><td><span class="pill red">${escapeHtml(a.issue)}</span><br><small>${escapeHtml(a.item)}</small></td></tr>`).join('')}</tbody></table></div>` : '<div class="empty">No hay alertas registradas.</div>';
+    function renderAlerts(){
+      const rows = state.alerts.slice(0, 200).map(a => [
+        a.dir,
+        a.module,
+        a.asunto,
+        a.alerta,
+        `<span class="status ${a.prioridad==="Alta"?"red":"yellow"}">${a.prioridad}</span>`
+      ]);
+      document.getElementById("alertsTable").innerHTML = table(["Dirección","Módulo","Asunto","Alerta","Prioridad"], rows);
     }
 
     function renderRanking(){
-      if(!DIR_STATS.length){ $('rankingTable').innerHTML = '<div class="empty">No hay datos para mostrar.</div>'; return; }
-      $('rankingTable').innerHTML = `<div class="table-wrap"><table><thead><tr><th>#</th><th>Dirección</th><th>Índice</th><th>Semáforo</th><th>PAC</th><th>Ordenanzas</th><th>Reuniones</th><th>Redes</th><th>Eventos</th><th>Apoyo</th><th>Registros</th></tr></thead><tbody>${DIR_STATS.map((d,i)=>`<tr><td><span class="rank-number">${i+1}</span></td><td><strong>${escapeHtml(d.direction)}</strong></td><td><strong>${fmtPct(d.index)}</strong></td><td><span class="pill ${d.sem.cls}">${d.sem.text}</span></td><td>${fmtPct(d.moduleScores.pac)}</td><td>${fmtPct(d.moduleScores.ordenanzas)}</td><td>${fmtPct(d.moduleScores.reuniones)}</td><td>${fmtPct(d.moduleScores.redes)}</td><td>${fmtPct(d.moduleScores.eventos)}</td><td>${fmtPct(d.moduleScores.apoyo)}</td><td>${d.totalRows}</td></tr>`).join('')}</tbody></table></div>`;
+      const top = state.ranking.slice(0, 5);
+      document.getElementById("topDirections").innerHTML = top.length ? top.map((r, i)=>`
+        <div class="rank-row">
+          <div class="rank-num">${i+1}</div>
+          <div class="rank-name" title="${r.direction}">${r.direction}</div>
+          <span class="status ${statusClass(r.index)}">${fmtPct(r.index)}</span>
+        </div>
+      `).join("") : `<div class="empty">No hay datos.</div>`;
+
+      document.getElementById("rankingBars").innerHTML = state.ranking.slice(0, 12).map(r => progressBar(r.direction, r.index)).join("") || `<div class="empty">No hay datos.</div>`;
+
+      const rows = state.ranking.map(r => [
+        r.direction,
+        `<strong>${fmtPct(r.index)}</strong>`,
+        fmtPct(r.scoreByModule.pac),
+        fmtPct(r.scoreByModule.ordenanzas),
+        fmtPct(r.scoreByModule.reuniones),
+        fmtPct(r.scoreByModule.redes),
+        fmtPct(r.scoreByModule.eventos),
+        fmtPct(r.scoreByModule.apoyo),
+        `<span class="status ${statusClass(r.index)}">${statusText(r.index)}</span>`
+      ]);
+      document.getElementById("rankingTable").innerHTML = table(["Dirección","Índice","PAC","Ordenanzas","Reuniones","Redes","Eventos","Apoyo","Estado"], rows);
     }
 
     function renderDirectionSelect(){
-      const select = $('directionSelect');
-      select.innerHTML = '<option value="">Seleccione una dirección</option>' + DIR_STATS.map(d => `<option value="${escapeAttr(d.direction)}">${escapeHtml(d.direction)}</option>`).join('');
-      select.addEventListener('change', () => renderDirectionDetail(select.value));
+      const select = document.getElementById("directionSelect");
+      select.innerHTML = `<option value="">Seleccione una dirección</option>` + state.directionList.map(d => `<option value="${d}">${d}</option>`).join("");
+      select.addEventListener("change", () => renderDirectionDetail(select.value));
     }
 
-    function renderDirectionDetail(direction){
-      const d = DIR_STATS.find(x => x.direction === direction);
-      if(!d){
-        $('directionDetail').innerHTML = '<h4>Resumen individual</h4><p>Seleccione una Dirección para ver su resumen ejecutivo, desempeño por módulo, alertas y registros asociados.</p><div class="empty">No se ha seleccionado una Dirección.</div>';
-        return;
-      }
-      const alerts = ALERTS.filter(a => splitDirections(a.direction).includes(d.direction) || a.direction.includes(d.direction));
-      const moduleCards = Object.keys(MODULE_LABELS).map(m => `
-        <div class="module-card"><div class="label">${escapeHtml(MODULE_LABELS[m])}</div><div class="score">${fmtPct(d.moduleScores[m])}</div><small>${d.rows[m].length} registros</small><div class="bar"><span style="width:${Math.max(0,Math.min(100,d.moduleScores[m]))}%"></span></div></div>
-      `).join('');
-      const rows = Object.keys(MODULE_LABELS).flatMap(m => d.rows[m].map(r => ({module:m,row:r,score:rowScore(m,r)})));
-      $('directionDetail').innerHTML = `
-        <h4>${escapeHtml(d.direction)}</h4>
-        <p>Resumen ejecutivo de desempeño por módulo.</p>
-        <div class="mini-grid">
-          <div class="mini"><strong>${fmtPct(d.index)}</strong><span>Índice general</span></div>
-          <div class="mini"><strong><span class="pill ${d.sem.cls}">${d.sem.text}</span></strong><span>Semáforo</span></div>
-          <div class="mini"><strong>${d.totalRows}</strong><span>Registros evaluados</span></div>
+    function renderDirectionDetail(dir){
+      const box = document.getElementById("directionDetail");
+      if(!dir){ box.className = "empty"; box.innerHTML = "Seleccione una Dirección para ver su resumen ejecutivo."; return; }
+      const d = state.directions[dir];
+      if(!d){ box.className = "empty"; box.innerHTML = "No hay datos para esta Dirección."; return; }
+      box.className = "";
+      const cards = [
+        ["Índice general", d.index],
+        ["PAC", d.scoreByModule.pac],
+        ["Ordenanzas", d.scoreByModule.ordenanzas],
+        ["Reuniones", d.scoreByModule.reuniones],
+        ["Redes", d.scoreByModule.redes],
+        ["Eventos", d.scoreByModule.eventos],
+        ["Apoyo", d.scoreByModule.apoyo],
+        ["Alertas", d.alerts.length]
+      ];
+      const allRecords = MODULE_KEYS.flatMap(k => (d.records[k] || []));
+      const recordRows = allRecords.map(r => [
+        r.module,
+        r.codigo || "",
+        r.tema || "",
+        r.estado || "",
+        excelDateToText(r.fecha),
+        r.evidencia || ""
+      ]);
+      const alertRows = d.alerts.map(a => [
+        a.module,
+        a.asunto,
+        a.alerta,
+        `<span class="status ${a.prioridad==="Alta"?"red":"yellow"}">${a.prioridad}</span>`
+      ]);
+
+      box.innerHTML = `
+        <div class="grid kpi-grid">
+          ${cards.map(([label,value]) => `
+            <div class="card">
+              <div class="kpi-title">${label}</div>
+              <div class="kpi-main">
+                <div class="big-number">${label === "Alertas" ? fmtNum(value) : fmtPct(value)}</div>
+                ${label === "Alertas" ? "" : donut(value)}
+              </div>
+            </div>
+          `).join("")}
         </div>
-        <div class="module-grid" style="margin-top:16px">${moduleCards}</div>
-        <div style="margin-top:16px">
-          <h4>Alertas de la Dirección</h4>
-          ${alerts.length ? `<div class="table-wrap"><table><thead><tr><th>Módulo</th><th>Alerta</th><th>Detalle</th></tr></thead><tbody>${alerts.map(a=>`<tr><td>${escapeHtml(a.module)}</td><td><span class="pill red">${escapeHtml(a.issue)}</span></td><td>${escapeHtml(a.item)}</td></tr>`).join('')}</tbody></table></div>` : '<div class="empty">No hay alertas para esta Dirección.</div>'}
+        <div class="grid charts-grid" style="margin-top:16px">
+          <div class="card">
+            <h3 class="chart-title">Desempeño por módulo</h3>
+            <div class="bar-chart">
+              ${MODULE_KEYS.map(k => progressBar(MODULE_NAMES[k], d.scoreByModule[k])).join("")}
+            </div>
+          </div>
+          <div class="card">
+            <h3 class="chart-title">Semáforo de la Dirección</h3>
+            <div style="display:flex;align-items:center;gap:18px;justify-content:center;padding:14px">
+              ${donut(d.index)}
+              <div>
+                <div class="big-number">${fmtPct(d.index)}</div>
+                <div class="subtext"><span class="status ${statusClass(d.index)}">${statusText(d.index)}</span></div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div style="margin-top:16px">
-          <h4>Registros asociados</h4>
-          ${rows.length ? `<div class="table-wrap"><table><thead><tr><th>Módulo</th><th>Registro</th><th>Estado / etapa</th><th>Puntaje</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${escapeHtml(MODULE_LABELS[x.module])}</td><td>${escapeHtml(recordName(x.module,x.row))}</td><td>${escapeHtml(get(x.row,['Etapa Actual','Etapa','Asistencia','Tipo','Fecha']) || 'Registrado')}</td><td>${fmtPct(x.score)}</td></tr>`).join('')}</tbody></table></div>` : '<div class="empty">No hay registros asociados.</div>'}
+        <div class="grid charts-grid" style="margin-top:16px">
+          <div class="card">
+            <h3 class="chart-title">Registros asociados</h3>
+            <div class="table-wrap four-scroll">${table(["Módulo","Código","Tema","Estado / Resultado","Fecha","Evidencia"], recordRows)}</div>
+          </div>
+          <div class="card">
+            <h3 class="chart-title">Alertas de la Dirección</h3>
+            <div class="table-wrap four-scroll">${table(["Módulo","Asunto","Alerta","Prioridad"], alertRows)}</div>
+          </div>
         </div>
       `;
     }
 
-    function recordName(module,row){
-      return get(row,['Nombre del Proyecto','Proyecto','Nombre de la ordenanza','Ordenanza','Tema Tratado','Publicación','Publicacion','Evento','Actividad','Código','Codigo']) || MODULE_LABELS[module];
-    }
-
     function setupTabs(){
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-          document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-          btn.classList.add('active');
-          const id = btn.dataset.tab;
-          $('tab-' + id).classList.add('active');
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById(`tab-${btn.dataset.tab}`).classList.add("active");
         });
       });
     }
 
-    function escapeHtml(value){
-      return String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-    }
-    function escapeAttr(value){ return escapeHtml(value); }
-
     async function init(){
       setupTabs();
-      $('messages').innerHTML = '<div class="loading">Cargando datos desde GitHub...</div>';
       try{
-        const entries = await Promise.all(Object.entries(CSV_FILES).map(async ([key,url]) => [key, await fetchCSV(url)]));
-        DATA = Object.fromEntries(entries);
-        buildStats();
-        renderKpis();
-        renderModules();
+        raw = {};
+        for(const [key,path] of Object.entries(FILES)){
+          raw[key] = await loadCSV(path);
+        }
+        console.log("Dashboard Alcaldía V8 - filas cargadas", Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,v.length])));
+        state = buildState();
+        renderSummary();
         renderRanking();
         renderDirectionSelect();
-        const counts = Object.fromEntries(Object.entries(DATA).map(([k,v]) => [k, v.length]));
-        $('loadStatus').textContent = 'Conexión correcta. CSV cargados desde GitHub.';
-        $('debugStatus').textContent = Object.entries(counts).map(([k,v]) => `${k}: ${v}`).join(' · ');
-        $('messages').innerHTML = '';
-        console.log('Dashboard Alcaldía V7 - filas cargadas', counts, {DIR_STATS, ALERTS});
+        document.getElementById("lastUpdate").textContent = "Actualizado desde CSV institucional";
       }catch(err){
         console.error(err);
-        $('loadStatus').textContent = 'No se pudieron cargar todos los CSV.';
-        $('messages').innerHTML = `<div class="error"><strong>No se pudieron cargar los CSV.</strong><br>${escapeHtml(err.message)}<br><small>Verifica la carpeta data del repositorio y presiona Ctrl + F5.</small></div>`;
+        document.querySelector("main").innerHTML = `<div class="card"><h2>No se pudieron cargar los datos</h2><p>${err.message}</p><p class="subtext">Revise que la carpeta data tenga los 6 CSV oficiales.</p></div>`;
       }
     }
 
