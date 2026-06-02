@@ -3,114 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Ejecutivo Alcaldía</title>
+  <title>Dashboard Ejecutivo Alcaldía | GADM Riobamba</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">A</div>
-        <div>
-          <p class="eyebrow">GADM Riobamba</p>
-          <h1>Dashboard Alcaldía</h1>
+  <div class="page">
+    <header class="institutional-header">
+      <div class="header-strip"></div>
+      <div class="header-content">
+        <div class="brand-block">
+          <div class="brand-mark">A</div>
+          <div>
+            <p class="eyebrow">GADM Riobamba</p>
+            <h1>Dashboard Ejecutivo de Gestión Directiva Municipal</h1>
+            <p class="subtitle">Seguimiento institucional de direcciones, cumplimiento y alertas de gestión.</p>
+          </div>
+        </div>
+        <div class="status-card">
+          <span>Fuente de datos</span>
+          <strong>CSV desde GitHub</strong>
+          <small>Actualizado desde la matriz Excel institucional.</small>
         </div>
       </div>
+    </header>
 
-      <nav class="nav">
-        <a href="#resumen" class="active">Resumen Ejecutivo</a>
-        <a href="#direcciones">Direcciones</a>
-        <a href="#alertas">Alertas</a>
-        <a href="#modulos">Módulos</a>
-      </nav>
+    <nav class="tabs" aria-label="Pestañas principales">
+      <button class="tab-button active" data-tab="resumen">Resumen general</button>
+      <button class="tab-button" data-tab="ranking">Mejores direcciones</button>
+      <button class="tab-button" data-tab="buscador">Buscador por dirección</button>
+    </nav>
 
-      <div class="sidebar-card">
-        <p class="eyebrow">Fuente de datos</p>
-        <strong>CSV desde GitHub</strong>
-        <span>Reemplaza los archivos de la carpeta <code>data</code> con los CSV oficiales.</span>
-      </div>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">Seguimiento de Directores</p>
-          <h2>Panel Ejecutivo de Gestión Directiva Municipal</h2>
-        </div>
-        <div class="filters">
-          <label for="direccionFilter">Dirección</label>
-          <select id="direccionFilter">
-            <option value="TODAS">Todas las direcciones</option>
-          </select>
-        </div>
-      </header>
-
-      <section id="resumen" class="section">
+    <main class="content">
+      <section id="tab-resumen" class="tab-panel active">
         <div class="section-title">
-          <h3>Resumen general</h3>
-          <p>Indicadores principales calculados desde PAC, ordenanzas, reuniones, redes institucionales, eventos y apoyo institucional.</p>
+          <div>
+            <p class="eyebrow blue">Vista ejecutiva</p>
+            <h2>Resumen general</h2>
+          </div>
+          <p>Indicadores consolidados de PAC, ordenanzas, reuniones, redes institucionales, eventos y apoyo institucional.</p>
         </div>
         <div id="kpiGrid" class="kpi-grid"></div>
+        <div class="grid-2 mt-24">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Avance por módulo</h3>
+                <p>Promedios generales calculados desde cada hoja de la matriz.</p>
+              </div>
+            </div>
+            <div id="moduleOverview" class="module-overview"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Alertas principales</h3>
+                <p>Casos que requieren revisión o actualización.</p>
+              </div>
+            </div>
+            <div id="topAlerts" class="compact-list"></div>
+          </div>
+        </div>
       </section>
 
-      <section id="direcciones" class="section grid-2">
-        <div class="panel large">
+      <section id="tab-ranking" class="tab-panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow blue">Comparativo institucional</p>
+            <h2>Mejores direcciones</h2>
+          </div>
+          <p>Ranking calculado con el índice general de gestión directiva y los resultados por cada módulo de seguimiento.</p>
+        </div>
+        <div id="topThree" class="podium-grid"></div>
+        <div class="panel mt-24">
           <div class="panel-header">
             <div>
-              <h3>Índice General de Gestión Directiva</h3>
-              <p>Promedio ponderado por Dirección. Sirve como semáforo de seguimiento, no como sanción automática.</p>
+              <h3>Ranking completo de direcciones</h3>
+              <p>El índice es un semáforo de seguimiento; no reemplaza la revisión técnica de cada caso.</p>
             </div>
           </div>
           <div id="rankingTable" class="table-wrap"></div>
         </div>
-
-        <div class="panel">
-          <div class="panel-header">
-            <div>
-              <h3>Semáforo por Dirección</h3>
-              <p>Clasificación ejecutiva según el índice general.</p>
-            </div>
-          </div>
-          <div id="semaforoList" class="semaforo-list"></div>
-        </div>
       </section>
 
-      <section id="alertas" class="section">
-        <div class="panel">
-          <div class="panel-header">
-            <div>
-              <h3>Alertas críticas</h3>
-              <p>Procesos vencidos, sin avance, inasistencias o apoyos con bajo cumplimiento.</p>
-            </div>
+      <section id="tab-buscador" class="tab-panel">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow blue">Consulta individual</p>
+            <h2>Buscador por dirección</h2>
           </div>
-          <div id="alertsTable" class="table-wrap"></div>
+          <div class="search-box">
+            <label for="direccionSearch">Seleccione una Dirección</label>
+            <select id="direccionSearch">
+              <option value="">Seleccione una dirección</option>
+            </select>
+          </div>
         </div>
-      </section>
-
-      <section id="modulos" class="section grid-2">
-        <div class="panel">
-          <h3>Avance PAC / Contratación</h3>
-          <div id="pacBars" class="bar-list"></div>
-        </div>
-        <div class="panel">
-          <h3>Avance Ordenanzas</h3>
-          <div id="ordenanzaBars" class="bar-list"></div>
-        </div>
-        <div class="panel">
-          <h3>Asistencia a reuniones</h3>
-          <div id="reunionBars" class="bar-list"></div>
-        </div>
-        <div class="panel">
-          <h3>Redes institucionales</h3>
-          <div id="redesBars" class="bar-list"></div>
-        </div>
-        <div class="panel">
-          <h3>Eventos institucionales</h3>
-          <div id="eventosBars" class="bar-list"></div>
-        </div>
-        <div class="panel">
-          <h3>Apoyo institucional</h3>
-          <div id="apoyoBars" class="bar-list"></div>
+        <div id="directionProfile" class="direction-profile empty-state">
+          Seleccione una Dirección para ver su resumen ejecutivo, desempeño por módulo, alertas y registros asociados.
         </div>
       </section>
     </main>

@@ -1,40 +1,29 @@
-# Dashboard Ejecutivo Alcaldía - versión adaptada a matriz de 6 hojas
+# Dashboard Ejecutivo Alcaldía - versión 3 pestañas
 
-Esta versión lee 6 archivos CSV en la carpeta `data`:
+Esta versión mantiene la lectura desde los 6 CSV generados desde la matriz Excel:
 
-- `pac_contratacion.csv`
-- `ordenanzas.csv`
-- `reuniones.csv`
-- `redes_institucionales.csv`
-- `eventos.csv`
-- `apoyo_institucional.csv`
+- `data/pac_contratacion.csv`
+- `data/ordenanzas.csv`
+- `data/reuniones.csv`
+- `data/redes_institucionales.csv`
+- `data/eventos.csv`
+- `data/apoyo_institucional.csv`
 
-## Matriz esperada
+## Pestañas principales
 
-La matriz Excel debe tener estas hojas:
+1. **Resumen general**  
+   Indicadores consolidados del municipio, avance por módulo y alertas principales.
 
-- `1. PAC`
-- `2. Ordenanzas`
-- `3. Reuniones`
-- `4. Redes Institucionales`
-- `5. Eventos`
-- `6. Apoyo Institucional`
+2. **Mejores direcciones**  
+   Ranking general por Dirección, considerando PAC, ordenanzas, reuniones, redes, eventos, apoyo institucional y actualización.
 
-El dashboard está preparado para leer la estructura nueva de PAC:
+3. **Buscador por dirección**  
+   Selector individual para consultar el resumen de una Dirección: índice, semáforo, desempeño por módulo, alertas y registros asociados.
 
-`Partida Presupuestaria, Código, Nombre del Proyecto, Dirección Responsable, Objeto de contratación, Tipo de Contratación, Tipo de Presupuesto, Monto Presupuestado, Monto Contratado, Monto Devengado, Etapa Actual, Fecha de inicio, Fecha límite, Observaciones, Evidencias`.
+## Identidad visual
 
-También acepta la estructura anterior de PAC con menos columnas.
+La interfaz usa una imagen más institucional basada en azul y rojo, colores asociados a Riobamba.
 
-## Recomendaciones de llenado
+## Actualización de datos
 
-- Para varias direcciones en una misma celda, separar con punto y coma `;`.
-- Las fechas pueden estar en formato `dd/mm/aaaa` o `aaaa-mm-dd`.
-- Los montos pueden escribirse como números; el dashboard también intenta interpretar formatos con `$`, comas o puntos.
-- La columna `Etapa Actual` del PAC se convierte a porcentaje así:
-  - No empieza el proceso: 0%
-  - Preparatoria: 25%
-  - Precontractual: 50%
-  - Contractual: 75%
-  - Finalizado / recibido / cerrado: 100%
-
+La información se actualiza reemplazando los CSV de la carpeta `data`, generados automáticamente desde el archivo Excel institucional mediante el actualizador Node.

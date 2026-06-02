@@ -75,9 +75,19 @@ let state = {
   redes: [],
   eventos: [],
   apoyo: [],
-  direccion: "TODAS",
+  selectedDirection: "",
   warnings: []
 };
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>'"]/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "'": "&#039;",
+    '"': "&quot;"
+  }[char]));
+}
 
 function parseCSV(text) {
   text = String(text || "").replace(/^\uFEFF/, "");
@@ -118,7 +128,6 @@ function parseCSV(text) {
 
   if (!rows.length) return [];
   const headers = rows.shift().map(h => String(h || "").replace(/^\uFEFF/, "").trim());
-
   return rows
     .filter(r => r.some(c => String(c || "").trim() !== ""))
     .map(r => Object.fromEntries(headers.map((h, i) => [h, r[i] ?? ""])));
@@ -203,9 +212,19 @@ function parseDate(value) {
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
+function formatDate(value) {
+  const d = parseDate(value);
+  if (!d) return escapeHTML(value || "-");
+  return d.toLocaleDateString("es-EC", { day: "2-digit", month: "2-digit", year: "numeric" });
+}
+
 function formatMoney(value) {
   const n = toNumber(value);
   return n.toLocaleString("es-EC", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+}
+
+function formatPercent(value) {
+  return `${Math.round(toNumber(value))}%`;
 }
 
 function etapaScore(value, dictionary) {
@@ -244,7 +263,7 @@ function redesScore(row) {
 }
 
 function eventosScore(row) {
-  const personas = toNumber(get(row, ["Cantidad de personas", "Cantidad de Personas", "Personas asistentes", "Nro de personas", "N° Personas", "Nº Personas", "Número de personas", "Asistentes", "Direcciones que Asisten", "Dirección que Asiste"]));
+  const personas = toNumber(get(row, ["Cantidad de personas", "Cantidad de Personas", "Personas asistentes", "Nro de personas", "N° Personas", "Nº Personas", "Número de personas", "Asistentes"]));
   return personas > 0 ? 100 : 0;
 }
 
@@ -270,10 +289,7 @@ function getRawDirection(row, module) {
 function splitDirections(value) {
   const text = String(value || "").trim();
   if (!text) return [];
-  return text
-    .split(/\s*(?:;|\||\n|\r)\s*/g)
-    .map(v => v.trim())
-    .filter(Boolean);
+  return text.split(/\s*(?:;|\||\n|\r)\s*/g).map(v => v.trim()).filter(Boolean);
 }
 
 function getDirectionsFromRow(row, module) {
@@ -285,9 +301,8 @@ function getDirection(row, module) {
   return getDirectionsFromRow(row, module)[0] || "Sin dirección";
 }
 
-function rowMatchesDirection(row, module, direction) {
-  if (direction === "TODAS") return true;
-  return getDirectionsFromRow(row, module).includes(direction);
+function rowsByDirection(rows, module, direction) {
+  return rows.filter(r => getDirectionsFromRow(r, module).includes(direction));
 }
 
 function getTema(row, module) {
@@ -316,6 +331,10 @@ function getDate(row, module) {
 
 function getEvidence(row) {
   return get(row, ["Evidencias", "Evidencia", "Enlace", "Link"]);
+}
+
+function getObservation(row) {
+  return get(row, ["Observaciones", "Observacion", "Observación", "Novedad"]);
 }
 
 function isFinalStage(row, module) {
@@ -354,10 +373,6 @@ function getDirections() {
   return [...set].sort((a, b) => a.localeCompare(b));
 }
 
-function filteredRows(rows, module) {
-  return rows.filter(row => rowMatchesDirection(row, module, state.direccion));
-}
-
 function groupByDirection(rows, module, scoreFunction) {
   return rows.reduce((acc, row) => {
     for (const key of getDirectionsFromRow(row, module)) {
@@ -382,10 +397,6 @@ function freshnessScore(rows) {
   return 10;
 }
 
-function rowsByDirection(rows, module, direction) {
-  return rows.filter(r => getDirectionsFromRow(r, module).includes(direction));
-}
-
 function calculateDirectionScores() {
   const directions = getDirections();
   const totalWeight = Object.values(WEIGHTS).reduce((a, b) => a + b, 0);
@@ -407,7 +418,7 @@ function calculateDirectionScores() {
     const apoAvg = apoRows.length ? avg(apoRows.map(apoyoScore)) : 0;
     const actScore = freshnessScore(allRows);
 
-    const index = (
+    const index = allRows.length ? (
       pacAvg * WEIGHTS.pac +
       ordAvg * WEIGHTS.ordenanzas +
       reuAvg * WEIGHTS.reuniones +
@@ -415,13 +426,23 @@ function calculateDirectionScores() {
       eveAvg * WEIGHTS.eventos +
       apoAvg * WEIGHTS.apoyo +
       actScore * WEIGHTS.actualizacion
-    ) / totalWeight;
+    ) / totalWeight : 0;
 
-    const alerts = pacRows.filter(r => isDelayed(r, "pac") || pacScore(r) === 0).length +
-      ordRows.filter(r => isDelayed(r, "ordenanzas") || ordenanzaScore(r) === 0).length +
-      reuRows.filter(r => reunionScore(r) === 0).length;
+    const alerts = makeAlerts(direction).length;
 
-    return { direction, pacScore: pacAvg, ordScore: ordAvg, reuScore: reuAvg, redScore: redAvg, eveScore: eveAvg, apoScore: apoAvg, actScore, index, alerts };
+    return {
+      direction,
+      pacRows, ordRows, reuRows, redRows, eveRows, apoRows, allRows,
+      pacScore: pacAvg,
+      ordScore: ordAvg,
+      reuScore: reuAvg,
+      redScore: redAvg,
+      eveScore: eveAvg,
+      apoScore: apoAvg,
+      actScore,
+      index,
+      alerts
+    };
   }).sort((a, b) => b.index - a.index);
 }
 
@@ -432,103 +453,152 @@ function pacBudgetTotals(rows) {
   return { presupuesto, contratado, devengado, ejecucion: presupuesto ? (devengado / presupuesto) * 100 : 0, contratacion: presupuesto ? (contratado / presupuesto) * 100 : 0 };
 }
 
-function makeAlerts() {
+function rowsForDirectionOrAll(rows, module, direction) {
+  return direction ? rowsByDirection(rows, module, direction) : rows;
+}
+
+function makeAlerts(direction = "") {
   const alerts = [];
-
-  filteredRows(state.pac, "pac").forEach(r => {
-    if (pacScore(r) === 0) alerts.push({ modulo: "PAC", direccion: getDirection(r, "pac"), tema: getTema(r, "pac"), problema: "Proceso no iniciado", prioridad: "Media" });
-    else if (isDelayed(r, "pac")) alerts.push({ modulo: "PAC", direccion: getDirection(r, "pac"), tema: getTema(r, "pac"), problema: "Proceso vencido o atrasado", prioridad: "Alta" });
-    if (!getEvidence(r)) alerts.push({ modulo: "PAC", direccion: getDirection(r, "pac"), tema: getTema(r, "pac"), problema: "Sin evidencia registrada", prioridad: "Baja" });
+  const push = (moduleLabel, moduleKey, row, problem, priority) => alerts.push({
+    modulo: moduleLabel,
+    direccion: getDirection(row, moduleKey),
+    tema: getTema(row, moduleKey),
+    problema: problem,
+    prioridad: priority
   });
 
-  filteredRows(state.ordenanzas, "ordenanzas").forEach(r => {
-    if (ordenanzaScore(r) === 0) alerts.push({ modulo: "Ordenanza", direccion: getDirection(r, "ordenanzas"), tema: getTema(r, "ordenanzas"), problema: "Ordenanza no iniciada", prioridad: "Media" });
-    else if (isDelayed(r, "ordenanzas")) alerts.push({ modulo: "Ordenanza", direccion: getDirection(r, "ordenanzas"), tema: getTema(r, "ordenanzas"), problema: "Ordenanza vencida o atrasada", prioridad: "Alta" });
-    if (!getEvidence(r)) alerts.push({ modulo: "Ordenanza", direccion: getDirection(r, "ordenanzas"), tema: getTema(r, "ordenanzas"), problema: "Sin evidencia registrada", prioridad: "Baja" });
+  rowsForDirectionOrAll(state.pac, "pac", direction).forEach(r => {
+    if (pacScore(r) === 0) push("PAC", "pac", r, "Proceso no iniciado", "Media");
+    else if (isDelayed(r, "pac")) push("PAC", "pac", r, "Proceso vencido o atrasado", "Alta");
+    if (!getEvidence(r)) push("PAC", "pac", r, "Sin evidencia registrada", "Baja");
   });
 
-  filteredRows(state.reuniones, "reuniones").forEach(r => {
-    if (reunionScore(r) === 0) alerts.push({ modulo: "Reunión", direccion: getDirection(r, "reuniones"), tema: getTema(r, "reuniones"), problema: "Inasistencia no justificada", prioridad: "Alta" });
+  rowsForDirectionOrAll(state.ordenanzas, "ordenanzas", direction).forEach(r => {
+    if (ordenanzaScore(r) === 0) push("Ordenanza", "ordenanzas", r, "Ordenanza no iniciada", "Media");
+    else if (isDelayed(r, "ordenanzas")) push("Ordenanza", "ordenanzas", r, "Ordenanza vencida o atrasada", "Alta");
+    if (!getEvidence(r)) push("Ordenanza", "ordenanzas", r, "Sin evidencia registrada", "Baja");
   });
 
-  filteredRows(state.redes, "redes").forEach(r => {
-    if (redesScore(r) === 0) alerts.push({ modulo: "Redes", direccion: getDirection(r, "redes"), tema: getTema(r, "redes"), problema: "Sin interacciones registradas", prioridad: "Baja" });
+  rowsForDirectionOrAll(state.reuniones, "reuniones", direction).forEach(r => {
+    if (reunionScore(r) === 0) push("Reunión", "reuniones", r, "Inasistencia no justificada", "Alta");
   });
 
-  filteredRows(state.eventos, "eventos").forEach(r => {
-    if (eventosScore(r) === 0) alerts.push({ modulo: "Eventos", direccion: getDirection(r, "eventos"), tema: getTema(r, "eventos"), problema: "Sin cantidad de asistentes registrada", prioridad: "Media" });
+  rowsForDirectionOrAll(state.redes, "redes", direction).forEach(r => {
+    if (redesScore(r) === 0) push("Redes", "redes", r, "Sin interacciones registradas", "Baja");
   });
 
-  filteredRows(state.apoyo, "apoyo").forEach(r => {
-    if (apoyoScore(r) === 0) alerts.push({ modulo: "Apoyo", direccion: getDirection(r, "apoyo"), tema: getTema(r, "apoyo"), problema: "Sin apoyo entregado registrado", prioridad: "Media" });
+  rowsForDirectionOrAll(state.eventos, "eventos", direction).forEach(r => {
+    if (eventosScore(r) === 0) push("Eventos", "eventos", r, "Sin cantidad de asistentes registrada", "Media");
+  });
+
+  rowsForDirectionOrAll(state.apoyo, "apoyo", direction).forEach(r => {
+    if (apoyoScore(r) === 0) push("Apoyo", "apoyo", r, "Sin apoyo entregado registrado", "Media");
   });
 
   return alerts;
 }
 
-function formatPercent(value) {
-  return `${Math.round(toNumber(value))}%`;
+function moduleMetrics(direction = "") {
+  const pacRows = rowsForDirectionOrAll(state.pac, "pac", direction);
+  const ordRows = rowsForDirectionOrAll(state.ordenanzas, "ordenanzas", direction);
+  const reuRows = rowsForDirectionOrAll(state.reuniones, "reuniones", direction);
+  const redRows = rowsForDirectionOrAll(state.redes, "redes", direction);
+  const eveRows = rowsForDirectionOrAll(state.eventos, "eventos", direction);
+  const apoRows = rowsForDirectionOrAll(state.apoyo, "apoyo", direction);
+  const budget = pacBudgetTotals(pacRows);
+  const interactions = redRows.reduce((sum, row) => sum + toNumber(get(row, ["Nro de Interacciones", "Nro. de Interacciones", "N° Interacciones", "Nº Interacciones", "Número de Interacciones", "Interacciones", "Nro Interacciones", "Cantidad de Interacciones"])), 0);
+  const asistentes = eveRows.reduce((sum, row) => sum + toNumber(get(row, ["Cantidad de personas", "Cantidad de Personas", "Personas asistentes", "Nro de personas", "N° Personas", "Nº Personas", "Número de personas", "Asistentes"])), 0);
+
+  return [
+    { key: "pac", label: "PAC / Contratación", score: avg(pacRows.map(pacScore)), count: pacRows.length, note: `${pacRows.length} proyectos`, value: formatPercent(avg(pacRows.map(pacScore))) },
+    { key: "presupuesto", label: "Ejecución presupuestaria", score: budget.ejecucion, count: pacRows.length, note: `${formatMoney(budget.devengado)} de ${formatMoney(budget.presupuesto)}`, value: formatPercent(budget.ejecucion) },
+    { key: "ordenanzas", label: "Ordenanzas", score: avg(ordRows.map(ordenanzaScore)), count: ordRows.length, note: `${ordRows.length} registros`, value: formatPercent(avg(ordRows.map(ordenanzaScore))) },
+    { key: "reuniones", label: "Reuniones", score: avg(reuRows.map(reunionScore)), count: reuRows.length, note: `${reuRows.length} asistencias`, value: formatPercent(avg(reuRows.map(reunionScore))) },
+    { key: "redes", label: "Redes institucionales", score: redRows.length ? 100 : 0, count: redRows.length, note: `${redRows.length} publicaciones`, value: interactions.toLocaleString("es-EC") },
+    { key: "eventos", label: "Eventos", score: eveRows.length ? 100 : 0, count: eveRows.length, note: `${eveRows.length} eventos`, value: asistentes.toLocaleString("es-EC") },
+    { key: "apoyo", label: "Apoyo institucional", score: avg(apoRows.map(apoyoScore)), count: apoRows.length, note: `${apoRows.length} actividades`, value: formatPercent(avg(apoRows.map(apoyoScore))) }
+  ];
 }
 
 function renderWarnings() {
   if (!state.warnings.length) return "";
-  return `<div class="panel warning-panel"><strong>Advertencias de carga:</strong><br>${state.warnings.join("<br>")}</div>`;
+  return `<div class="panel warning-panel"><strong>Advertencias de carga:</strong><br>${state.warnings.map(escapeHTML).join("<br>")}</div>`;
 }
 
 function renderKPIs() {
-  const pac = filteredRows(state.pac, "pac");
-  const ord = filteredRows(state.ordenanzas, "ordenanzas");
-  const reu = filteredRows(state.reuniones, "reuniones");
-  const red = filteredRows(state.redes, "redes");
-  const eve = filteredRows(state.eventos, "eventos");
-  const apo = filteredRows(state.apoyo, "apoyo");
+  const metrics = moduleMetrics();
+  const budget = pacBudgetTotals(state.pac);
   const alerts = makeAlerts();
-  const interactions = red.reduce((sum, row) => sum + toNumber(get(row, ["Nro de Interacciones", "Nro. de Interacciones", "N° Interacciones", "Nº Interacciones", "Número de Interacciones", "Interacciones", "Nro Interacciones", "Cantidad de Interacciones"])), 0);
-  const asistentes = eve.reduce((sum, row) => sum + toNumber(get(row, ["Cantidad de personas", "Cantidad de Personas", "Personas asistentes", "Nro de personas", "N° Personas", "Nº Personas", "Número de personas", "Asistentes", "Direcciones que Asisten", "Dirección que Asiste"])), 0);
-  const budget = pacBudgetTotals(pac);
-
+  const scores = calculateDirectionScores();
+  const generalIndex = scores.length ? avg(scores.map(s => s.index)) : 0;
   const kpis = [
-    { label: "Avance promedio PAC", value: formatPercent(avg(pac.map(pacScore))), note: `${pac.length} proyectos registrados` },
-    { label: "Ejecución presupuestaria", value: formatPercent(budget.ejecucion), note: `${formatMoney(budget.devengado)} devengado de ${formatMoney(budget.presupuesto)}` },
+    { label: "Índice general", value: formatPercent(generalIndex), note: "Promedio ponderado municipal" },
+    { label: "Avance promedio PAC", value: metrics[0].value, note: metrics[0].note },
+    { label: "Ejecución presupuestaria", value: metrics[1].value, note: metrics[1].note },
     { label: "Monto contratado PAC", value: formatMoney(budget.contratado), note: `${formatPercent(budget.contratacion)} del presupuesto registrado` },
-    { label: "Avance ordenanzas", value: formatPercent(avg(ord.map(ordenanzaScore))), note: `${ord.length} ordenanzas registradas` },
-    { label: "Asistencia a reuniones", value: formatPercent(avg(reu.map(reunionScore))), note: `${reu.length} registros de asistencia` },
-    { label: "Interacciones en redes", value: interactions.toLocaleString("es-EC"), note: `${red.length} publicaciones registradas` },
-    { label: "Asistencia a eventos", value: asistentes.toLocaleString("es-EC"), note: `${eve.length} eventos registrados` },
-    { label: "Apoyo institucional", value: formatPercent(avg(apo.map(apoyoScore))), note: `${apo.length} actividades reportadas` },
-    { label: "Direcciones monitoreadas", value: state.direccion === "TODAS" ? getDirections().length : 1, note: "Con datos en al menos un módulo" },
-    { label: "Alertas críticas", value: alerts.length, note: "Casos que requieren seguimiento" }
+    { label: "Avance ordenanzas", value: metrics[2].value, note: metrics[2].note },
+    { label: "Asistencia a reuniones", value: metrics[3].value, note: metrics[3].note },
+    { label: "Interacciones en redes", value: metrics[4].value, note: metrics[4].note },
+    { label: "Asistencia a eventos", value: metrics[5].value, note: metrics[5].note },
+    { label: "Direcciones monitoreadas", value: getDirections().length, note: "Con datos en al menos un módulo" },
+    { label: "Alertas", value: alerts.length, note: "Casos que requieren seguimiento", alert: true }
   ];
 
   document.getElementById("kpiGrid").innerHTML = kpis.map(k => `
-    <div class="kpi-card">
-      <div class="kpi-label">${k.label}</div>
-      <div class="kpi-value">${k.value}</div>
-      <div class="kpi-note">${k.note}</div>
+    <div class="kpi-card ${k.alert ? "alert" : ""}">
+      <div class="kpi-label">${escapeHTML(k.label)}</div>
+      <div class="kpi-value">${escapeHTML(k.value)}</div>
+      <div class="kpi-note">${escapeHTML(k.note)}</div>
     </div>
   `).join("");
 }
 
+function renderModuleOverview() {
+  const metrics = moduleMetrics().filter(m => m.key !== "presupuesto");
+  document.getElementById("moduleOverview").innerHTML = metrics.map(m => `
+    <div class="module-row">
+      <strong>${escapeHTML(m.label)}</strong>
+      <div class="progress"><span style="width:${Math.max(0, Math.min(100, m.score))}%"></span></div>
+      <span class="score">${escapeHTML(m.value)}</span>
+    </div>
+  `).join("") || `<div class="empty">No hay datos por módulo.</div>`;
+}
+
+function renderTopAlerts() {
+  const alerts = makeAlerts().slice(0, 8);
+  document.getElementById("topAlerts").innerHTML = alerts.map(a => `
+    <div class="compact-item">
+      <strong>${escapeHTML(a.modulo)} · ${escapeHTML(a.problema)}</strong>
+      <small>${escapeHTML(a.direccion || "Sin dirección")} — ${escapeHTML(a.tema || "Sin tema")}</small>
+    </div>
+  `).join("") || `<div class="empty">No existen alertas registradas.</div>`;
+}
+
 function renderRanking() {
-  let scores = calculateDirectionScores();
-  if (state.direccion !== "TODAS") scores = scores.filter(s => s.direction === state.direccion);
+  const scores = calculateDirectionScores();
+  const top = scores.slice(0, 3);
+  document.getElementById("topThree").innerHTML = top.map((s, index) => `
+    <div class="podium-card">
+      <div class="podium-rank">${index + 1}</div>
+      <h3>${escapeHTML(s.direction)}</h3>
+      <span class="badge ${scoreToSemaforo(s.index)}">${semaforoLabel(s.index)}</span>
+      <div class="podium-value">${formatPercent(s.index)}</div>
+      <p>${s.allRows.length} registros evaluados · ${s.alerts} alertas</p>
+    </div>
+  `).join("") || `<div class="empty">No hay direcciones para mostrar.</div>`;
 
-  if (!scores.length) {
-    document.getElementById("rankingTable").innerHTML = `<div class="empty">No hay datos para mostrar.</div>`;
-    return;
-  }
-
-  document.getElementById("rankingTable").innerHTML = `
+  document.getElementById("rankingTable").innerHTML = scores.length ? `
     <table>
       <thead>
         <tr>
-          <th>Dirección</th><th>Índice</th><th>Semáforo</th><th>PAC</th><th>Ordenanzas</th><th>Reuniones</th><th>Redes</th><th>Eventos</th><th>Apoyo</th><th>Alertas</th>
+          <th>Posición</th><th>Dirección</th><th>Índice</th><th>Semáforo</th><th>PAC</th><th>Ordenanzas</th><th>Reuniones</th><th>Redes</th><th>Eventos</th><th>Apoyo</th><th>Alertas</th>
         </tr>
       </thead>
       <tbody>
-        ${scores.map(s => `
+        ${scores.map((s, i) => `
           <tr>
-            <td><strong>${s.direction}</strong></td>
+            <td><span class="badge azul">${i + 1}</span></td>
+            <td><strong>${escapeHTML(s.direction)}</strong></td>
             <td class="score">${formatPercent(s.index)}</td>
             <td><span class="badge ${scoreToSemaforo(s.index)}">${semaforoLabel(s.index)}</span></td>
             <td>${formatPercent(s.pacScore)}</td>
@@ -542,84 +612,153 @@ function renderRanking() {
         `).join("")}
       </tbody>
     </table>
-  `;
+  ` : `<div class="empty">No hay datos para mostrar.</div>`;
 }
 
-function renderSemaforo() {
-  let scores = calculateDirectionScores();
-  if (state.direccion !== "TODAS") scores = scores.filter(s => s.direction === state.direccion);
-  document.getElementById("semaforoList").innerHTML = scores.map(s => `
-    <div class="semaforo-item">
-      <div>
-        <strong>${s.direction}</strong>
-        <div class="progress"><span style="width:${Math.max(0, Math.min(100, s.index))}%"></span></div>
-      </div>
-      <span class="badge ${scoreToSemaforo(s.index)}">${formatPercent(s.index)}</span>
-    </div>
-  `).join("") || `<div class="empty">No hay datos.</div>`;
+function detailRowsForDirection(direction) {
+  const modules = [
+    { key: "pac", label: "PAC", score: pacScore },
+    { key: "ordenanzas", label: "Ordenanzas", score: ordenanzaScore },
+    { key: "reuniones", label: "Reuniones", score: reunionScore },
+    { key: "redes", label: "Redes", score: redesScore },
+    { key: "eventos", label: "Eventos", score: eventosScore },
+    { key: "apoyo", label: "Apoyo", score: apoyoScore }
+  ];
+  return modules.flatMap(m => rowsByDirection(state[m.key], m.key, direction).map(row => ({
+    modulo: m.label,
+    fecha: getDate(row, m.key),
+    tema: getTema(row, m.key),
+    avance: m.score(row),
+    observacion: getObservation(row)
+  })));
 }
 
-function renderAlerts() {
-  const alerts = makeAlerts();
-  if (!alerts.length) {
-    document.getElementById("alertsTable").innerHTML = `<div class="empty">No existen alertas críticas con el filtro actual.</div>`;
+function renderDirectionProfile() {
+  const container = document.getElementById("directionProfile");
+  const direction = state.selectedDirection;
+  if (!direction) {
+    container.className = "direction-profile empty-state";
+    container.innerHTML = "Seleccione una Dirección para ver su resumen ejecutivo, desempeño por módulo, alertas y registros asociados.";
     return;
   }
-  document.getElementById("alertsTable").innerHTML = `
-    <table>
-      <thead><tr><th>Módulo</th><th>Dirección</th><th>Tema</th><th>Problema</th><th>Prioridad</th></tr></thead>
-      <tbody>
-        ${alerts.map(a => `
-          <tr>
-            <td><span class="badge rojo">${a.modulo}</span></td>
-            <td>${a.direccion || "Sin dirección"}</td>
-            <td>${a.tema || "Sin tema"}</td>
-            <td>${a.problema}</td>
-            <td>${a.prioridad}</td>
-          </tr>
-        `).join("")}
-      </tbody>
-    </table>
+  container.className = "direction-profile";
+  const score = calculateDirectionScores().find(s => s.direction === direction);
+  if (!score) {
+    container.innerHTML = `<div class="empty">No hay datos para la Dirección seleccionada.</div>`;
+    return;
+  }
+
+  const metrics = moduleMetrics(direction);
+  const alerts = makeAlerts(direction);
+  const details = detailRowsForDirection(direction).slice(0, 20);
+
+  container.innerHTML = `
+    <div class="profile-header">
+      <div>
+        <p class="eyebrow blue">Resumen individual</p>
+        <h3>${escapeHTML(direction)}</h3>
+        <p>Consolidado según los registros asociados a esta Dirección en la matriz.</p>
+      </div>
+      <div>
+        <span class="badge ${scoreToSemaforo(score.index)}">${semaforoLabel(score.index)}</span>
+        <div class="podium-value">${formatPercent(score.index)}</div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div class="mini-card"><span>Registros evaluados</span><strong>${score.allRows.length}</strong></div>
+      <div class="mini-card"><span>Alertas</span><strong>${alerts.length}</strong></div>
+      <div class="mini-card"><span>PAC</span><strong>${formatPercent(score.pacScore)}</strong></div>
+      <div class="mini-card"><span>Ordenanzas</span><strong>${formatPercent(score.ordScore)}</strong></div>
+      <div class="mini-card"><span>Reuniones</span><strong>${formatPercent(score.reuScore)}</strong></div>
+      <div class="mini-card"><span>Redes</span><strong>${formatPercent(score.redScore)}</strong></div>
+      <div class="mini-card"><span>Eventos</span><strong>${formatPercent(score.eveScore)}</strong></div>
+      <div class="mini-card"><span>Apoyo</span><strong>${formatPercent(score.apoScore)}</strong></div>
+    </div>
+
+    <div class="profile-sections">
+      <div class="panel">
+        <h3>Desempeño por módulo</h3>
+        <div class="module-overview" style="margin-top:14px;">
+          ${metrics.filter(m => m.key !== "presupuesto").map(m => `
+            <div class="module-row">
+              <strong>${escapeHTML(m.label)}</strong>
+              <div class="progress"><span style="width:${Math.max(0, Math.min(100, m.score))}%"></span></div>
+              <span class="score">${escapeHTML(m.value)}</span>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Alertas de la Dirección</h3>
+        <div class="compact-list" style="margin-top:14px;">
+          ${alerts.slice(0, 10).map(a => `
+            <div class="compact-item">
+              <strong>${escapeHTML(a.modulo)} · ${escapeHTML(a.problema)}</strong>
+              <small>${escapeHTML(a.tema || "Sin tema")}</small>
+            </div>
+          `).join("") || `<div class="empty">No existen alertas para esta Dirección.</div>`}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel mt-24">
+      <h3>Registros asociados</h3>
+      <div class="table-wrap" style="margin-top:14px;">
+        ${details.length ? `
+          <table class="detail-table">
+            <thead><tr><th>Módulo</th><th>Fecha</th><th>Tema</th><th>Avance/Puntaje</th><th>Observación</th></tr></thead>
+            <tbody>
+              ${details.map(d => `
+                <tr>
+                  <td>${escapeHTML(d.modulo)}</td>
+                  <td>${formatDate(d.fecha)}</td>
+                  <td>${escapeHTML(d.tema || "Sin tema")}</td>
+                  <td><span class="badge ${scoreToSemaforo(d.avance)}">${formatPercent(d.avance)}</span></td>
+                  <td>${escapeHTML(d.observacion || "-")}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        ` : `<div class="empty">No hay registros asociados para mostrar.</div>`}
+      </div>
+    </div>
   `;
 }
 
-function renderBars(containerId, rows, module, scoreFunction) {
-  const grouped = groupByDirection(filteredRows(rows, module), module, scoreFunction);
-  const data = Object.entries(grouped).map(([direction, values]) => ({ direction, value: avg(values) })).sort((a, b) => b.value - a.value);
+function setupTabs() {
+  document.querySelectorAll(".tab-button").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      button.classList.add("active");
+      document.getElementById(`tab-${button.dataset.tab}`).classList.add("active");
+    });
+  });
+}
 
-  document.getElementById(containerId).innerHTML = data.map(d => `
-    <div class="bar-row">
-      <div class="bar-meta"><span class="bar-label">${d.direction}</span><span>${formatPercent(d.value)}</span></div>
-      <div class="progress"><span style="width:${Math.max(0, Math.min(100, d.value))}%"></span></div>
-    </div>
-  `).join("") || `<div class="empty">No hay datos.</div>`;
+function setupDirectionSearch() {
+  const select = document.getElementById("direccionSearch");
+  const options = getDirections().map(d => `<option value="${escapeHTML(d)}">${escapeHTML(d)}</option>`).join("");
+  select.innerHTML = `<option value="">Seleccione una dirección</option>${options}`;
+  select.addEventListener("change", e => {
+    state.selectedDirection = e.target.value;
+    renderDirectionProfile();
+  });
 }
 
 function renderAll() {
   renderKPIs();
+  renderModuleOverview();
+  renderTopAlerts();
   renderRanking();
-  renderSemaforo();
-  renderAlerts();
-  renderBars("pacBars", state.pac, "pac", pacScore);
-  renderBars("ordenanzaBars", state.ordenanzas, "ordenanzas", ordenanzaScore);
-  renderBars("reunionBars", state.reuniones, "reuniones", reunionScore);
-  renderBars("redesBars", state.redes, "redes", redesScore);
-  renderBars("eventosBars", state.eventos, "eventos", eventosScore);
-  renderBars("apoyoBars", state.apoyo, "apoyo", apoyoScore);
-}
-
-function setupFilter() {
-  const select = document.getElementById("direccionFilter");
-  const options = getDirections().map(d => `<option value="${d}">${d}</option>`).join("");
-  select.innerHTML = `<option value="TODAS">Todas las direcciones</option>${options}`;
-  select.addEventListener("change", e => {
-    state.direccion = e.target.value;
-    renderAll();
-  });
+  setupDirectionSearch();
+  renderDirectionProfile();
 }
 
 async function init() {
   try {
+    setupTabs();
     const [pac, ordenanzas, reuniones, redes, eventos, apoyo] = await Promise.all([
       loadCSV(CSV_FILES.pac),
       loadCSV(CSV_FILES.ordenanzas),
@@ -630,15 +769,14 @@ async function init() {
     ]);
     state = { ...state, pac, ordenanzas, reuniones, redes, eventos, apoyo };
     console.log("Dashboard Alcaldía - filas cargadas", { pac: pac.length, ordenanzas: ordenanzas.length, reuniones: reuniones.length, redes: redes.length, eventos: eventos.length, apoyo: apoyo.length });
-    setupFilter();
-    const main = document.querySelector(".main");
-    if (state.warnings.length) main.insertAdjacentHTML("afterbegin", renderWarnings());
+    const content = document.querySelector(".content");
+    if (state.warnings.length) content.insertAdjacentHTML("afterbegin", renderWarnings());
     renderAll();
   } catch (error) {
-    document.querySelector(".main").innerHTML = `
+    document.querySelector(".content").innerHTML = `
       <div class="panel">
         <h2>No se pudieron cargar los CSV</h2>
-        <p>${error.message}</p>
+        <p>${escapeHTML(error.message)}</p>
         <p>Abre el proyecto desde GitHub Pages o desde un servidor local, no directamente con doble clic. En VS Code puedes usar Live Server.</p>
       </div>
     `;
