@@ -6,164 +6,211 @@
   <title>Dashboard Ejecutivo Alcaldía | GADM Riobamba</title>
   <style>
     :root{
-      --blue:#083c70;
-      --blue2:#0f5a9c;
-      --blue3:#eaf3fb;
-      --red:#c62828;
-      --red2:#e04444;
-      --dark:#102033;
-      --muted:#607087;
-      --bg:#f3f7fb;
+      --azul:#0b3a6e;
+      --azul-2:#145899;
+      --azul-3:#eaf3fb;
+      --rojo:#c62828;
+      --rojo-2:#e53935;
+      --gris:#f4f7fb;
+      --gris-2:#e6edf5;
+      --texto:#0f2338;
+      --muted:#61738a;
       --card:#ffffff;
-      --line:#dbe4ef;
-      --green:#2e7d32;
-      --yellow:#f9a825;
-      --orange:#ef6c00;
-      --shadow:0 14px 35px rgba(8,60,112,.10);
-      --radius:22px;
+      --shadow:0 14px 35px rgba(9, 42, 76, .10);
+      --radius:20px;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#f6f9fd 0%,#edf4fb 52%,#fff5f5 100%);color:var(--dark)}
-    .page{max-width:1540px;margin:0 auto;padding:20px 22px 44px}
-    .hero{position:relative;overflow:hidden;border-radius:28px;padding:22px 30px;background:linear-gradient(110deg,var(--blue),#165a99 56%,var(--red));box-shadow:var(--shadow);color:#fff;display:flex;align-items:center;gap:22px;min-height:104px}
-    .hero:after{content:"";position:absolute;right:-80px;top:-100px;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.12)}
-    .hero:before{content:"";position:absolute;right:140px;bottom:-160px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.10)}
-    .logoBox{width:66px;height:66px;border-radius:18px;background:#fff;color:var(--blue);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(0,0,0,.14);flex:0 0 auto}
-    .logoBox svg{width:38px;height:38px}
-    .heroText{position:relative;z-index:1;flex:1}
-    .eyebrow{font-size:12px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:#ffe7e7;margin-bottom:8px}
-    h1{font-size:34px;line-height:1.05;margin:0 0 9px;font-weight:900;letter-spacing:-.03em}
-    .hero p{display:none}
-    .heroBadges{display:none}
-    .badge{display:none}
-    .tabs{margin:18px 0 26px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:0 14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;box-shadow:0 8px 22px rgba(8,60,112,.07)}
-    .tabBtn{border:0;background:transparent;border-radius:0;padding:18px 14px 15px;font-weight:950;color:var(--blue);cursor:pointer;letter-spacing:.01em;transition:.2s;font-size:15px;border-bottom:4px solid transparent}
-    .tabBtn .num{display:none}
-    .tabBtn.active{background:transparent;color:var(--blue);box-shadow:none;border-bottom-color:var(--red)}
-    .tabBtn.active .num{display:none}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, Segoe UI, Roboto, Arial, sans-serif;
+      background:linear-gradient(180deg,#f6f9fd 0%, #eef4fa 100%);
+      color:var(--texto);
+      line-height:1.45;
+    }
+    .wrap{max-width:1480px;margin:0 auto;padding:22px 26px 44px}
+    .hero{
+      background:linear-gradient(120deg,var(--azul) 0%, #174d85 58%, var(--rojo) 100%);
+      color:white;
+      border-radius:28px;
+      padding:28px 32px;
+      box-shadow:var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      overflow:hidden;
+      position:relative;
+    }
+    .hero::after{content:"";position:absolute;right:-80px;top:-120px;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.12)}
+    .brand{display:flex;gap:18px;align-items:center;position:relative;z-index:1}
+    .logoBox{width:70px;height:70px;border-radius:18px;background:#fff;display:grid;place-items:center;color:var(--azul);box-shadow:0 8px 20px rgba(0,0,0,.12)}
+    .logoBox svg{width:42px;height:42px}
+    .eyebrow{font-weight:800;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#f6dede;margin-bottom:3px}
+    h1{font-size:34px;margin:0 0 5px;font-weight:900;line-height:1.1;color:inherit}
+    .hero p{margin:0;color:#eef7ff;font-size:15px;max-width:820px}
+    .badge{position:relative;z-index:1;border:1px solid rgba(255,255,255,.35);padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.10);font-weight:700;font-size:13px;white-space:nowrap}
+    .nav{
+      margin:20px 0 26px;
+      background:white;
+      border:1px solid #d7e2ef;
+      border-radius:18px;
+      padding:8px;
+      display:flex;
+      gap:8px;
+      box-shadow:0 6px 24px rgba(9,42,76,.06);
+      position:sticky;
+      top:0;
+      z-index:5;
+    }
+    .tabBtn{
+      flex:1;
+      border:0;
+      background:transparent;
+      padding:14px 10px;
+      color:var(--azul);
+      font-weight:900;
+      font-size:15px;
+      cursor:pointer;
+      border-radius:12px;
+      position:relative;
+    }
+    .tabBtn.active{background:#f9fbfe;color:var(--azul)}
+    .tabBtn.active::after{content:"";position:absolute;left:22%;right:22%;bottom:4px;height:4px;border-radius:999px;background:var(--rojo)}
+    .sectionTitle{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:22px 2px 14px}
+    .sectionTitle h2{font-size:26px;margin:0;color:#061d33;font-weight:900}
+    .sectionTitle p{margin:0;color:var(--muted);font-size:14px;text-align:right}
+    .grid{display:grid;gap:16px}
+    .grid.kpi{grid-template-columns:repeat(6,minmax(0,1fr))}
+    .grid.two{grid-template-columns:1.05fr .95fr}
+    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{
+      background:var(--card);
+      border:1px solid #d8e2ee;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    .kpiCard{min-height:138px;cursor:pointer;transition:.18s transform,.18s box-shadow,.18s border-color;display:flex;flex-direction:column;justify-content:space-between}
+    .kpiCard:hover{transform:translateY(-2px);border-color:#b9cce2;box-shadow:0 18px 42px rgba(9,42,76,.14)}
+    .kpiTitle{font-size:12px;color:#52657c;font-weight:900;text-transform:uppercase;letter-spacing:.5px}
+    .kpiValue{font-size:34px;font-weight:950;color:#061d33;line-height:1.1;text-align:center;margin:10px 0}
+    .kpiSub{font-size:12px;color:var(--muted);text-align:center}
+    .bar{height:12px;background:#e7edf5;border-radius:999px;overflow:hidden;position:relative}
+    .bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--azul-2),var(--rojo));width:0%}
+    .barLabel{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800;font-size:13px;margin:12px 0 6px}
+    .detailPanel{display:none;margin-top:14px;padding-top:14px;border-top:1px dashed #cad7e6}
+    .detailPanel.open{display:block}
+    .themeCard{cursor:pointer;min-height:230px}
+    .themeHead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px}
+    .themeName{font-size:20px;font-weight:950;color:var(--azul);margin:0}
+    .themePct{font-size:34px;font-weight:950;color:#061d33}
+    .moduleMini{margin-top:10px}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:#edf4fb;border:1px solid #d4e2ef;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;color:#204765;margin:3px 4px 3px 0}
+    .pill.red{background:#fff0f0;border-color:#ffc4c4;color:#9d1919}
     .tabPanel{display:none}
     .tabPanel.active{display:block}
-    .sectionHead{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:6px 2px 16px}
-    h2{margin:0;font-size:26px;letter-spacing:-.02em;color:#061c34}
-    .sectionNote{margin:0;color:var(--muted);font-size:14px;line-height:1.45;text-align:right}
-    .grid{display:grid;gap:16px}
-    .grid.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
-    .grid.two{grid-template-columns:1.15fr .85fr}
-    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;min-width:0}
-    .kpi{min-height:132px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:default;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff,#fbfdff)}
-    .kpi.clickable{cursor:pointer}
-    .kpi.clickable:hover{transform:translateY(-1px);border-color:#b7c6d8}
-    .kpiTitle{font-size:13px;font-weight:950;color:#52647a;margin-bottom:12px;line-height:1.2;text-transform:uppercase;letter-spacing:.03em}
-    .kpiValue{font-size:38px;font-weight:950;letter-spacing:-.04em;color:#061c34;line-height:1}
-    .kpiSub{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.35;max-width:92%}
-    .kpiPair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch;width:100%}
-    .miniMetric{padding:13px 10px;border-radius:16px;background:var(--blue3);text-align:center}
-    .miniMetric.red{background:#fff1f1}
-    .miniMetric strong{display:block;font-size:28px;color:#061c34;line-height:1;font-weight:950}
-    .miniMetric span{display:block;font-size:12px;color:var(--muted);font-weight:800;margin-top:6px}
-    .chartTitle{font-size:17px;font-weight:950;margin:0 0 13px;color:#061c34}
-    .bars{display:flex;flex-direction:column;gap:11px}
-    .barRow{display:grid;grid-template-columns:180px 1fr 54px;gap:12px;align-items:center;font-size:13px;color:#34465a}
-    .barLabel{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .barTrack{height:12px;background:#e8eef6;border-radius:999px;overflow:hidden}
-    .barFill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue2),var(--red));min-width:2px}
-    .barValue{text-align:right;font-weight:900;color:#061c34}
-    .donutWrap{display:flex;align-items:center;justify-content:center;gap:20px;min-height:210px}
-    .donut{--p:0;width:168px;height:168px;border-radius:50%;background:conic-gradient(var(--blue) calc(var(--p)*1%),#e5edf6 0);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(8,60,112,.1)}
-    .donut:after{content:attr(data-value);width:112px;height:112px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:950;color:#061c34;box-shadow:0 0 0 1px #e2e8f0}
-    .legend{display:flex;flex-direction:column;gap:9px;color:var(--muted);font-size:13px}
-    .legend b{color:var(--dark)}
-    .tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line);background:#fff}
-    table{width:100%;border-collapse:collapse;font-size:13px;min-width:760px}
-    th{background:#f1f6fc;color:#0b315a;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}
-    td{padding:11px 12px;border-bottom:1px solid #edf2f8;color:#26384d;vertical-align:top}
-    tr:last-child td{border-bottom:0}
-    .pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;background:#eef5fc;color:var(--blue)}
-    .pill.red{background:#fff0f0;color:var(--red)}
-    .pill.green{background:#edf8ef;color:var(--green)}
-    .pill.yellow{background:#fff8df;color:#8a6400}
-    .pill.gray{background:#f0f2f5;color:#56616f}
-    .rankList{display:flex;flex-direction:column;gap:12px}
-    .rankItem{display:grid;grid-template-columns:46px 1fr 76px;gap:14px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#fbfdff)}
-    .rankNo{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:950;color:#fff;background:linear-gradient(135deg,var(--blue),var(--red))}
-    .rankName{font-weight:950;color:#102033;line-height:1.25}
-    .rankMeta{font-size:12px;color:var(--muted);margin-top:4px}
-    .score{text-align:right;font-size:24px;font-weight:950;color:#061c34}
-    .combinedRank{display:flex;flex-direction:column;gap:12px}
-    .combinedRow{display:grid;grid-template-columns:44px 280px 1fr 62px;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#fbfdff)}
-    .combinedName{font-weight:950;color:#102033;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .combinedMeta{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:3px}
-    @media(max-width:850px){.combinedRow{grid-template-columns:40px 1fr;}.combinedRow .barTrack,.combinedRow .score{grid-column:2}.combinedName{white-space:normal}}
-    .selectRow{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-bottom:16px}
-    select{border:1px solid #cdd9e7;border-radius:15px;padding:12px 14px;min-width:320px;background:#fff;color:#102033;font-weight:800;outline:none}
-    .hidden{display:none!important}
-    .scroll4{max-height:245px;overflow:auto}
-    .alertBox{border-left:5px solid var(--red);background:#fff7f7;border-radius:14px;padding:12px 14px;margin-bottom:10px;color:#3a2630;font-size:13px}
-    .status{font-size:13px;color:var(--muted);margin-top:8px}
-    .empty{padding:22px;border:1px dashed #c9d6e5;border-radius:16px;text-align:center;color:var(--muted);background:#fbfdff}
-    .footer{margin-top:22px;text-align:center;color:#6b7a8d;font-size:12px}
-    @media(max-width:1050px){.grid.kpis{grid-template-columns:repeat(2,1fr)}.grid.two,.grid.three{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.heroBadges{justify-content:flex-start}.barRow{grid-template-columns:130px 1fr 48px}.tabs{grid-template-columns:1fr}.sectionHead{align-items:start;flex-direction:column}.sectionNote{text-align:left}select{min-width:100%;width:100%}.selectRow{justify-content:stretch;flex-direction:column;align-items:stretch}}
+    .rows{display:grid;gap:10px}
+    .dirRow{display:grid;grid-template-columns:42px minmax(210px,1.1fr) minmax(260px,2.2fr) 60px;align-items:center;gap:12px;padding:12px 14px;border:1px solid #d8e2ee;border-radius:16px;background:#fff}
+    .rank{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--azul),var(--rojo));display:grid;place-items:center;color:white;font-weight:950}
+    .dirName{font-weight:900;color:#112b45;font-size:13px;text-transform:uppercase;line-height:1.25}
+    .pct{font-weight:950;font-size:18px;text-align:right;color:#061d33}
+    .subBars{display:grid;gap:8px}
+    .subBar{display:grid;grid-template-columns:122px 1fr 48px;align-items:center;gap:8px;font-size:12px;color:#52657c;font-weight:800}
+    .subBar .bar{height:8px}
+    .accordion{display:grid;gap:14px}
+    .accItem{border:1px solid #d8e2ee;border-radius:18px;background:#fff;box-shadow:0 8px 22px rgba(9,42,76,.06);overflow:hidden}
+    .accHead{width:100%;border:0;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;text-align:left}
+    .accHead strong{font-size:19px;color:#061d33}
+    .accHead span{color:var(--muted);font-weight:800}
+    .accBody{display:none;padding:0 20px 20px;border-top:1px solid #eef3f8}
+    .accBody.open{display:block}
+    .tableWrap{max-height:285px;overflow:auto;border:1px solid #dce6f0;border-radius:14px;background:white}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:10px 12px;border-bottom:1px solid #edf2f7;text-align:left;vertical-align:top}
+    th{position:sticky;top:0;background:#f3f7fb;color:#153a5d;font-weight:950;z-index:1}
+    tr:hover td{background:#fbfdff}
+    .alertLine{padding:10px 12px;border:1px solid #f1c4c4;background:#fff7f7;border-radius:12px;margin:8px 0;color:#5d2222;font-size:13px}
+    .alertLine b{color:var(--rojo)}
+    .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 16px}
+    select,input{border:1px solid #ccd9e7;border-radius:12px;padding:11px 12px;background:white;color:#102b44;font-weight:700;min-width:250px}
+    .muted{color:var(--muted);font-size:13px}
+    .empty{padding:20px;border:1px dashed #cbd8e7;border-radius:14px;color:var(--muted);text-align:center;background:#fbfdff}
+    .footer{margin-top:26px;color:#65768a;font-size:12px;text-align:right}
+    @media(max-width:1100px){.grid.kpi{grid-template-columns:repeat(3,1fr)}.grid.two,.grid.three{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.dirRow{grid-template-columns:36px 1fr}.dirRow .subBars,.dirRow .pct{grid-column:2}.pct{text-align:left}.nav{position:relative;flex-direction:column}.tabBtn.active::after{left:35%;right:35%}}
+    @media(max-width:720px){.wrap{padding:14px}.grid.kpi{grid-template-columns:1fr}.hero{padding:22px}.logoBox{width:58px;height:58px}h1{font-size:26px}.sectionTitle{display:block}.sectionTitle p{text-align:left;margin-top:5px}.subBar{grid-template-columns:1fr}.subBar .bar,.subBar span:last-child{grid-column:1}.badge{white-space:normal}}
   </style>
 </head>
 <body>
-  <div class="page">
+  <main class="wrap">
     <header class="hero">
-      <div class="logoBox" title="Ícono institucional">
-        <svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M32 7 8 20v5h48v-5L32 7Zm-17 22v21H9v6h46v-6h-6V29h-7v21h-7V29h-7v21h-7V29h-6Zm-2-7 19-10 19 10H13Z"/></svg>
+      <div class="brand">
+        <div class="logoBox" title="Municipio">
+          <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <path d="M8 24L32 10L56 24V29H8V24Z" fill="currentColor" opacity=".95"/>
+            <path d="M14 32H20V50H14V32ZM29 32H35V50H29V32ZM44 32H50V50H44V32Z" fill="currentColor"/>
+            <path d="M10 52H54V58H10V52Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div>
+          <div class="eyebrow">GADM Riobamba · Seguimiento institucional</div>
+          <h1>Panel de control para Alcaldía</h1>
+        </div>
       </div>
-      <div class="heroText">
-        <div class="eyebrow">Seguimiento institucional de directores</div>
-        <h1>Panel de control para Alcaldía</h1>
-
-      </div>
-
+      <div class="badge">Datos desde CSV publicados en GitHub</div>
     </header>
 
-    <nav class="tabs" aria-label="Pestañas principales">
-      <button class="tabBtn active" data-tab="resumen">Resumen general</button>
-      <button class="tabBtn" data-tab="seguimiento">Seguimiento por Dirección</button>
-      <button class="tabBtn" data-tab="buscador">Buscador por Dirección</button>
+    <section id="resumenGeneral">
+      <div class="sectionTitle">
+        <h2>Resumen general</h2>
+        <p>Vista inicial consolidada por temas de gestión. Clic en cada indicador para ver/ocultar su detalle.</p>
+      </div>
+      <div class="grid kpi" id="generalKpis"></div>
+      <div id="generalDetails" class="detailPanel card"></div>
+    </section>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <button class="tabBtn active" data-tab="temaResumen">Resumen por tema</button>
+      <button class="tabBtn" data-tab="temaSeguimiento">Seguimiento por tema</button>
+      <button class="tabBtn" data-tab="comparativo">Comparativo por direcciones</button>
     </nav>
 
-    <main id="app">
-      <section id="tab-resumen" class="tabPanel active">
-        <div class="sectionHead">
-          <h2>Resumen general</h2>
-          <p class="sectionNote">Indicadores consolidados calculados desde las hojas de la matriz.</p>
-        </div>
-        <div class="grid two" style="margin-top:16px">
-          <div class="card"><h3 class="chartTitle">Distribución del índice general</h3><div id="indexDonut"></div></div>
-          <div class="card"><h3 class="chartTitle">Avance por módulo</h3><div id="moduleBars" class="bars"></div></div>
-        </div>
-        <div id="summaryKpis" class="grid kpis" style="margin-top:16px"></div>
-        <div id="alertsPanel" class="card hidden" style="margin-top:16px">
-          <h3 class="chartTitle">Alertas principales</h3>
-          <div id="alertsList"></div>
-        </div>
-      </section>
+    <section id="temaResumen" class="tabPanel active">
+      <div class="sectionTitle">
+        <h2>Resumen por tema</h2>
+        <p>Planificación, Ejecución y Monitoreo, y Participación Ciudadana.</p>
+      </div>
+      <div class="grid three" id="themeSummary"></div>
+    </section>
 
-      <section id="tab-seguimiento" class="tabPanel">
-        <div class="sectionHead"><h2>Seguimiento por Dirección</h2></div>
-        <div class="card"><h3 class="chartTitle">Seguimiento porcentual por Dirección</h3><div id="combinedRanking" class="combinedRank"></div></div>
-        <div class="card" style="margin-top:16px"><h3 class="chartTitle">Detalle de seguimiento</h3><div id="rankingTable" class="tableWrap"></div></div>
-      </section>
+    <section id="temaSeguimiento" class="tabPanel">
+      <div class="sectionTitle">
+        <h2>Seguimiento por tema</h2>
+        <p>Detalle desplegable por tema, con el mismo tipo de gráfico de barras horizontales.</p>
+      </div>
+      <div class="accordion" id="themeTracking"></div>
+    </section>
 
-      <section id="tab-buscador" class="tabPanel">
-        <div class="sectionHead">
-          <h2>Buscador por Dirección</h2>
-          <div class="selectRow"><label for="directionSelect"><b>Seleccione una Dirección</b></label><select id="directionSelect"><option value="">Seleccione una dirección</option></select></div>
-        </div>
-        <div id="directionContent" class="empty">Seleccione una Dirección para ver su resumen ejecutivo, desempeño por módulo, alertas y registros asociados.</div>
-      </section>
-    </main>
+    <section id="comparativo" class="tabPanel">
+      <div class="sectionTitle">
+        <h2>Comparativo por direcciones</h2>
+        <p>Comparación institucional por Dirección y por los tres temas de gestión.</p>
+      </div>
+      <div class="toolbar">
+        <label class="muted" for="directionFilter"><b>Filtrar Dirección</b></label>
+        <select id="directionFilter"><option value="">Todas las direcciones</option></select>
+      </div>
+      <div class="card">
+        <div class="rows" id="directionComparison"></div>
+      </div>
+    </section>
 
-    <div class="footer">Dashboard Ejecutivo Alcaldía · GADM Riobamba</div>
-  </div>
+    <div class="footer">Dashboard Ejecutivo Alcaldía · CSV publicados en GitHub Pages</div>
+  </main>
 
 <script>
 (() => {
-  const DATA = {
+  const CSV_FILES = {
     pac: 'data/pac_contratacion.csv',
     ordenanzas: 'data/ordenanzas.csv',
     reuniones: 'data/reuniones.csv',
@@ -171,253 +218,397 @@
     eventos: 'data/eventos.csv',
     apoyo: 'data/apoyo_institucional.csv'
   };
-  const MODULES = [
-    ['pac','PAC'], ['ordenanzas','Ordenanzas'], ['reuniones','Reuniones'],
-    ['redes','Redes institucionales'], ['eventos','Eventos'], ['apoyo','Apoyo institucional']
-  ];
-  const state = {raw:{}, directions:new Map(), dirStats:new Map(), alerts:[], moduleAverages:{}};
 
-  const $ = id => document.getElementById(id);
-  const fmtPct = n => `${Math.round(Number(n)||0)}%`;
-  const money = n => new Intl.NumberFormat('es-EC',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number(n)||0);
-  const clean = v => String(v ?? '').replace(/^\uFEFF/,'').trim();
-  const norm = v => clean(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[#º°]/g,'').replace(/\s+/g,' ').trim();
-  const toKey = d => norm(d);
-  const addDir = d => { d=clean(d); if(!d) return ''; const k=toKey(d); if(!state.directions.has(k)) state.directions.set(k,d); return k; };
-  const get = (row, names) => { for(const n of names){ const v = row[norm(n)]; if(v !== undefined && clean(v) !== '') return clean(v); } return ''; };
-  const splitDirs = v => clean(v).split(/[;|\n]+/).map(x=>clean(x)).filter(Boolean);
-  const unique = arr => [...new Set(arr.filter(Boolean))];
-  const avg = arr => arr.length ? arr.reduce((a,b)=>a+(Number(b)||0),0)/arr.length : 0;
-  const sum = arr => arr.reduce((a,b)=>a+(Number(b)||0),0);
-  const num = v => {
-    let s=clean(v).replace(/\$/g,'').replace(/\s/g,'');
-    if(!s) return 0;
-    if(s.includes(',') && s.includes('.')) s=s.replace(/,/g,'');
-    else if(s.includes(',') && !s.includes('.')) s=s.replace(',', '.');
-    const m=s.match(/-?\d+(\.\d+)?/);
-    return m ? Number(m[0]) : 0;
+  const MODULE_LABEL = {
+    pac: 'PAC', ordenanzas: 'Ordenanzas', reuniones: 'Reuniones',
+    redes: 'Redes institucionales', eventos: 'Eventos', apoyo: 'Apoyo institucional'
   };
-  const persons = v => {
-    const s=clean(v);
-    const m=s.match(/(\d+(?:[.,]\d+)?)\s*(personas|persona|asistentes|funcionarios)/i);
-    if(m) return num(m[1]);
-    const nums=[...s.matchAll(/\d+(?:[.,]\d+)?/g)].map(x=>num(x[0]));
-    return nums.length ? Math.max(...nums) : 0;
-  };
-  const parseDate = v => {
-    v=clean(v); if(!v) return null;
-    let m=v.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-    if(m){ let y=Number(m[3]); if(y<100) y+=2000; return new Date(y,Number(m[2])-1,Number(m[1])); }
-    m=v.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
-    if(m) return new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));
-    const d=new Date(v); return isNaN(d) ? null : d;
-  };
-  const expired = v => { const d=parseDate(v); if(!d) return false; const today=new Date(); today.setHours(0,0,0,0); return d < today; };
-  const stagePAC = v => { v=norm(v); if(!v) return 0; if(/final|recibid|cerrad|liquidad/.test(v)) return 100; if(/contractual/.test(v)) return 75; if(/precontractual/.test(v)) return 50; if(/preparatoria/.test(v)) return 25; if(/no empieza|no inicia|sin iniciar/.test(v)) return 0; return num(v)||0; };
-  const stageORD = v => { v=norm(v); if(!v) return 0; if(/aprob|sancion|segundo/.test(v)) return 100; if(/ajuste|subsan/.test(v)) return 75; if(/primer/.test(v)) return 50; if(/jurid/.test(v)) return 40; if(/elabor/.test(v)) return 25; if(/no empieza|no inicia|sin iniciar/.test(v)) return 0; return num(v)||0; };
-  const asistScore = v => { v=norm(v); if(!v) return 0; if(/no asiste|inasistencia/.test(v)) return 0; if(/justifica/.test(v)) return 50; if(/delegad/.test(v)) return 75; if(/asiste|presente|director|si|sí/.test(v)) return 100; return 0; };
-  const isCompleteStage = v => /final|recibid|cerrad|liquidad|aprob|sancion|segundo/.test(norm(v));
 
-  function parseCSV(text){
-    text = text.replace(/^\uFEFF/,'');
-    const first = text.split(/\r?\n/)[0] || '';
-    const delimiter = (first.match(/;/g)||[]).length > (first.match(/,/g)||[]).length ? ';' : ',';
-    const rows=[]; let row=[], field='', inQuotes=false;
-    for(let i=0;i<text.length;i++){
-      const c=text[i], next=text[i+1];
-      if(c==='"'){
-        if(inQuotes && next==='"'){ field+='"'; i++; }
-        else inQuotes=!inQuotes;
-      } else if(c===delimiter && !inQuotes){ row.push(field); field=''; }
-      else if((c==='\n' || c==='\r') && !inQuotes){
-        if(c==='\r' && next==='\n') i++;
-        row.push(field); field='';
-        if(row.some(x=>clean(x)!=='')) rows.push(row);
-        row=[];
-      } else field+=c;
+  const THEMES = {
+    planificacion: { label: 'Planificación', modules: ['pac','ordenanzas'] },
+    ejecucion: { label: 'Ejecución y Monitoreo', modules: ['reuniones','apoyo'] },
+    participacion: { label: 'Participación Ciudadana', modules: ['redes','eventos'] }
+  };
+
+  const state = { raw:{}, dirData:{}, directions:[], alerts:[], summary:{} };
+
+  function norm(s){
+    return String(s ?? '')
+      .replace(/^\uFEFF/,'')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .toLowerCase().replace(/\s+/g,' ').trim();
+  }
+  function clean(s){ return String(s ?? '').replace(/^\uFEFF/,'').trim(); }
+  function key(row, names){
+    for(const n of names){
+      const wanted = norm(n);
+      for(const k of Object.keys(row)) if(norm(k) === wanted) return clean(row[k]);
     }
-    row.push(field); if(row.some(x=>clean(x)!=='')) rows.push(row);
+    return '';
+  }
+  function pct(n){ return Math.max(0, Math.min(100, Number.isFinite(+n) ? +n : 0)); }
+  function avg(arr){ const nums=arr.filter(v=>Number.isFinite(+v)); return nums.length? nums.reduce((a,b)=>a+(+b),0)/nums.length : 0; }
+  function fmtPct(n){ return `${Math.round(pct(n))}%`; }
+  function money(n){ return new Intl.NumberFormat('es-EC',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number.isFinite(+n)?+n:0); }
+  function parseNum(v){
+    let s=String(v ?? '').trim(); if(!s) return 0;
+    s=s.replace(/[^0-9,.-]/g,'');
+    const lastComma=s.lastIndexOf(','), lastDot=s.lastIndexOf('.');
+    if(lastComma>=0 && lastDot>=0){ s = lastComma>lastDot ? s.replace(/\./g,'').replace(',', '.') : s.replace(/,/g,''); }
+    else if(lastComma>=0){ s=s.replace(',', '.'); }
+    const n=parseFloat(s); return Number.isFinite(n)?n:0;
+  }
+  function splitDirs(v){
+    const text = clean(v); if(!text) return [];
+    return [...new Set(text.split(/;|\n|\r|\||\/|•/g).map(x=>clean(x).replace(/\s+/g,' ')).filter(Boolean))];
+  }
+  function dirKey(d){ return clean(d).toUpperCase(); }
+  function shortDir(d){ return d.length>45 ? d.slice(0,42)+'...' : d; }
+
+  function detectDelimiter(line){
+    const comma=(line.match(/,/g)||[]).length, semi=(line.match(/;/g)||[]).length;
+    return semi>comma ? ';' : ',';
+  }
+  function parseCSV(text){
+    text = String(text || '').replace(/^\uFEFF/,'');
+    if(!text.trim()) return [];
+    const first = text.split(/\r?\n/).find(l=>l.trim()) || '';
+    const delim = detectDelimiter(first);
+    const rows=[]; let row=[], cur='', q=false;
+    for(let i=0;i<text.length;i++){
+      const c=text[i], n=text[i+1];
+      if(c==='"'){
+        if(q && n==='"'){cur+='"'; i++;} else q=!q;
+      } else if(c===delim && !q){row.push(cur); cur='';}
+      else if((c==='\n' || c==='\r') && !q){
+        if(c==='\r' && n==='\n') i++;
+        row.push(cur); cur='';
+        if(row.some(x=>String(x).trim()!=='')) rows.push(row);
+        row=[];
+      } else cur+=c;
+    }
+    row.push(cur); if(row.some(x=>String(x).trim()!=='')) rows.push(row);
     if(!rows.length) return [];
-    const headers=rows.shift().map(h=>norm(h));
-    return rows.map(r=>{ const o={}; headers.forEach((h,i)=>o[h]=clean(r[i])); return o; });
+    const headers=rows.shift().map(clean);
+    return rows.map(r=>{
+      const o={}; headers.forEach((h,i)=>o[h]=clean(r[i] ?? ''));
+      return o;
+    }).filter(o=>Object.values(o).some(v=>clean(v)));
+  }
+  async function fetchCSV(path){
+    const url = `${path}?v=${Date.now()}`;
+    const res = await fetch(url, {cache:'no-store'});
+    if(!res.ok) throw new Error(`No se pudo cargar ${path}`);
+    return parseCSV(await res.text());
   }
 
-  async function loadData(){
-    const entries = await Promise.all(Object.entries(DATA).map(async ([k,path])=>{
-      const res = await fetch(`${path}?v=${Date.now()}`, {cache:'no-store'});
-      if(!res.ok) throw new Error(`No se pudo cargar ${path}`);
-      const text = await res.text();
-      return [k, parseCSV(text)];
-    }));
-    entries.forEach(([k,v])=>state.raw[k]=v);
-    console.log('Dashboard V10 - filas cargadas', Object.fromEntries(entries.map(([k,v])=>[k,v.length])));
-    compute(); render();
+  function stageScorePAC(v){
+    const s=norm(v);
+    if(!s) return 0;
+    if(s.includes('final') || s.includes('recib') || s.includes('cerr')) return 100;
+    if(s.includes('contractual')) return 75;
+    if(s.includes('precontractual')) return 50;
+    if(s.includes('preparatoria')) return 25;
+    if(s.includes('no empieza') || s.includes('no inicia') || s.includes('sin iniciar')) return 0;
+    const n=parseNum(v); return n>0 ? pct(n) : 0;
+  }
+  function stageScoreOrdenanza(v){
+    const s=norm(v);
+    if(!s) return 0;
+    if(s.includes('aprob') || s.includes('sancion')) return 100;
+    if(s.includes('segundo')) return 90;
+    if(s.includes('ajuste') || s.includes('subsan')) return 75;
+    if(s.includes('primer')) return 60;
+    if(s.includes('jurid')) return 40;
+    if(s.includes('elabor')) return 25;
+    if(s.includes('no empieza') || s.includes('no inicia') || s.includes('sin iniciar')) return 0;
+    const n=parseNum(v); return n>0 ? pct(n) : 0;
+  }
+  function attendanceScore(v){
+    const s=norm(v);
+    if(!s) return 0;
+    if(s.includes('no asiste') || s==='no') return 0;
+    if(s.includes('justif')) return 50;
+    if(s.includes('deleg')) return 75;
+    if(s.includes('director') || s.includes('asiste') || s==='si' || s==='sí') return 100;
+    const n=parseNum(v); return n>0 ? pct(n) : 0;
+  }
+  function parseDate(v){
+    const s=clean(v); if(!s) return null;
+    const m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+    if(m){ const yy=+m[3] < 100 ? 2000+(+m[3]) : +m[3]; return new Date(yy, +m[2]-1, +m[1]); }
+    const d=new Date(s); return isNaN(d) ? null : d;
+  }
+  function addDir(d){
+    const k=dirKey(d); if(!k) return null;
+    if(!state.dirData[k]) state.dirData[k]={ name:clean(d), modules:{pac:[],ordenanzas:[],reuniones:[],redes:[],eventos:[],apoyo:[]}, codes:{redes:new Set(),eventos:new Set(),apoyo:new Set()}, meta:{interacciones:0,personasEventos:0,personasApoyo:0}, alerts:[] };
+    return state.dirData[k];
+  }
+  function addAlert(dir, tema, module, message, row){
+    const a={dir:dir?dirKey(dir):'', tema, module, message, row};
+    state.alerts.push(a);
+    if(dir){ const d=addDir(dir); if(d) d.alerts.push(a); }
   }
 
-  function initDir(k){
-    if(!state.dirStats.has(k)) state.dirStats.set(k,{scores:{pac:0,ordenanzas:0,reuniones:0,redes:0,eventos:0,apoyo:0},counts:{},extras:{interacciones:0,personasEventos:0,personasApoyo:0},records:[],alerts:[]});
-    return state.dirStats.get(k);
-  }
-
-  function compute(){
-    state.directions.clear(); state.dirStats.clear(); state.alerts=[];
-    // collect all directions
-    state.raw.pac.forEach(r=>addDir(get(r,['Dirección Responsable'])));
-    state.raw.ordenanzas.forEach(r=>addDir(get(r,['Dirección Responsable'])));
-    state.raw.reuniones.forEach(r=>splitDirs(get(r,['Direcciones Convocadas'])).forEach(addDir));
-    state.raw.redes.forEach(r=>addDir(get(r,['Dirección que comparte','Direcciones que comparten'])));
-    state.raw.eventos.forEach(r=>addDir(get(r,['Dirección que Asiste','Direcciones que Asisten'])));
-    state.raw.apoyo.forEach(r=>addDir(get(r,['Dirección que apoya','Direcciones que apoyan'])));
-    state.directions.forEach((_,k)=>initDir(k));
-
-    const temp={pac:new Map(),ordenanzas:new Map(),reuniones:new Map(),redes:new Map(),eventos:new Map(),apoyo:new Map()};
-    const addTemp=(module,k,val,rec)=>{ if(!k) return; if(!temp[module].has(k)) temp[module].set(k,[]); temp[module].get(k).push(val); const s=initDir(k); s.records.push(rec); };
-
-    state.raw.pac.forEach(r=>{
-      const d=get(r,['Dirección Responsable']); const k=addDir(d); const st=get(r,['Etapa Actual']); const val=stagePAC(st);
-      addTemp('pac',k,val,{mod:'PAC',codigo:get(r,['Código']),tema:get(r,['Nombre del Proyecto']),estado:st,obs:get(r,['Observaciones'])});
-      if(k){
-        const s=initDir(k); s.extras.presupuesto=(s.extras.presupuesto||0)+num(get(r,['Monto Presupuestado'])); s.extras.contratado=(s.extras.contratado||0)+num(get(r,['Monto Contratado'])); s.extras.devengado=(s.extras.devengado||0)+num(get(r,['Monto Devengado','Monto devengado']));
-      }
-      const nombre=get(r,['Nombre del Proyecto'])||get(r,['Código'])||'Proyecto PAC';
-      if(norm(st).includes('no empieza')||norm(st).includes('no inicia')) pushAlert(k,'PAC',nombre,'Proceso sin iniciar');
-      if(expired(get(r,['Fecha límite'])) && !isCompleteStage(st)) pushAlert(k,'PAC',nombre,'Fecha límite vencida');
-      if(!get(r,['Evidencias'])) pushAlert(k,'PAC',nombre,'Sin evidencia registrada');
-    });
-
-    state.raw.ordenanzas.forEach(r=>{
-      const st=get(r,['Etapa Actual']); const val=stageORD(st);
-      const principal=get(r,['Dirección Responsable']);
-      const coop=splitDirs(get(r,['Direcciones Cooperando','Dirección Cooperando']));
-      const dirs=unique([principal, ...coop]);
-      const codigo=get(r,['Nro. Ordenanza','# Trámite','Nro Ordenanza']);
-      const tema=get(r,['Tema']);
-      const nombre=tema||codigo||'Ordenanza';
-      dirs.forEach(d=>{
-        const k=addDir(d);
-        addTemp('ordenanzas',k,val,{mod:'Ordenanzas',codigo,tema,estado:`${st} · avance del registro ${fmtPct(val)}`,obs:get(r,['Observaciones'])});
-        if(norm(st).includes('no empieza')||norm(st).includes('no inicia')) pushAlert(k,'Ordenanzas',nombre,'Ordenanza sin iniciar');
-        if(expired(get(r,['Fecha de finalización'])) && !isCompleteStage(st)) pushAlert(k,'Ordenanzas',nombre,'Fecha de finalización vencida');
-        if(!get(r,['Evidencias'])) pushAlert(k,'Ordenanzas',nombre,'Sin evidencia registrada');
-      });
-    });
-
-    state.raw.reuniones.forEach(r=>{
-      const dirs=splitDirs(get(r,['Direcciones Convocadas'])); const val=asistScore(get(r,['Asistencia']));
-      dirs.forEach(d=>{ const k=addDir(d); addTemp('reuniones',k,val,{mod:'Reuniones',codigo:get(r,['Código']),tema:get(r,['Tema Tratado']),estado:get(r,['Asistencia']),obs:get(r,['Observaciones'])}); if(val===0) pushAlert(k,'Reuniones',get(r,['Tema Tratado'])||get(r,['Código'])||'Reunión','Inasistencia o sin asistencia registrada'); });
-    });
-
-    const calcCodeParticipation=(module, rows, codeNames, dirNames, personField, interactionField) => {
-      const allCodes=unique(rows.map(r=>get(r,codeNames))).filter(Boolean);
-      const total=allCodes.length;
-      const byDir=new Map();
-      rows.forEach(r=>{
-        const code=get(r,codeNames); const dir=get(r,dirNames); const k=addDir(dir); if(!k || !code) return;
-        if(!byDir.has(k)) byDir.set(k,new Set()); byDir.get(k).add(code);
-        const s=initDir(k);
-        if(module==='redes') s.extras.interacciones += num(get(r,interactionField));
-        if(module==='eventos') s.extras.personasEventos += num(get(r,personField));
-        if(module==='apoyo') s.extras.personasApoyo += persons(get(r,personField));
-        s.records.push({mod: module==='redes'?'Redes institucionales':module==='eventos'?'Eventos':'Apoyo institucional',codigo:code,tema:get(r,['Tema de publicación','Nombre del evento','Actividad']),estado:'Registrado',obs:get(r,['Observaciones'])});
-        if(!get(r,['Evidencias'])) pushAlert(k, module==='redes'?'Redes':module==='eventos'?'Eventos':'Apoyo', get(r,['Tema de publicación','Nombre del evento','Actividad'])||code,'Sin evidencia registrada');
-      });
-      state.directions.forEach((_,k)=>{
-        const pct = total ? ((byDir.get(k)?.size || 0) / total) * 100 : 0;
-        initDir(k).scores[module]=pct;
-      });
-      state.moduleAverages[module]=avg([...state.directions.keys()].map(k=>initDir(k).scores[module]));
+  function processData(){
+    state.dirData={}; state.alerts=[];
+    const totalCodes={
+      redes: new Set(state.raw.redes.map((r,i)=>key(r,['Código','Codigo']) || `RED-${i+1}`)),
+      eventos: new Set(state.raw.eventos.map((r,i)=>key(r,['Código','Codigo']) || `EVE-${i+1}`)),
+      apoyo: new Set(state.raw.apoyo.map((r,i)=>key(r,['Código','Codigo']) || `APO-${i+1}`))
     };
+    const today=new Date(); today.setHours(0,0,0,0);
 
-    // Average record-based modules
-    ['pac','ordenanzas','reuniones'].forEach(m=>{
-      state.directions.forEach((_,k)=>{ initDir(k).scores[m]=avg(temp[m].get(k)||[]); initDir(k).counts[m]=(temp[m].get(k)||[]).length; });
-      state.moduleAverages[m]=avg([...state.directions.keys()].map(k=>initDir(k).scores[m]));
+    state.raw.pac.forEach((r,i)=>{
+      const dirs=splitDirs(key(r,['Dirección Responsable','Direccion Responsable']));
+      const etapa=key(r,['Etapa Actual']); const score=stageScorePAC(etapa);
+      const nombre=key(r,['Nombre del Proyecto','Proyecto']);
+      const limite=parseDate(key(r,['Fecha límite','Fecha limite']));
+      dirs.forEach(d=>{
+        const dd=addDir(d); dd.modules.pac.push({score,row:r,label:nombre || key(r,['Código','Codigo']) || `PAC ${i+1}`});
+        if(score===0) addAlert(d,'Planificación','PAC',`Proceso sin avance: ${nombre || 'registro PAC'}`,r);
+        if(limite && limite<today && score<100) addAlert(d,'Planificación','PAC',`Proceso PAC vencido o por revisar: ${nombre || 'registro PAC'}`,r);
+        if(!key(r,['Evidencias','Evidencia'])) addAlert(d,'Planificación','PAC',`Sin evidencia registrada: ${nombre || 'registro PAC'}`,r);
+      });
     });
-    calcCodeParticipation('redes',state.raw.redes,['Código'],['Dirección que comparte','Direcciones que comparten'],[],['Nro de Interacciones','Número de Interacciones']);
-    calcCodeParticipation('eventos',state.raw.eventos,['Código'],['Dirección que Asiste','Direcciones que Asisten'],['Cantidad de personas'],[]);
-    calcCodeParticipation('apoyo',state.raw.apoyo,['Código'],['Dirección que apoya','Direcciones que apoyan'],['Apoyo Entregado'],[]);
 
-    state.directions.forEach((name,k)=>{
-      const s=initDir(k); s.index=MODULES.reduce((acc,[m])=>acc+(Number(s.scores[m])||0),0)/MODULES.length;
-      s.name=name;
+    state.raw.ordenanzas.forEach((r,i)=>{
+      const dirs=[...splitDirs(key(r,['Dirección Responsable','Direccion Responsable'])), ...splitDirs(key(r,['Direcciones Cooperando','Dirección Cooperando','Direcciones que cooperan']))];
+      const unique=[...new Set(dirs.map(dirKey))].map(k=>dirs.find(d=>dirKey(d)===k));
+      const etapa=key(r,['Etapa Actual']); const score=stageScoreOrdenanza(etapa);
+      const tema=key(r,['Tema','Nro. Ordenanza','Nro Ordenanza']) || `Ordenanza ${i+1}`;
+      unique.forEach(d=>{
+        const dd=addDir(d); dd.modules.ordenanzas.push({score,row:r,label:tema});
+        if(score===0) addAlert(d,'Planificación','Ordenanzas',`Ordenanza sin avance: ${tema}`,r);
+        if(!key(r,['Evidencias','Evidencia'])) addAlert(d,'Planificación','Ordenanzas',`Ordenanza sin evidencia: ${tema}`,r);
+      });
     });
+
+    state.raw.reuniones.forEach((r,i)=>{
+      const dirs=splitDirs(key(r,['Direcciones Convocadas','Dirección Convocada','Direccion Convocada']));
+      const score=attendanceScore(key(r,['Asistencia','Resultado Asistencia']));
+      const tema=key(r,['Tema Tratado','Tipo de Reunión','Tipo de Reunion']) || `Reunión ${i+1}`;
+      dirs.forEach(d=>{
+        const dd=addDir(d); dd.modules.reuniones.push({score,row:r,label:tema});
+        if(score===0) addAlert(d,'Ejecución y Monitoreo','Reuniones',`Inasistencia o asistencia no registrada: ${tema}`,r);
+      });
+    });
+
+    state.raw.redes.forEach((r,i)=>{
+      const code=key(r,['Código','Codigo']) || `RED-${i+1}`;
+      const dirs=splitDirs(key(r,['Dirección que comparte','Direcciones que comparten','Direccion que comparte']));
+      const inter=parseNum(key(r,['Nro de Interacciones','N° Interacciones','Numero de Interacciones','Interacciones']));
+      dirs.forEach(d=>{
+        const dd=addDir(d); dd.codes.redes.add(code); dd.meta.interacciones += inter;
+        dd.modules.redes.push({score:100,row:r,label:key(r,['Tema de publicación','Tema de Publicacion']) || code});
+      });
+    });
+
+    state.raw.eventos.forEach((r,i)=>{
+      const code=key(r,['Código','Codigo']) || `EVE-${i+1}`;
+      const dirs=splitDirs(key(r,['Dirección que Asiste','Direcciones que Asisten','Direccion que Asiste']));
+      const personas=parseNum(key(r,['Cantidad de personas','Cantidad personas','Nro de personas','Personas']));
+      dirs.forEach(d=>{
+        const dd=addDir(d); dd.codes.eventos.add(code); dd.meta.personasEventos += personas;
+        dd.modules.eventos.push({score:100,row:r,label:key(r,['Nombre del evento','Evento']) || code});
+      });
+    });
+
+    state.raw.apoyo.forEach((r,i)=>{
+      const code=key(r,['Código','Codigo']) || `APO-${i+1}`;
+      const dirs=splitDirs(key(r,['Dirección que apoya','Direcciones que apoyan','Direccion que apoya']));
+      const apoyoTxt=key(r,['Apoyo Entregado','Cantidad de personas','Personas']);
+      const personas=parseNum(apoyoTxt);
+      dirs.forEach(d=>{
+        const dd=addDir(d); dd.codes.apoyo.add(code); dd.meta.personasApoyo += personas;
+        dd.modules.apoyo.push({score:100,row:r,label:key(r,['Actividad']) || code});
+      });
+    });
+
+    state.directions=Object.values(state.dirData).sort((a,b)=>a.name.localeCompare(b.name));
+    state.directions.forEach(d=>{
+      const m=d.modules;
+      d.moduleScores={
+        pac: avg(m.pac.map(x=>x.score)),
+        ordenanzas: avg(m.ordenanzas.map(x=>x.score)),
+        reuniones: avg(m.reuniones.map(x=>x.score)),
+        redes: totalCodes.redes.size ? (d.codes.redes.size/totalCodes.redes.size)*100 : 0,
+        eventos: totalCodes.eventos.size ? (d.codes.eventos.size/totalCodes.eventos.size)*100 : 0,
+        apoyo: totalCodes.apoyo.size ? (d.codes.apoyo.size/totalCodes.apoyo.size)*100 : 0
+      };
+      d.themes={
+        planificacion: avg([d.moduleScores.pac,d.moduleScores.ordenanzas]),
+        ejecucion: avg([d.moduleScores.reuniones,d.moduleScores.apoyo]),
+        participacion: avg([d.moduleScores.redes,d.moduleScores.eventos])
+      };
+      d.general=avg([d.themes.planificacion,d.themes.ejecucion,d.themes.participacion]);
+    });
+    state.summary={
+      general: avg(state.directions.map(d=>d.general)),
+      planificacion: avg(state.directions.map(d=>d.themes.planificacion)),
+      ejecucion: avg(state.directions.map(d=>d.themes.ejecucion)),
+      participacion: avg(state.directions.map(d=>d.themes.participacion)),
+      direcciones: state.directions.length,
+      alertas: state.alerts.length,
+      totalCodes,
+      presupuestado: state.raw.pac.reduce((a,r)=>a+parseNum(key(r,['Monto Presupuestado'])),0),
+      contratado: state.raw.pac.reduce((a,r)=>a+parseNum(key(r,['Monto Contratado'])),0),
+      devengado: state.raw.pac.reduce((a,r)=>a+parseNum(key(r,['Monto devengado','Monto Devengado'])),0)
+    };
   }
 
-  function pushAlert(k,module,tema,msg){
-    const a={dirKey:k,module,tema,msg}; state.alerts.push(a); if(k) initDir(k).alerts.push(a);
+  function barHTML(value){ return `<div class="bar" aria-label="${fmtPct(value)}"><span style="width:${pct(value)}%"></span></div>`; }
+  function kpiCard(id,title,value,sub,barVal){
+    const isPct=typeof value==='number';
+    return `<article class="card kpiCard" data-detail="${id}">
+      <div class="kpiTitle">${title}</div>
+      <div class="kpiValue">${isPct?fmtPct(value):value}</div>
+      ${barVal!==undefined?barHTML(barVal):''}
+      <div class="kpiSub">${sub}</div>
+    </article>`;
+  }
+  function renderGeneral(){
+    const s=state.summary;
+    const execPres = s.presupuestado ? (s.devengado/s.presupuestado)*100 : 0;
+    document.getElementById('generalKpis').innerHTML = [
+      kpiCard('general','Índice general municipal',s.general,'Promedio de los tres temas',s.general),
+      kpiCard('planificacion','Planificación',s.planificacion,'PAC y ordenanzas',s.planificacion),
+      kpiCard('ejecucion','Ejecución y Monitoreo',s.ejecucion,'Reuniones y apoyo institucional',s.ejecucion),
+      kpiCard('participacion','Participación Ciudadana',s.participacion,'Redes institucionales y eventos',s.participacion),
+      kpiCard('presupuesto','Ejecución presupuestaria',execPres,`${money(s.devengado)} devengado de ${money(s.presupuestado)}`,execPres),
+      kpiCard('alertas','Alertas activas',String(s.alertas),'Clic para ver detalle',Math.min(100,s.alertas*10))
+    ].join('');
+    document.querySelectorAll('.kpiCard').forEach(el=>el.addEventListener('click',()=>toggleGeneralDetail(el.dataset.detail)));
+  }
+  function toggleGeneralDetail(id){
+    const panel=document.getElementById('generalDetails');
+    if(panel.dataset.open===id){ panel.classList.remove('open'); panel.dataset.open=''; panel.innerHTML=''; return; }
+    panel.dataset.open=id; panel.classList.add('open');
+    if(id==='alertas'){
+      panel.innerHTML = `<h3>Alertas activas</h3>${state.alerts.length ? state.alerts.slice(0,80).map(a=>`<div class="alertLine"><b>${a.module}</b> · ${a.dir?state.dirData[a.dir]?.name || a.dir:'General'}<br>${a.message}</div>`).join('') : '<div class="empty">No hay alertas.</div>'}`;
+      return;
+    }
+    const labels = { general:'Índice general municipal', planificacion:'Planificación', ejecucion:'Ejecución y Monitoreo', participacion:'Participación Ciudadana', presupuesto:'Ejecución presupuestaria' };
+    if(id==='presupuesto'){
+      panel.innerHTML = `<h3>${labels[id]}</h3>
+        <div class="grid three">
+          <div class="card"><b>Presupuestado</b><div class="kpiValue">${money(state.summary.presupuestado)}</div></div>
+          <div class="card"><b>Contratado</b><div class="kpiValue">${money(state.summary.contratado)}</div></div>
+          <div class="card"><b>Devengado</b><div class="kpiValue">${money(state.summary.devengado)}</div></div>
+        </div>`;
+      return;
+    }
+    const key = id==='general' ? 'general' : id;
+    const dirs = [...state.directions].sort((a,b)=>(key==='general'?b.general-a.general:b.themes[key]-a.themes[key])).slice(0,10);
+    panel.innerHTML = `<h3>${labels[id]}</h3><div class="rows">${dirs.map((d,i)=>dirRowHTML(d,i,key)).join('')}</div>`;
   }
 
-  function render(){
-    renderTabs(); renderSummary(); renderRanking(); renderSearch();
+  function themeScoreHTML(moduleScores, mods){
+    return mods.map(m=>`<div class="moduleMini"><div class="barLabel"><span>${MODULE_LABEL[m]}</span><span>${fmtPct(moduleScores[m])}</span></div>${barHTML(moduleScores[m])}</div>`).join('');
   }
-  function renderTabs(){
+  function renderThemeSummary(){
+    document.getElementById('themeSummary').innerHTML = Object.entries(THEMES).map(([k,t])=>{
+      const val=state.summary[k];
+      const moduleAvg={}; t.modules.forEach(m=>moduleAvg[m]=avg(state.directions.map(d=>d.moduleScores[m])));
+      const registros=t.modules.reduce((a,m)=>a+(state.raw[m]?.length||0),0);
+      return `<article class="card themeCard" data-theme="${k}">
+        <div class="themeHead"><div><h3 class="themeName">${t.label}</h3><div class="muted">${registros} registros vinculados</div></div><div class="themePct">${fmtPct(val)}</div></div>
+        ${barHTML(val)}
+        ${themeScoreHTML(moduleAvg,t.modules)}
+        <div class="detailPanel" id="themeDetail_${k}"></div>
+      </article>`;
+    }).join('');
+    document.querySelectorAll('.themeCard').forEach(c=>c.addEventListener('click',(ev)=>{
+      if(ev.target.closest('a,button,select,input')) return;
+      const k=c.dataset.theme; const d=document.getElementById(`themeDetail_${k}`);
+      d.classList.toggle('open');
+      if(d.classList.contains('open')) d.innerHTML=themeDetailHTML(k); else d.innerHTML='';
+    }));
+  }
+  function themeDetailHTML(k){
+    const t=THEMES[k];
+    return `<div class="muted"><b>Módulos:</b> ${t.modules.map(m=>MODULE_LABEL[m]).join(' · ')}</div>
+      <div style="margin-top:10px" class="rows">${[...state.directions].sort((a,b)=>b.themes[k]-a.themes[k]).slice(0,8).map((d,i)=>dirRowHTML(d,i,k)).join('')}</div>`;
+  }
+
+  function dirRowHTML(d,i,mode='general'){
+    const total = mode==='general' ? d.general : (d.themes[mode] ?? d.general);
+    return `<div class="dirRow">
+      <div class="rank">${i+1}</div>
+      <div class="dirName" title="${d.name}">${shortDir(d.name)}</div>
+      <div class="subBars">
+        <div class="subBar"><span>Índice total</span>${barHTML(d.general)}<span>${fmtPct(d.general)}</span></div>
+        <div class="subBar"><span>Planificación</span>${barHTML(d.themes.planificacion)}<span>${fmtPct(d.themes.planificacion)}</span></div>
+        <div class="subBar"><span>Ejecución</span>${barHTML(d.themes.ejecucion)}<span>${fmtPct(d.themes.ejecucion)}</span></div>
+        <div class="subBar"><span>Participación</span>${barHTML(d.themes.participacion)}<span>${fmtPct(d.themes.participacion)}</span></div>
+      </div>
+      <div class="pct">${fmtPct(total)}</div>
+    </div>`;
+  }
+  function renderThemeTracking(){
+    document.getElementById('themeTracking').innerHTML = Object.entries(THEMES).map(([k,t])=>`
+      <div class="accItem">
+        <button class="accHead" data-acc="${k}"><strong>${t.label}</strong><span>${fmtPct(state.summary[k])} · Ver detalle</span></button>
+        <div class="accBody" id="acc_${k}">
+          <div class="grid two">
+            <div class="card"><h3>Avance por Dirección</h3><div class="rows">${[...state.directions].sort((a,b)=>b.themes[k]-a.themes[k]).map((d,i)=>dirRowHTML(d,i,k)).join('')}</div></div>
+            <div class="card"><h3>Registros del tema</h3>${themeTablesHTML(t.modules)}</div>
+          </div>
+        </div>
+      </div>`).join('');
+    document.querySelectorAll('.accHead').forEach(b=>b.addEventListener('click',()=>{
+      const body=document.getElementById(`acc_${b.dataset.acc}`); body.classList.toggle('open');
+    }));
+  }
+  function themeTablesHTML(mods){
+    return mods.map(m=>`<h4>${MODULE_LABEL[m]}</h4>${tableHTML(state.raw[m],m)}`).join('');
+  }
+  function tableHTML(rows,module){
+    if(!rows.length) return '<div class="empty">Sin registros.</div>';
+    const cols = {
+      pac:['Código','Nombre del Proyecto','Dirección Responsable','Etapa Actual','Monto Presupuestado','Monto devengado'],
+      ordenanzas:['Nro. Ordenanza','Dirección Responsable','Direcciones Cooperando','Tema','Etapa Actual'],
+      reuniones:['Código','Tipo de Reunión','Fecha','Tema Tratado','Direcciones Convocadas','Asistencia'],
+      redes:['Código','Fecha de Publicación','Tema de publicación','Dirección que comparte','Nro de Interacciones'],
+      eventos:['Código','Nombre del evento','Fecha','Dirección que Asiste','Cantidad de personas'],
+      apoyo:['Código','Actividad','Fecha','Dirección que apoya','Apoyo Entregado']
+    }[module] || Object.keys(rows[0]).slice(0,6);
+    return `<div class="tableWrap"><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${key(r,[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  }
+  function renderComparative(){
+    const select=document.getElementById('directionFilter');
+    select.innerHTML='<option value="">Todas las direcciones</option>'+state.directions.map(d=>`<option value="${dirKey(d.name)}">${d.name}</option>`).join('');
+    select.onchange=renderDirectionRows;
+    renderDirectionRows();
+  }
+  function renderDirectionRows(){
+    const v=document.getElementById('directionFilter').value;
+    let dirs=[...state.directions].sort((a,b)=>b.general-a.general);
+    if(v) dirs=dirs.filter(d=>dirKey(d.name)===v);
+    document.getElementById('directionComparison').innerHTML = dirs.length ? dirs.map((d,i)=>dirRowHTML(d,i,'general')).join('') : '<div class="empty">No hay datos para la Dirección seleccionada.</div>';
+  }
+
+  function setupTabs(){
     document.querySelectorAll('.tabBtn').forEach(btn=>btn.addEventListener('click',()=>{
       document.querySelectorAll('.tabBtn').forEach(b=>b.classList.remove('active'));
       document.querySelectorAll('.tabPanel').forEach(p=>p.classList.remove('active'));
-      btn.classList.add('active'); $('tab-'+btn.dataset.tab).classList.add('active');
+      btn.classList.add('active'); document.getElementById(btn.dataset.tab).classList.add('active');
     }));
   }
-  function renderSummary(){
-    const dirs=[...state.dirStats.values()];
-    const general=avg(dirs.map(d=>d.index));
-    const presup=sum(dirs.map(d=>d.extras.presupuesto||0)); const dev=sum(dirs.map(d=>d.extras.devengado||0)); const ejec=presup?dev/presup*100:0;
-    const inter=sum(dirs.map(d=>d.extras.interacciones||0)); const personasEventos=sum(dirs.map(d=>d.extras.personasEventos||0));
-    $('summaryKpis').innerHTML = `
-      <div class="card kpi"><div class="kpiTitle">PAC y ejecución presupuestaria</div><div class="kpiPair"><div class="miniMetric"><strong>${fmtPct(state.moduleAverages.pac)}</strong><span>Avance PAC</span></div><div class="miniMetric red"><strong>${fmtPct(ejec)}</strong><span>Devengado de ${money(presup)}</span></div></div></div>
-      <div class="card kpi"><div class="kpiTitle">Ordenanzas</div><div class="kpiValue">${fmtPct(state.moduleAverages.ordenanzas)}</div><div class="kpiSub">Incluye Dirección Responsable y Direcciones Cooperando</div></div>
-      <div class="card kpi"><div class="kpiTitle">Reuniones y eventos</div><div class="kpiPair"><div class="miniMetric"><strong>${fmtPct(state.moduleAverages.reuniones)}</strong><span>Reuniones</span></div><div class="miniMetric red"><strong>${fmtPct(state.moduleAverages.eventos)}</strong><span>Eventos · ${personasEventos} personas</span></div></div></div>
-      <div class="card kpi"><div class="kpiTitle">Interacción en Redes Institucionales</div><div class="kpiValue">${inter}</div><div class="kpiSub">${state.raw.redes.length} registros de difusión</div></div>
-      <div class="card kpi"><div class="kpiTitle">Apoyo institucional</div><div class="kpiValue">${fmtPct(state.moduleAverages.apoyo)}</div><div class="kpiSub">${state.raw.apoyo.length} actividades reportadas</div></div>
-      <div class="card kpi clickable" id="alertKpi"><div class="kpiTitle">Alertas principales</div><div class="kpiValue">${state.alerts.length}</div><div class="kpiSub">Haga clic para desplegar la tabla</div></div>
-      <div class="card kpi"><div class="kpiTitle">Módulos activos</div><div class="kpiValue">6</div><div class="kpiSub">Cada hoja equivale al 16,67% del índice total</div></div>
-    `;
-    $('alertKpi').onclick=()=> $('alertsPanel').classList.toggle('hidden');
-    $('moduleBars').innerHTML = MODULES.map(([m,label])=>bar(label,state.moduleAverages[m])).join('');
-    $('indexDonut').innerHTML = `<div class="donutWrap"><div class="donut" style="--p:${Math.round(general)}" data-value="${fmtPct(general)}"></div><div class="legend"><div><b>Índice general</b><br>Promedio de las seis hojas de seguimiento.</div><div><b>Valor de cada hoja:</b> 16,67%</div><div><b>Direcciones:</b> ${dirs.length}</div></div></div>`;
-    $('alertsList').innerHTML = state.alerts.length ? makeAlerts(state.alerts) : '<div class="empty">No hay alertas registradas.</div>';
-  }
-  function bar(label,val){ return `<div class="barRow"><div class="barLabel" title="${label}">${label}</div><div class="barTrack"><div class="barFill" style="width:${Math.max(0,Math.min(100,val||0))}%"></div></div><div class="barValue">${fmtPct(val)}</div></div>`; }
-  function renderRanking(){
-    const dirs=[...state.dirStats.values()].sort((a,b)=>b.index-a.index);
-    $('combinedRanking').innerHTML = dirs.length ? dirs.map((d,i)=>`<div class="combinedRow"><div class="rankNo">${i+1}</div><div><div class="combinedName" title="${d.name}">${d.name}</div><div class="combinedMeta">PAC ${fmtPct(d.scores.pac)} · Ord. ${fmtPct(d.scores.ordenanzas)} · Reun. ${fmtPct(d.scores.reuniones)} · Redes ${fmtPct(d.scores.redes)}</div></div><div class="barTrack"><div class="barFill" style="width:${Math.max(0,Math.min(100,d.index||0))}%"></div></div><div class="score">${fmtPct(d.index)}</div></div>`).join('') : '<div class="empty">No hay datos.</div>';
-    $('rankingTable').innerHTML = `<table><thead><tr><th>Dirección</th>${MODULES.map(([_,l])=>`<th>${l}</th>`).join('')}<th>Índice</th><th>Alertas</th></tr></thead><tbody>${dirs.map(d=>`<tr><td><b>${d.name}</b></td>${MODULES.map(([m])=>`<td>${fmtPct(d.scores[m])}</td>`).join('')}<td><span class="pill ${pillClass(d.index)}">${fmtPct(d.index)}</span></td><td>${d.alerts.length}</td></tr>`).join('')}</tbody></table>`;
-  }
-  function pillClass(v){ return v>=85?'green':v>=70?'yellow':v>=50?'gray':'red'; }
-  function renderSearch(){
-    const sel=$('directionSelect');
-    const dirs=[...state.dirStats.values()].sort((a,b)=>a.name.localeCompare(b.name,'es'));
-    sel.innerHTML='<option value="">Seleccione una dirección</option>'+dirs.map(d=>`<option value="${toKey(d.name)}">${d.name}</option>`).join('');
-    sel.onchange=()=>renderDirection(sel.value);
-  }
-  function renderDirection(k){
-    const d=state.dirStats.get(k); if(!d){ $('directionContent').className='empty'; $('directionContent').innerHTML='Seleccione una Dirección para ver su resumen ejecutivo.'; return; }
-    $('directionContent').className='';
-    $('directionContent').innerHTML = `
-      <div class="grid kpis">
-        <div class="card kpi"><div class="kpiTitle">Índice general</div><div class="kpiValue">${fmtPct(d.index)}</div><div class="kpiSub">Promedio de 6 módulos</div></div>
-        <div class="card kpi"><div class="kpiTitle">PAC</div><div class="kpiValue">${fmtPct(d.scores.pac)}</div><div class="kpiSub">Presupuesto: ${money(d.extras.presupuesto||0)} · Devengado: ${money(d.extras.devengado||0)}</div></div>
-        <div class="card kpi"><div class="kpiTitle">Reuniones y eventos</div><div class="kpiPair"><div class="miniMetric"><strong>${fmtPct(d.scores.reuniones)}</strong><span>Reuniones</span></div><div class="miniMetric red"><strong>${fmtPct(d.scores.eventos)}</strong><span>Eventos</span></div></div></div>
-        <div class="card kpi"><div class="kpiTitle">Alertas</div><div class="kpiValue">${d.alerts.length}</div><div class="kpiSub">Casos de seguimiento</div></div>
-      </div>
-      <div class="grid two" style="margin-top:16px">
-        <div class="card"><h3 class="chartTitle">Desempeño por módulo</h3><div class="bars">${MODULES.map(([m,l])=>bar(l,d.scores[m])).join('')}</div></div>
-        <div class="card"><h3 class="chartTitle">Resumen visual</h3><div class="donutWrap"><div class="donut" style="--p:${Math.round(d.index)}" data-value="${fmtPct(d.index)}"></div><div class="legend"><div><b>${d.name}</b></div><div>Interacciones redes: <b>${d.extras.interacciones||0}</b></div><div>Personas en eventos: <b>${d.extras.personasEventos||0}</b></div><div>Personas apoyo: <b>${d.extras.personasApoyo||0}</b></div></div></div></div>
-      </div>
-      <div class="grid two" style="margin-top:16px">
-        <div class="card"><h3 class="chartTitle">Registros asociados</h3><div class="tableWrap scroll4">${recordsTable(d.records)}</div></div>
-        <div class="card"><h3 class="chartTitle">Alertas de la Dirección</h3><div class="scroll4">${d.alerts.length?makeAlerts(d.alerts):'<div class="empty">No hay alertas para esta Dirección.</div>'}</div></div>
-      </div>`;
-  }
-  function recordsTable(records){
-    if(!records.length) return '<div class="empty">No hay registros asociados.</div>';
-    return `<table><thead><tr><th>Módulo</th><th>Código</th><th>Tema</th><th>Estado</th><th>Observación</th></tr></thead><tbody>${records.map(r=>`<tr><td>${r.mod||''}</td><td>${r.codigo||''}</td><td>${r.tema||''}</td><td>${r.estado||''}</td><td>${r.obs||''}</td></tr>`).join('')}</tbody></table>`;
-  }
-  function makeAlerts(alerts){ return alerts.map(a=>`<div class="alertBox"><b>${a.module}</b> · ${a.tema||'Registro'}<br><span>${a.msg}</span></div>`).join(''); }
 
-  loadData().catch(err=>{
-    console.error(err);
-    document.body.innerHTML = `<div class="page"><div class="card"><h2>No se pudieron cargar los datos</h2><p>${err.message}</p><p>Verifique que los CSV existan en la carpeta <b>data</b> y actualice con Ctrl + F5.</p></div></div>`;
-  });
+  async function init(){
+    try{
+      const entries=await Promise.all(Object.entries(CSV_FILES).map(async([k,path])=>[k,await fetchCSV(path)]));
+      entries.forEach(([k,rows])=>state.raw[k]=rows);
+      processData();
+      renderGeneral(); renderThemeSummary(); renderThemeTracking(); renderComparative(); setupTabs();
+      console.log('Dashboard Alcaldía V11', Object.fromEntries(Object.entries(state.raw).map(([k,v])=>[k,v.length])), state.summary);
+    } catch(err){
+      document.body.innerHTML = `<main class="wrap"><div class="card"><h1>No se pudieron cargar los CSV</h1><p>${err.message}</p><p>Verifica que la carpeta <b>data</b> tenga los seis archivos CSV publicados en GitHub Pages.</p></div></main>`;
+      console.error(err);
+    }
+  }
+  init();
 })();
 </script>
 </body>
