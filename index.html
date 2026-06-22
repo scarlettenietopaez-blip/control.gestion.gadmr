@@ -43,8 +43,11 @@
     .sixGrid{grid-template-columns:repeat(6,minmax(0,1fr))}
     .twoGrid{grid-template-columns:1fr 1fr}
     .card{background:var(--card);border:1px solid var(--linea);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
-    .kpiCard{cursor:pointer;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;transition:.15s transform,.15s border-color;background:#fff}
-    .kpiCard:hover{transform:translateY(-2px);border-color:#b9ccdf}.kpiCard.active{outline:2px solid rgba(198,40,40,.18);border-color:#df9f9f}
+    .kpiCard{cursor:default;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;transition:.15s transform,.15s border-color;background:#fff}
+    .kpiCard.interactive{cursor:pointer;background:linear-gradient(135deg,#f4f9ff 0%,#ffffff 54%,#fff5f5 100%);border-color:#bfd2e7}
+    .kpiCard.interactive::before{content:"Clic para desplegar";align-self:flex-end;margin:-8px -4px 4px 0;padding:5px 9px;border-radius:999px;background:#eef5ff;color:var(--azul);font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.35px}
+    .kpiCard.interactive:hover{transform:translateY(-2px);border-color:#b84a4a;box-shadow:0 12px 30px rgba(198,40,40,.12)}
+    .kpiCard.active{outline:2px solid rgba(198,40,40,.20);border-color:#c62828;background:linear-gradient(135deg,#fff7f7 0%,#ffffff 55%,#f2f7ff 100%)}
     .kpiTitle{text-transform:uppercase;letter-spacing:.4px;color:#52677d;font-weight:950;font-size:12px}.kpiVal{text-align:center;font-size:38px;font-weight:950;color:#061d33;line-height:1}.kpiSub{text-align:center;color:var(--muted);font-size:12px}
     .bar{height:12px;background:#e7eef6;border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--azul2),var(--rojo));width:0%}.bar.thin{height:8px}
     .barLine{display:grid;grid-template-columns:minmax(150px,1fr) minmax(210px,2.5fr) 56px;gap:12px;align-items:center;margin:10px 0;font-weight:850;font-size:13px}.barLine .name{text-transform:uppercase;line-height:1.2;color:#17344f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.barLine .pct{text-align:right;font-size:16px;font-weight:950;color:#061d33}
@@ -92,7 +95,7 @@
         <p>Indicadores principales. Clic en cada KPI para mostrar u ocultar el detalle.</p>
       </div>
       <div class="grid topGrid">
-        <article class="card kpiCard" data-kpi="general" id="generalKpiCard"></article>
+        <article class="card kpiCard" id="generalKpiCard"></article>
         <article class="card compareCard">
           <h3>Comparativo del índice general por Dirección</h3>
           <div class="compareBody" id="generalCompare"></div>
@@ -224,14 +227,13 @@
   function barHTML(v, thin=false){ return `<div class="bar ${thin?'thin':''}"><span style="width:${pct(v)}%"></span></div>`; }
   function simpleRow(name,val){ return `<div class="simpleRow"><b>${name}</b><div class="pct">${fmtPct(val)}</div></div>`; }
   function compactRow(name,val){ return `<div class="compactRow"><b>${name}</b>${barHTML(val,true)}<div class="pct">${fmtPct(val)}</div></div>`; }
-  function kpiHTML(id,title,val,sub){ return `<article class="card kpiCard" data-kpi="${id}"><div class="kpiTitle">${title}</div><div class="kpiVal">${typeof val==='number'?fmtPct(val):val}</div>${typeof val==='number'?barHTML(val):''}<div class="kpiSub">${sub||'Clic para ver detalle'}</div></article>`; }
+  function kpiHTML(id,title,val,sub){ return `<article class="card kpiCard interactive" data-kpi="${id}"><div class="kpiTitle">${title}</div><div class="kpiVal">${typeof val==='number'?fmtPct(val):val}</div>${typeof val==='number'?barHTML(val):''}<div class="kpiSub">${sub||'Clic para ver detalle'}</div></article>`; }
   function directionBar(d,theme='general',rank=false){ const val=theme==='general'?d.general:d.themes[theme]; return `<div class="barLine ${rank?'rank':''}">${rank?`<div class="rankNo">${rank}</div>`:''}<div class="name" title="${d.name}">${shortDir(d.name)}</div>${barHTML(val)}<div class="pct">${fmtPct(val)}</div></div>`; }
   function themeCompare(theme){ const dirs=[...state.directions].sort((a,b)=>b.themes[theme]-a.themes[theme]); return `<div class="compareBody">${dirs.map((d,i)=>directionBar(d,theme,i+1)).join('') || '<div class="empty">Sin datos.</div>'}</div>`; }
 
   function renderGeneral(){
     const s=state.summary;
-    document.getElementById('generalKpiCard').innerHTML=`<div class="kpiTitle">Índice general municipal</div><div class="kpiVal">${fmtPct(s.general)}</div>${barHTML(s.general)}<div class="kpiSub">${s.direcciones} direcciones monitoreadas · clic para ver lista</div>`;
-    document.getElementById('generalKpiCard').onclick=()=>toggleGeneral('general',document.getElementById('generalKpiCard'));
+    document.getElementById('generalKpiCard').innerHTML=`<div class="kpiTitle">Índice general municipal</div><div class="kpiVal">${fmtPct(s.general)}</div>${barHTML(s.general)}<div class="kpiSub">${s.direcciones} direcciones monitoreadas</div>`;
     document.getElementById('generalCompare').innerHTML=[...state.directions].sort((a,b)=>b.general-a.general).map((d,i)=>directionBar(d,'general',i+1)).join('') || '<div class="empty">Sin datos.</div>';
     document.getElementById('themeKpis').innerHTML=[
       kpiHTML('planificacion','Planificación',s.planificacion,'PAC y Ordenanzas'),
@@ -243,7 +245,7 @@
   }
   function toggleGeneral(id,el){
     const box=document.getElementById('generalDetail');
-    document.querySelectorAll('[data-kpi], #generalKpiCard').forEach(k=>k.classList.remove('active'));
+    document.querySelectorAll('[data-kpi]').forEach(k=>k.classList.remove('active'));
     if(box.dataset.open===id){box.dataset.open='';box.classList.remove('open');box.innerHTML='';return;}
     box.dataset.open=id; box.classList.add('open'); el.classList.add('active');
     if(id==='general'){
@@ -296,7 +298,7 @@
   }
   function setupTabs(){ document.querySelectorAll('.tabBtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabBtn').forEach(x=>x.classList.remove('active')); document.querySelectorAll('.tabPanel').forEach(x=>x.classList.remove('active')); b.classList.add('active'); document.getElementById(b.dataset.tab).classList.add('active');}); }
   async function init(){
-    try{ const entries=await Promise.all(Object.entries(CSV_FILES).map(async([k,p])=>[k,await fetchCSV(p)])); entries.forEach(([k,v])=>state.raw[k]=v); processData(); renderGeneral(); renderDirectionTab(); setupTabs(); console.log('Dashboard V13',Object.fromEntries(Object.entries(state.raw).map(([k,v])=>[k,v.length])),state.summary); }
+    try{ const entries=await Promise.all(Object.entries(CSV_FILES).map(async([k,p])=>[k,await fetchCSV(p)])); entries.forEach(([k,v])=>state.raw[k]=v); processData(); renderGeneral(); renderDirectionTab(); setupTabs(); console.log('Dashboard V14',Object.fromEntries(Object.entries(state.raw).map(([k,v])=>[k,v.length])),state.summary); }
     catch(err){document.body.innerHTML=`<main class="wrap"><div class="card"><h1>No se pudieron cargar los CSV</h1><p>${err.message}</p><p>Verifica que la carpeta <b>data</b> tenga los seis CSV publicados.</p></div></main>`; console.error(err);}
   }
   init();
