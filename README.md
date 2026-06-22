@@ -1,10 +1,13 @@
-# Dashboard Ejecutivo Alcaldía - V12
+# Dashboard Ejecutivo Alcaldía - V13
 
-Versión reorganizada por temas de gestión, con CSV publicados en GitHub Pages.
+Versión reorganizada para GitHub Pages.
 
-## Estructura de datos
+## Estructura
 
-El dashboard lee los siguientes archivos:
+- `index.html`: dashboard completo con estilos y lógica integrada.
+- `data/`: carpeta con los CSV generados desde la matriz Excel.
+
+## Archivos CSV requeridos
 
 - `data/pac_contratacion.csv`
 - `data/ordenanzas.csv`
@@ -13,11 +16,10 @@ El dashboard lee los siguientes archivos:
 - `data/eventos.csv`
 - `data/apoyo_institucional.csv`
 
-## Cambios V12
+## Cambios V13
 
-- Tres pestañas: Resumen general, Seguimiento por tema y Resumen por dirección.
-- El resumen general elimina el KPI independiente de ejecución presupuestaria.
-- El PAC engloba la ejecución presupuestaria cuando existen montos presupuestados/devengados.
-- Los KPI son interactivos y muestran/ocultan información al hacer clic.
-- Seguimiento por tema muestra comparativos de direcciones por tema.
-- Resumen por dirección permite seleccionar una dirección y consultar KPIs por cada CSV.
+- Se elimina la pestaña Seguimiento por tema.
+- Los KPI principales se organizan en una sola fila.
+- El índice general municipal y el comparativo de direcciones aparecen juntos al inicio.
+- Al hacer clic en Planificación, Ejecución y Monitoreo o Participación Ciudadana se despliega el comparativo por dirección del tema correspondiente.
+- Se mantiene el resumen por dirección con lista desplegable y detalles por CSV.

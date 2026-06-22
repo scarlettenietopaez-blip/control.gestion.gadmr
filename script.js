@@ -1,1 +1,1 @@
-// V12: lógica integrada en index.html para evitar problemas de carga en GitHub Pages.
+// JavaScript integrado en index.html para evitar problemas de caché o carga en GitHub Pages.
