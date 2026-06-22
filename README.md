@@ -1,23 +1,10 @@
-# Dashboard Ejecutivo Alcaldía - V11
+# Dashboard Ejecutivo Alcaldía - V12
 
-Versión reorganizada por temas de gestión para GitHub Pages.
+Versión reorganizada por temas de gestión, con CSV publicados en GitHub Pages.
 
-## Estructura visual
+## Estructura de datos
 
-1. Resumen general inicial.
-2. Resumen por tema.
-3. Seguimiento por tema.
-4. Comparativo por direcciones.
-
-## Temas de gestión
-
-- **Planificación:** PAC y Ordenanzas.
-- **Ejecución y Monitoreo:** Reuniones y Apoyo Institucional.
-- **Participación Ciudadana:** Redes Institucionales y Eventos.
-
-## Archivos CSV requeridos
-
-Los datos deben estar en la carpeta `data` del repositorio:
+El dashboard lee los siguientes archivos:
 
 - `data/pac_contratacion.csv`
 - `data/ordenanzas.csv`
@@ -26,10 +13,11 @@ Los datos deben estar en la carpeta `data` del repositorio:
 - `data/eventos.csv`
 - `data/apoyo_institucional.csv`
 
-## Publicación
+## Cambios V12
 
-Subir `index.html`, `README.md`, `styles.css` y `script.js` a la raíz del repositorio. La lógica está integrada en `index.html` para evitar problemas de carga en GitHub Pages.
-
-Abrir con:
-
-`https://scarlettenietopaez-blip.github.io/control.gestion.gadmr/?v=11`
+- Tres pestañas: Resumen general, Seguimiento por tema y Resumen por dirección.
+- El resumen general elimina el KPI independiente de ejecución presupuestaria.
+- El PAC engloba la ejecución presupuestaria cuando existen montos presupuestados/devengados.
+- Los KPI son interactivos y muestran/ocultan información al hacer clic.
+- Seguimiento por tema muestra comparativos de direcciones por tema.
+- Resumen por dirección permite seleccionar una dirección y consultar KPIs por cada CSV.

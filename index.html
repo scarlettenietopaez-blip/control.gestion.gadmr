@@ -6,148 +6,62 @@
   <title>Dashboard Ejecutivo Alcaldía | GADM Riobamba</title>
   <style>
     :root{
-      --azul:#0b3a6e;
-      --azul-2:#145899;
-      --azul-3:#eaf3fb;
-      --rojo:#c62828;
-      --rojo-2:#e53935;
-      --gris:#f4f7fb;
-      --gris-2:#e6edf5;
-      --texto:#0f2338;
-      --muted:#61738a;
+      --azul:#0B3A6E;
+      --azul2:#145899;
+      --rojo:#C62828;
+      --rojo2:#e53935;
+      --fondo:#f3f7fb;
       --card:#ffffff;
-      --shadow:0 14px 35px rgba(9, 42, 76, .10);
-      --radius:20px;
+      --linea:#d7e3ef;
+      --texto:#0b2137;
+      --muted:#63758a;
+      --suave:#e8eef6;
+      --shadow:0 12px 30px rgba(9,42,76,.08);
+      --radius:18px;
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter, Segoe UI, Roboto, Arial, sans-serif;
-      background:linear-gradient(180deg,#f6f9fd 0%, #eef4fa 100%);
-      color:var(--texto);
-      line-height:1.45;
-    }
-    .wrap{max-width:1480px;margin:0 auto;padding:22px 26px 44px}
-    .hero{
-      background:linear-gradient(120deg,var(--azul) 0%, #174d85 58%, var(--rojo) 100%);
-      color:white;
-      border-radius:28px;
-      padding:28px 32px;
-      box-shadow:var(--shadow);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      overflow:hidden;
-      position:relative;
-    }
-    .hero::after{content:"";position:absolute;right:-80px;top:-120px;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.12)}
-    .brand{display:flex;gap:18px;align-items:center;position:relative;z-index:1}
-    .logoBox{width:70px;height:70px;border-radius:18px;background:#fff;display:grid;place-items:center;color:var(--azul);box-shadow:0 8px 20px rgba(0,0,0,.12)}
-    .logoBox svg{width:42px;height:42px}
-    .eyebrow{font-weight:800;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#f6dede;margin-bottom:3px}
-    h1{font-size:34px;margin:0 0 5px;font-weight:900;line-height:1.1;color:inherit}
-    .hero p{margin:0;color:#eef7ff;font-size:15px;max-width:820px}
-    .badge{position:relative;z-index:1;border:1px solid rgba(255,255,255,.35);padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.10);font-weight:700;font-size:13px;white-space:nowrap}
-    .nav{
-      margin:20px 0 26px;
-      background:white;
-      border:1px solid #d7e2ef;
-      border-radius:18px;
-      padding:8px;
-      display:flex;
-      gap:8px;
-      box-shadow:0 6px 24px rgba(9,42,76,.06);
-      position:sticky;
-      top:0;
-      z-index:5;
-    }
-    .tabBtn{
-      flex:1;
-      border:0;
-      background:transparent;
-      padding:14px 10px;
-      color:var(--azul);
-      font-weight:900;
-      font-size:15px;
-      cursor:pointer;
-      border-radius:12px;
-      position:relative;
-    }
-    .tabBtn.active{background:#f9fbfe;color:var(--azul)}
-    .tabBtn.active::after{content:"";position:absolute;left:22%;right:22%;bottom:4px;height:4px;border-radius:999px;background:var(--rojo)}
-    .sectionTitle{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:22px 2px 14px}
-    .sectionTitle h2{font-size:26px;margin:0;color:#061d33;font-weight:900}
-    .sectionTitle p{margin:0;color:var(--muted);font-size:14px;text-align:right}
-    .grid{display:grid;gap:16px}
-    .grid.kpi{grid-template-columns:repeat(6,minmax(0,1fr))}
-    .grid.two{grid-template-columns:1.05fr .95fr}
-    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .card{
-      background:var(--card);
-      border:1px solid #d8e2ee;
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
-    .kpiCard{min-height:138px;cursor:pointer;transition:.18s transform,.18s box-shadow,.18s border-color;display:flex;flex-direction:column;justify-content:space-between}
-    .kpiCard:hover{transform:translateY(-2px);border-color:#b9cce2;box-shadow:0 18px 42px rgba(9,42,76,.14)}
-    .kpiTitle{font-size:12px;color:#52657c;font-weight:900;text-transform:uppercase;letter-spacing:.5px}
-    .kpiValue{font-size:34px;font-weight:950;color:#061d33;line-height:1.1;text-align:center;margin:10px 0}
-    .kpiSub{font-size:12px;color:var(--muted);text-align:center}
-    .bar{height:12px;background:#e7edf5;border-radius:999px;overflow:hidden;position:relative}
-    .bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--azul-2),var(--rojo));width:0%}
-    .barLabel{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800;font-size:13px;margin:12px 0 6px}
-    .detailPanel{display:none;margin-top:14px;padding-top:14px;border-top:1px dashed #cad7e6}
-    .detailPanel.open{display:block}
-    .themeCard{cursor:pointer;min-height:230px}
-    .themeHead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px}
-    .themeName{font-size:20px;font-weight:950;color:var(--azul);margin:0}
-    .themePct{font-size:34px;font-weight:950;color:#061d33}
-    .moduleMini{margin-top:10px}
-    .pill{display:inline-flex;align-items:center;gap:6px;background:#edf4fb;border:1px solid #d4e2ef;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;color:#204765;margin:3px 4px 3px 0}
-    .pill.red{background:#fff0f0;border-color:#ffc4c4;color:#9d1919}
-    .tabPanel{display:none}
-    .tabPanel.active{display:block}
-    .rows{display:grid;gap:10px}
-    .dirRow{display:grid;grid-template-columns:42px minmax(210px,1.1fr) minmax(260px,2.2fr) 60px;align-items:center;gap:12px;padding:12px 14px;border:1px solid #d8e2ee;border-radius:16px;background:#fff}
-    .rank{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--azul),var(--rojo));display:grid;place-items:center;color:white;font-weight:950}
-    .dirName{font-weight:900;color:#112b45;font-size:13px;text-transform:uppercase;line-height:1.25}
-    .pct{font-weight:950;font-size:18px;text-align:right;color:#061d33}
-    .subBars{display:grid;gap:8px}
-    .subBar{display:grid;grid-template-columns:122px 1fr 48px;align-items:center;gap:8px;font-size:12px;color:#52657c;font-weight:800}
-    .subBar .bar{height:8px}
-    .accordion{display:grid;gap:14px}
-    .accItem{border:1px solid #d8e2ee;border-radius:18px;background:#fff;box-shadow:0 8px 22px rgba(9,42,76,.06);overflow:hidden}
-    .accHead{width:100%;border:0;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;text-align:left}
-    .accHead strong{font-size:19px;color:#061d33}
-    .accHead span{color:var(--muted);font-weight:800}
-    .accBody{display:none;padding:0 20px 20px;border-top:1px solid #eef3f8}
-    .accBody.open{display:block}
-    .tableWrap{max-height:285px;overflow:auto;border:1px solid #dce6f0;border-radius:14px;background:white}
-    table{width:100%;border-collapse:collapse;font-size:13px}
-    th,td{padding:10px 12px;border-bottom:1px solid #edf2f7;text-align:left;vertical-align:top}
-    th{position:sticky;top:0;background:#f3f7fb;color:#153a5d;font-weight:950;z-index:1}
-    tr:hover td{background:#fbfdff}
-    .alertLine{padding:10px 12px;border:1px solid #f1c4c4;background:#fff7f7;border-radius:12px;margin:8px 0;color:#5d2222;font-size:13px}
-    .alertLine b{color:var(--rojo)}
-    .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 16px}
-    select,input{border:1px solid #ccd9e7;border-radius:12px;padding:11px 12px;background:white;color:#102b44;font-weight:700;min-width:250px}
-    .muted{color:var(--muted);font-size:13px}
-    .empty{padding:20px;border:1px dashed #cbd8e7;border-radius:14px;color:var(--muted);text-align:center;background:#fbfdff}
-    .footer{margin-top:26px;color:#65768a;font-size:12px;text-align:right}
-    @media(max-width:1100px){.grid.kpi{grid-template-columns:repeat(3,1fr)}.grid.two,.grid.three{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.dirRow{grid-template-columns:36px 1fr}.dirRow .subBars,.dirRow .pct{grid-column:2}.pct{text-align:left}.nav{position:relative;flex-direction:column}.tabBtn.active::after{left:35%;right:35%}}
-    @media(max-width:720px){.wrap{padding:14px}.grid.kpi{grid-template-columns:1fr}.hero{padding:22px}.logoBox{width:58px;height:58px}h1{font-size:26px}.sectionTitle{display:block}.sectionTitle p{text-align:left;margin-top:5px}.subBar{grid-template-columns:1fr}.subBar .bar,.subBar span:last-child{grid-column:1}.badge{white-space:normal}}
+    body{margin:0;background:linear-gradient(180deg,#f7f9fc,#edf4fb);font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;color:var(--texto)}
+    .wrap{max-width:1500px;margin:0 auto;padding:18px 22px 38px}
+    .hero{background:linear-gradient(120deg,var(--azul) 0%,#174c85 62%,var(--rojo) 100%);border-radius:26px;color:#fff;box-shadow:var(--shadow);padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:18px;overflow:hidden;position:relative}
+    .hero::after{content:"";position:absolute;right:-120px;top:-145px;width:410px;height:410px;border-radius:50%;background:rgba(255,255,255,.12)}
+    .brand{position:relative;z-index:1;display:flex;align-items:center;gap:16px}
+    .logo{width:64px;height:64px;border-radius:16px;background:#fff;display:grid;place-items:center;color:var(--azul)}
+    .logo svg{width:40px;height:40px}
+    .eyebrow{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;font-weight:900;color:#ffdfe0;margin-bottom:2px}
+    h1{margin:0;font-size:32px;line-height:1.1;font-weight:950}
+    .heroTag{position:relative;z-index:1;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:10px 14px;background:rgba(255,255,255,.10);font-weight:800;font-size:13px;white-space:nowrap}
+    .nav{margin:18px 0 22px;background:#fff;border:1px solid var(--linea);border-radius:17px;padding:7px;display:flex;gap:8px;box-shadow:0 6px 20px rgba(9,42,76,.06);position:sticky;top:0;z-index:10}
+    .tabBtn{flex:1;background:transparent;border:0;border-radius:12px;padding:14px 10px;font-size:15px;font-weight:950;color:var(--azul);cursor:pointer;position:relative}
+    .tabBtn.active::after{content:"";position:absolute;left:24%;right:24%;bottom:3px;height:4px;border-radius:999px;background:var(--rojo)}
+    .tabBtn:hover{background:#f5f8fc}
+    .tabPanel{display:none}.tabPanel.active{display:block}
+    .sectionTitle{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin:22px 2px 14px}
+    .sectionTitle h2{margin:0;font-size:26px;font-weight:950;color:#061d33}.sectionTitle p{margin:0;color:var(--muted);font-size:14px;text-align:right}
+    .grid{display:grid;gap:16px}.grid.kpi{grid-template-columns:repeat(5,minmax(0,1fr))}.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.six{grid-template-columns:repeat(6,minmax(0,1fr))}
+    .card{background:var(--card);border:1px solid var(--linea);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .kpi{cursor:pointer;min-height:142px;display:flex;flex-direction:column;justify-content:space-between;transition:.15s transform,.15s border-color}
+    .kpi:hover{transform:translateY(-2px);border-color:#b9ccdf}.kpi.active{outline:2px solid rgba(198,40,40,.18);border-color:#df9f9f}
+    .kpiTitle{text-transform:uppercase;letter-spacing:.4px;color:#52677d;font-weight:950;font-size:12px}.kpiVal{text-align:center;font-size:36px;font-weight:950;color:#061d33;line-height:1}.kpiSub{text-align:center;color:var(--muted);font-size:12px}
+    .bar{height:12px;background:#e7eef6;border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--azul2),var(--rojo));width:0%}.bar.thin{height:8px}
+    .barLine{display:grid;grid-template-columns:minmax(120px,1fr) minmax(150px,2fr) 56px;gap:12px;align-items:center;margin:12px 0;font-weight:850;font-size:13px}.barLine .name{text-transform:uppercase;line-height:1.2;color:#17344f}.barLine .pct{text-align:right;font-size:16px;font-weight:950;color:#061d33}
+    .detail{display:none;margin-top:16px}.detail.open{display:block}.detailTitle{font-size:18px;font-weight:950;margin:0 0 12px;color:#061d33}
+    .compactRows{display:grid;gap:7px}.compactRow{display:grid;grid-template-columns:minmax(220px,1fr) 1fr 54px;gap:12px;align-items:center;padding:10px 12px;border:1px solid #e0e8f1;border-radius:13px;background:#fff}.compactRow b{font-size:12px;text-transform:uppercase;line-height:1.25;color:#17344f}.compactRow .pct{text-align:right;font-size:17px;font-weight:950}
+    .themePanel{border:1px solid var(--linea);border-radius:20px;background:#fff;box-shadow:var(--shadow);overflow:hidden}.themeBtn{width:100%;border:0;background:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-align:left}.themeBtn:hover{background:#f9fbfe}.themeBtn strong{font-size:20px;color:#061d33}.themeBtn span{font-weight:950;color:var(--azul)}.themeBody{display:none;padding:0 20px 20px;border-top:1px solid #edf2f7}.themeBody.open{display:block}
+    .tableWrap{max-height:265px;overflow:auto;border:1px solid #dce6f0;border-radius:14px;background:#fff}.tableWrap.small{max-height:245px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 12px;border-bottom:1px solid #eef3f8;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f3f7fb;color:#143b5e;font-weight:950;z-index:1}tr:hover td{background:#fbfdff}
+    .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}select{min-width:330px;background:#fff;border:1px solid #cbd9e8;border-radius:12px;padding:12px;font-weight:800;color:#102b44}
+    .empty{padding:18px;border:1px dashed #c8d6e6;border-radius:14px;text-align:center;color:var(--muted);background:#fbfdff}.alert{padding:10px 12px;border:1px solid #efc2c2;background:#fff7f7;color:#5d2222;border-radius:12px;margin:8px 0;font-size:13px}.alert b{color:var(--rojo)}
+    .moduleKpi{min-height:130px}.moduleKpi .kpiVal{font-size:30px}.moduleDetails{margin-top:16px}.footer{margin-top:28px;text-align:right;color:#627489;font-size:12px}
+    @media(max-width:1200px){.grid.kpi{grid-template-columns:repeat(3,1fr)}.grid.six{grid-template-columns:repeat(3,1fr)}.grid.two,.grid.three{grid-template-columns:1fr}.compactRow{grid-template-columns:1fr}.compactRow .pct{text-align:left}.barLine{grid-template-columns:1fr}}
+    @media(max-width:760px){.wrap{padding:12px}.hero{flex-direction:column;align-items:flex-start}.heroTag{white-space:normal}.nav{flex-direction:column;position:relative}h1{font-size:25px}.grid.kpi,.grid.six{grid-template-columns:1fr}.sectionTitle{display:block}.sectionTitle p{text-align:left;margin-top:4px}.logo{width:56px;height:56px}}
   </style>
 </head>
 <body>
   <main class="wrap">
     <header class="hero">
       <div class="brand">
-        <div class="logoBox" title="Municipio">
+        <div class="logo" aria-label="Municipio">
           <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-            <path d="M8 24L32 10L56 24V29H8V24Z" fill="currentColor" opacity=".95"/>
+            <path d="M8 24L32 10L56 24V29H8V24Z" fill="currentColor"/>
             <path d="M14 32H20V50H14V32ZM29 32H35V50H29V32ZM44 32H50V50H44V32Z" fill="currentColor"/>
             <path d="M10 52H54V58H10V52Z" fill="currentColor"/>
           </svg>
@@ -157,55 +71,45 @@
           <h1>Panel de control para Alcaldía</h1>
         </div>
       </div>
-      <div class="badge">Datos desde CSV publicados en GitHub</div>
+      <div class="heroTag">Dashboard Ejecutivo</div>
     </header>
 
-    <section id="resumenGeneral">
-      <div class="sectionTitle">
-        <h2>Resumen general</h2>
-        <p>Vista inicial consolidada por temas de gestión. Clic en cada indicador para ver/ocultar su detalle.</p>
-      </div>
-      <div class="grid kpi" id="generalKpis"></div>
-      <div id="generalDetails" class="detailPanel card"></div>
-    </section>
-
     <nav class="nav" aria-label="Navegación principal">
-      <button class="tabBtn active" data-tab="temaResumen">Resumen por tema</button>
-      <button class="tabBtn" data-tab="temaSeguimiento">Seguimiento por tema</button>
-      <button class="tabBtn" data-tab="comparativo">Comparativo por direcciones</button>
+      <button class="tabBtn active" data-tab="resumen">Resumen general</button>
+      <button class="tabBtn" data-tab="seguimiento">Seguimiento por tema</button>
+      <button class="tabBtn" data-tab="direccion">Resumen por dirección</button>
     </nav>
 
-    <section id="temaResumen" class="tabPanel active">
+    <section id="resumen" class="tabPanel active">
       <div class="sectionTitle">
-        <h2>Resumen por tema</h2>
-        <p>Planificación, Ejecución y Monitoreo, y Participación Ciudadana.</p>
+        <h2>Resumen general</h2>
+        <p>Indicadores principales. Clic en cada KPI para mostrar u ocultar el detalle.</p>
       </div>
-      <div class="grid three" id="themeSummary"></div>
+      <div class="grid kpi" id="generalKpis"></div>
+      <div id="generalDetail" class="card detail"></div>
     </section>
 
-    <section id="temaSeguimiento" class="tabPanel">
+    <section id="seguimiento" class="tabPanel">
       <div class="sectionTitle">
         <h2>Seguimiento por tema</h2>
-        <p>Detalle desplegable por tema, con el mismo tipo de gráfico de barras horizontales.</p>
+        <p>Comparativo de todas las direcciones dentro de cada tema.</p>
       </div>
-      <div class="accordion" id="themeTracking"></div>
+      <div class="grid" id="themePanels"></div>
     </section>
 
-    <section id="comparativo" class="tabPanel">
+    <section id="direccion" class="tabPanel">
       <div class="sectionTitle">
-        <h2>Comparativo por direcciones</h2>
-        <p>Comparación institucional por Dirección y por los tres temas de gestión.</p>
+        <h2>Resumen por dirección</h2>
+        <p>Seleccione una Dirección para revisar sus indicadores por cada hoja de la matriz.</p>
       </div>
       <div class="toolbar">
-        <label class="muted" for="directionFilter"><b>Filtrar Dirección</b></label>
-        <select id="directionFilter"><option value="">Todas las direcciones</option></select>
+        <label for="dirSelect"><b>Dirección</b></label>
+        <select id="dirSelect"><option value="">Seleccione una dirección</option></select>
       </div>
-      <div class="card">
-        <div class="rows" id="directionComparison"></div>
-      </div>
+      <div id="dirContent" class="empty">Seleccione una Dirección para visualizar el resumen.</div>
     </section>
 
-    <div class="footer">Dashboard Ejecutivo Alcaldía · CSV publicados en GitHub Pages</div>
+    <div class="footer">Dashboard Ejecutivo Alcaldía · datos desde CSV publicados en GitHub Pages</div>
   </main>
 
 <script>
@@ -218,212 +122,80 @@
     eventos: 'data/eventos.csv',
     apoyo: 'data/apoyo_institucional.csv'
   };
-
-  const MODULE_LABEL = {
-    pac: 'PAC', ordenanzas: 'Ordenanzas', reuniones: 'Reuniones',
-    redes: 'Redes institucionales', eventos: 'Eventos', apoyo: 'Apoyo institucional'
-  };
-
+  const MODULE_LABEL = {pac:'PAC', ordenanzas:'Ordenanzas', reuniones:'Reuniones', redes:'Redes institucionales', eventos:'Eventos', apoyo:'Apoyo institucional'};
   const THEMES = {
-    planificacion: { label: 'Planificación', modules: ['pac','ordenanzas'] },
-    ejecucion: { label: 'Ejecución y Monitoreo', modules: ['reuniones','apoyo'] },
-    participacion: { label: 'Participación Ciudadana', modules: ['redes','eventos'] }
+    planificacion:{label:'Planificación', modules:['pac','ordenanzas']},
+    ejecucion:{label:'Ejecución y Monitoreo', modules:['reuniones','apoyo']},
+    participacion:{label:'Participación Ciudadana', modules:['redes','eventos']}
   };
+  const state = {raw:{}, dirData:{}, directions:[], alerts:[], summary:{}};
 
-  const state = { raw:{}, dirData:{}, directions:[], alerts:[], summary:{} };
-
-  function norm(s){
-    return String(s ?? '')
-      .replace(/^\uFEFF/,'')
-      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .toLowerCase().replace(/\s+/g,' ').trim();
-  }
-  function clean(s){ return String(s ?? '').replace(/^\uFEFF/,'').trim(); }
-  function key(row, names){
-    for(const n of names){
-      const wanted = norm(n);
-      for(const k of Object.keys(row)) if(norm(k) === wanted) return clean(row[k]);
-    }
-    return '';
-  }
-  function pct(n){ return Math.max(0, Math.min(100, Number.isFinite(+n) ? +n : 0)); }
-  function avg(arr){ const nums=arr.filter(v=>Number.isFinite(+v)); return nums.length? nums.reduce((a,b)=>a+(+b),0)/nums.length : 0; }
-  function fmtPct(n){ return `${Math.round(pct(n))}%`; }
+  const clean = s => String(s ?? '').replace(/^\uFEFF/,'').trim();
+  const norm = s => clean(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+  const dirKey = d => clean(d).toUpperCase();
+  const pct = n => Math.max(0, Math.min(100, Number.isFinite(+n) ? +n : 0));
+  const fmtPct = n => `${Math.round(pct(n))}%`;
+  const avg = arr => { const nums=arr.filter(v=>Number.isFinite(+v)); return nums.length ? nums.reduce((a,b)=>a+(+b),0)/nums.length : 0; };
+  const shortDir = d => clean(d).length > 58 ? clean(d).slice(0,55)+'...' : clean(d);
+  function key(row, names){ for(const n of names){ const target=norm(n); for(const k of Object.keys(row)) if(norm(k)===target) return clean(row[k]); } return ''; }
+  function parseNum(v){ let s=clean(v); if(!s) return 0; s=s.replace(/[^0-9,.-]/g,''); const c=s.lastIndexOf(','), d=s.lastIndexOf('.'); if(c>=0&&d>=0) s=c>d?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,''); else if(c>=0) s=s.replace(',','.'); const n=parseFloat(s); return Number.isFinite(n)?n:0; }
+  function splitDirs(v){ const t=clean(v); if(!t) return []; return [...new Set(t.split(/;|\n|\r|\||•/g).map(x=>clean(x).replace(/\s+/g,' ')).filter(Boolean))]; }
   function money(n){ return new Intl.NumberFormat('es-EC',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number.isFinite(+n)?+n:0); }
-  function parseNum(v){
-    let s=String(v ?? '').trim(); if(!s) return 0;
-    s=s.replace(/[^0-9,.-]/g,'');
-    const lastComma=s.lastIndexOf(','), lastDot=s.lastIndexOf('.');
-    if(lastComma>=0 && lastDot>=0){ s = lastComma>lastDot ? s.replace(/\./g,'').replace(',', '.') : s.replace(/,/g,''); }
-    else if(lastComma>=0){ s=s.replace(',', '.'); }
-    const n=parseFloat(s); return Number.isFinite(n)?n:0;
-  }
-  function splitDirs(v){
-    const text = clean(v); if(!text) return [];
-    return [...new Set(text.split(/;|\n|\r|\||\/|•/g).map(x=>clean(x).replace(/\s+/g,' ')).filter(Boolean))];
-  }
-  function dirKey(d){ return clean(d).toUpperCase(); }
-  function shortDir(d){ return d.length>45 ? d.slice(0,42)+'...' : d; }
-
-  function detectDelimiter(line){
-    const comma=(line.match(/,/g)||[]).length, semi=(line.match(/;/g)||[]).length;
-    return semi>comma ? ';' : ',';
-  }
+  function detectDelimiter(line){ return (line.match(/;/g)||[]).length > (line.match(/,/g)||[]).length ? ';' : ','; }
   function parseCSV(text){
-    text = String(text || '').replace(/^\uFEFF/,'');
-    if(!text.trim()) return [];
-    const first = text.split(/\r?\n/).find(l=>l.trim()) || '';
-    const delim = detectDelimiter(first);
+    text=String(text||'').replace(/^\uFEFF/,''); if(!text.trim()) return [];
+    const first=text.split(/\r?\n/).find(l=>l.trim())||'', delim=detectDelimiter(first);
     const rows=[]; let row=[], cur='', q=false;
-    for(let i=0;i<text.length;i++){
-      const c=text[i], n=text[i+1];
-      if(c==='"'){
-        if(q && n==='"'){cur+='"'; i++;} else q=!q;
-      } else if(c===delim && !q){row.push(cur); cur='';}
-      else if((c==='\n' || c==='\r') && !q){
-        if(c==='\r' && n==='\n') i++;
-        row.push(cur); cur='';
-        if(row.some(x=>String(x).trim()!=='')) rows.push(row);
-        row=[];
-      } else cur+=c;
+    for(let i=0;i<text.length;i++){ const c=text[i], n=text[i+1];
+      if(c==='"'){ if(q&&n==='"'){cur+='"';i++;} else q=!q; }
+      else if(c===delim&&!q){row.push(cur);cur='';}
+      else if((c==='\n'||c==='\r')&&!q){ if(c==='\r'&&n==='\n') i++; row.push(cur); cur=''; if(row.some(x=>clean(x))) rows.push(row); row=[]; }
+      else cur+=c;
     }
-    row.push(cur); if(row.some(x=>String(x).trim()!=='')) rows.push(row);
-    if(!rows.length) return [];
+    row.push(cur); if(row.some(x=>clean(x))) rows.push(row); if(!rows.length) return [];
     const headers=rows.shift().map(clean);
-    return rows.map(r=>{
-      const o={}; headers.forEach((h,i)=>o[h]=clean(r[i] ?? ''));
-      return o;
-    }).filter(o=>Object.values(o).some(v=>clean(v)));
+    return rows.map(r=>{const o={}; headers.forEach((h,i)=>o[h]=clean(r[i]??'')); return o;}).filter(o=>Object.values(o).some(clean));
   }
-  async function fetchCSV(path){
-    const url = `${path}?v=${Date.now()}`;
-    const res = await fetch(url, {cache:'no-store'});
-    if(!res.ok) throw new Error(`No se pudo cargar ${path}`);
-    return parseCSV(await res.text());
-  }
+  async function fetchCSV(path){ const res=await fetch(`${path}?v=${Date.now()}`,{cache:'no-store'}); if(!res.ok) throw new Error(`No se pudo cargar ${path}`); return parseCSV(await res.text()); }
 
-  function stageScorePAC(v){
-    const s=norm(v);
-    if(!s) return 0;
-    if(s.includes('final') || s.includes('recib') || s.includes('cerr')) return 100;
-    if(s.includes('contractual')) return 75;
-    if(s.includes('precontractual')) return 50;
-    if(s.includes('preparatoria')) return 25;
-    if(s.includes('no empieza') || s.includes('no inicia') || s.includes('sin iniciar')) return 0;
-    const n=parseNum(v); return n>0 ? pct(n) : 0;
+  function stageScorePAC(v){ const s=norm(v); if(s.includes('final')||s.includes('recib')||s.includes('cerr')) return 100; if(s.includes('contractual')) return 75; if(s.includes('precontractual')) return 50; if(s.includes('preparatoria')) return 25; if(s.includes('no empieza')||s.includes('no inicia')||s.includes('sin iniciar')) return 0; const n=parseNum(v); return n>0?pct(n):0; }
+  function stageScoreOrdenanza(v){ const s=norm(v); if(s.includes('aprob')||s.includes('sancion')) return 100; if(s.includes('segundo')) return 90; if(s.includes('ajuste')||s.includes('subsan')) return 75; if(s.includes('primer')) return 60; if(s.includes('jurid')) return 40; if(s.includes('elabor')) return 25; if(s.includes('no empieza')||s.includes('no inicia')||s.includes('sin iniciar')) return 0; const n=parseNum(v); return n>0?pct(n):0; }
+  function attendanceScore(v){ const s=norm(v); if(!s||s.includes('no asiste')||s==='no') return 0; if(s.includes('justif')) return 50; if(s.includes('deleg')) return 75; if(s.includes('director')||s.includes('asiste')||s==='si'||s==='sí') return 100; const n=parseNum(v); return n>0?pct(n):0; }
+  function parseDate(v){ const s=clean(v); if(!s) return null; const m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/); if(m){ const y=+m[3]<100?2000+(+m[3]):+m[3]; return new Date(y,+m[2]-1,+m[1]); } const d=new Date(s); return isNaN(d)?null:d; }
+  function dirsForRow(module,row){
+    if(module==='pac') return splitDirs(key(row,['Dirección Responsable','Direccion Responsable']));
+    if(module==='ordenanzas') return [...new Set([...splitDirs(key(row,['Dirección Responsable','Direccion Responsable'])),...splitDirs(key(row,['Direcciones Cooperando','Dirección Cooperando','Direcciones que cooperan']))].map(dirKey))].map(k=>[...splitDirs(key(row,['Dirección Responsable','Direccion Responsable'])),...splitDirs(key(row,['Direcciones Cooperando','Dirección Cooperando','Direcciones que cooperan']))].find(d=>dirKey(d)===k));
+    if(module==='reuniones') return splitDirs(key(row,['Direcciones Convocadas','Dirección Convocada','Direccion Convocada']));
+    if(module==='redes') return splitDirs(key(row,['Dirección que comparte','Direcciones que comparten','Direccion que comparte']));
+    if(module==='eventos') return splitDirs(key(row,['Dirección que Asiste','Direcciones que Asisten','Direccion que Asiste']));
+    if(module==='apoyo') return splitDirs(key(row,['Dirección que apoya','Direcciones que apoyan','Direccion que apoya']));
+    return [];
   }
-  function stageScoreOrdenanza(v){
-    const s=norm(v);
-    if(!s) return 0;
-    if(s.includes('aprob') || s.includes('sancion')) return 100;
-    if(s.includes('segundo')) return 90;
-    if(s.includes('ajuste') || s.includes('subsan')) return 75;
-    if(s.includes('primer')) return 60;
-    if(s.includes('jurid')) return 40;
-    if(s.includes('elabor')) return 25;
-    if(s.includes('no empieza') || s.includes('no inicia') || s.includes('sin iniciar')) return 0;
-    const n=parseNum(v); return n>0 ? pct(n) : 0;
-  }
-  function attendanceScore(v){
-    const s=norm(v);
-    if(!s) return 0;
-    if(s.includes('no asiste') || s==='no') return 0;
-    if(s.includes('justif')) return 50;
-    if(s.includes('deleg')) return 75;
-    if(s.includes('director') || s.includes('asiste') || s==='si' || s==='sí') return 100;
-    const n=parseNum(v); return n>0 ? pct(n) : 0;
-  }
-  function parseDate(v){
-    const s=clean(v); if(!s) return null;
-    const m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-    if(m){ const yy=+m[3] < 100 ? 2000+(+m[3]) : +m[3]; return new Date(yy, +m[2]-1, +m[1]); }
-    const d=new Date(s); return isNaN(d) ? null : d;
-  }
-  function addDir(d){
-    const k=dirKey(d); if(!k) return null;
-    if(!state.dirData[k]) state.dirData[k]={ name:clean(d), modules:{pac:[],ordenanzas:[],reuniones:[],redes:[],eventos:[],apoyo:[]}, codes:{redes:new Set(),eventos:new Set(),apoyo:new Set()}, meta:{interacciones:0,personasEventos:0,personasApoyo:0}, alerts:[] };
-    return state.dirData[k];
-  }
-  function addAlert(dir, tema, module, message, row){
-    const a={dir:dir?dirKey(dir):'', tema, module, message, row};
-    state.alerts.push(a);
-    if(dir){ const d=addDir(dir); if(d) d.alerts.push(a); }
-  }
+  function addDir(d){ const k=dirKey(d); if(!k) return null; if(!state.dirData[k]) state.dirData[k]={name:clean(d), modules:{pac:[],ordenanzas:[],reuniones:[],redes:[],eventos:[],apoyo:[]}, codes:{redes:new Set(),eventos:new Set(),apoyo:new Set()}, meta:{interacciones:0,personasEventos:0,personasApoyo:0}, alerts:[]}; return state.dirData[k]; }
+  function addAlert(d,tema,module,msg,row){ const a={dir:dirKey(d),tema,module,msg,row}; state.alerts.push(a); const dd=addDir(d); if(dd) dd.alerts.push(a); }
 
   function processData(){
     state.dirData={}; state.alerts=[];
-    const totalCodes={
-      redes: new Set(state.raw.redes.map((r,i)=>key(r,['Código','Codigo']) || `RED-${i+1}`)),
-      eventos: new Set(state.raw.eventos.map((r,i)=>key(r,['Código','Codigo']) || `EVE-${i+1}`)),
-      apoyo: new Set(state.raw.apoyo.map((r,i)=>key(r,['Código','Codigo']) || `APO-${i+1}`))
-    };
+    const totalCodes={redes:new Set(),eventos:new Set(),apoyo:new Set()};
+    state.raw.redes.forEach((r,i)=>totalCodes.redes.add(key(r,['Código','Codigo'])||`RED-${i+1}`));
+    state.raw.eventos.forEach((r,i)=>totalCodes.eventos.add(key(r,['Código','Codigo'])||`EVE-${i+1}`));
+    state.raw.apoyo.forEach((r,i)=>totalCodes.apoyo.add(key(r,['Código','Codigo'])||`APO-${i+1}`));
     const today=new Date(); today.setHours(0,0,0,0);
 
     state.raw.pac.forEach((r,i)=>{
-      const dirs=splitDirs(key(r,['Dirección Responsable','Direccion Responsable']));
-      const etapa=key(r,['Etapa Actual']); const score=stageScorePAC(etapa);
-      const nombre=key(r,['Nombre del Proyecto','Proyecto']);
+      const presupuesto=parseNum(key(r,['Monto Presupuestado'])), dev=parseNum(key(r,['Monto devengado','Monto Devengado']));
+      const budgetScore=presupuesto>0 ? (dev/presupuesto)*100 : null;
+      const stage=stageScorePAC(key(r,['Etapa Actual']));
+      const score=budgetScore===null ? stage : pct(budgetScore); // PAC engloba ejecución presupuestaria.
+      const label=key(r,['Nombre del Proyecto','Proyecto'])||key(r,['Código','Codigo'])||`PAC ${i+1}`;
       const limite=parseDate(key(r,['Fecha límite','Fecha limite']));
-      dirs.forEach(d=>{
-        const dd=addDir(d); dd.modules.pac.push({score,row:r,label:nombre || key(r,['Código','Codigo']) || `PAC ${i+1}`});
-        if(score===0) addAlert(d,'Planificación','PAC',`Proceso sin avance: ${nombre || 'registro PAC'}`,r);
-        if(limite && limite<today && score<100) addAlert(d,'Planificación','PAC',`Proceso PAC vencido o por revisar: ${nombre || 'registro PAC'}`,r);
-        if(!key(r,['Evidencias','Evidencia'])) addAlert(d,'Planificación','PAC',`Sin evidencia registrada: ${nombre || 'registro PAC'}`,r);
-      });
+      dirsForRow('pac',r).forEach(d=>{ const dd=addDir(d); dd.modules.pac.push({score,row:r,label}); if(stage===0&&score===0) addAlert(d,'Planificación','PAC',`Proceso sin avance: ${label}`,r); if(limite&&limite<today&&stage<100) addAlert(d,'Planificación','PAC',`Proceso PAC vencido o por revisar: ${label}`,r); });
     });
-
-    state.raw.ordenanzas.forEach((r,i)=>{
-      const dirs=[...splitDirs(key(r,['Dirección Responsable','Direccion Responsable'])), ...splitDirs(key(r,['Direcciones Cooperando','Dirección Cooperando','Direcciones que cooperan']))];
-      const unique=[...new Set(dirs.map(dirKey))].map(k=>dirs.find(d=>dirKey(d)===k));
-      const etapa=key(r,['Etapa Actual']); const score=stageScoreOrdenanza(etapa);
-      const tema=key(r,['Tema','Nro. Ordenanza','Nro Ordenanza']) || `Ordenanza ${i+1}`;
-      unique.forEach(d=>{
-        const dd=addDir(d); dd.modules.ordenanzas.push({score,row:r,label:tema});
-        if(score===0) addAlert(d,'Planificación','Ordenanzas',`Ordenanza sin avance: ${tema}`,r);
-        if(!key(r,['Evidencias','Evidencia'])) addAlert(d,'Planificación','Ordenanzas',`Ordenanza sin evidencia: ${tema}`,r);
-      });
-    });
-
-    state.raw.reuniones.forEach((r,i)=>{
-      const dirs=splitDirs(key(r,['Direcciones Convocadas','Dirección Convocada','Direccion Convocada']));
-      const score=attendanceScore(key(r,['Asistencia','Resultado Asistencia']));
-      const tema=key(r,['Tema Tratado','Tipo de Reunión','Tipo de Reunion']) || `Reunión ${i+1}`;
-      dirs.forEach(d=>{
-        const dd=addDir(d); dd.modules.reuniones.push({score,row:r,label:tema});
-        if(score===0) addAlert(d,'Ejecución y Monitoreo','Reuniones',`Inasistencia o asistencia no registrada: ${tema}`,r);
-      });
-    });
-
-    state.raw.redes.forEach((r,i)=>{
-      const code=key(r,['Código','Codigo']) || `RED-${i+1}`;
-      const dirs=splitDirs(key(r,['Dirección que comparte','Direcciones que comparten','Direccion que comparte']));
-      const inter=parseNum(key(r,['Nro de Interacciones','N° Interacciones','Numero de Interacciones','Interacciones']));
-      dirs.forEach(d=>{
-        const dd=addDir(d); dd.codes.redes.add(code); dd.meta.interacciones += inter;
-        dd.modules.redes.push({score:100,row:r,label:key(r,['Tema de publicación','Tema de Publicacion']) || code});
-      });
-    });
-
-    state.raw.eventos.forEach((r,i)=>{
-      const code=key(r,['Código','Codigo']) || `EVE-${i+1}`;
-      const dirs=splitDirs(key(r,['Dirección que Asiste','Direcciones que Asisten','Direccion que Asiste']));
-      const personas=parseNum(key(r,['Cantidad de personas','Cantidad personas','Nro de personas','Personas']));
-      dirs.forEach(d=>{
-        const dd=addDir(d); dd.codes.eventos.add(code); dd.meta.personasEventos += personas;
-        dd.modules.eventos.push({score:100,row:r,label:key(r,['Nombre del evento','Evento']) || code});
-      });
-    });
-
-    state.raw.apoyo.forEach((r,i)=>{
-      const code=key(r,['Código','Codigo']) || `APO-${i+1}`;
-      const dirs=splitDirs(key(r,['Dirección que apoya','Direcciones que apoyan','Direccion que apoya']));
-      const apoyoTxt=key(r,['Apoyo Entregado','Cantidad de personas','Personas']);
-      const personas=parseNum(apoyoTxt);
-      dirs.forEach(d=>{
-        const dd=addDir(d); dd.codes.apoyo.add(code); dd.meta.personasApoyo += personas;
-        dd.modules.apoyo.push({score:100,row:r,label:key(r,['Actividad']) || code});
-      });
-    });
+    state.raw.ordenanzas.forEach((r,i)=>{ const score=stageScoreOrdenanza(key(r,['Etapa Actual'])); const label=key(r,['Tema','Nro. Ordenanza','Nro Ordenanza'])||`Ordenanza ${i+1}`; dirsForRow('ordenanzas',r).forEach(d=>{ const dd=addDir(d); dd.modules.ordenanzas.push({score,row:r,label}); if(score===0) addAlert(d,'Planificación','Ordenanzas',`Ordenanza sin avance: ${label}`,r); }); });
+    state.raw.reuniones.forEach((r,i)=>{ const score=attendanceScore(key(r,['Asistencia','Resultado Asistencia'])); const label=key(r,['Tema Tratado','Tipo de Reunión','Tipo de Reunion'])||`Reunión ${i+1}`; dirsForRow('reuniones',r).forEach(d=>{ const dd=addDir(d); dd.modules.reuniones.push({score,row:r,label}); if(score===0) addAlert(d,'Ejecución y Monitoreo','Reuniones',`Inasistencia o asistencia no registrada: ${label}`,r); }); });
+    state.raw.redes.forEach((r,i)=>{ const code=key(r,['Código','Codigo'])||`RED-${i+1}`; const inter=parseNum(key(r,['Nro de Interacciones','N° Interacciones','Numero de Interacciones','Interacciones'])); dirsForRow('redes',r).forEach(d=>{ const dd=addDir(d); dd.codes.redes.add(code); dd.meta.interacciones+=inter; dd.modules.redes.push({score:100,row:r,label:key(r,['Tema de publicación','Tema de Publicacion'])||code}); }); });
+    state.raw.eventos.forEach((r,i)=>{ const code=key(r,['Código','Codigo'])||`EVE-${i+1}`; const personas=parseNum(key(r,['Cantidad de personas','Cantidad personas','Nro de personas','Personas'])); dirsForRow('eventos',r).forEach(d=>{ const dd=addDir(d); dd.codes.eventos.add(code); dd.meta.personasEventos+=personas; dd.modules.eventos.push({score:100,row:r,label:key(r,['Nombre del evento','Evento'])||code}); }); });
+    state.raw.apoyo.forEach((r,i)=>{ const code=key(r,['Código','Codigo'])||`APO-${i+1}`; const personas=parseNum(key(r,['Apoyo Entregado','Cantidad de personas','Personas'])); dirsForRow('apoyo',r).forEach(d=>{ const dd=addDir(d); dd.codes.apoyo.add(code); dd.meta.personasApoyo+=personas; dd.modules.apoyo.push({score:100,row:r,label:key(r,['Actividad'])||code}); }); });
 
     state.directions=Object.values(state.dirData).sort((a,b)=>a.name.localeCompare(b.name));
     state.directions.forEach(d=>{
@@ -432,181 +204,100 @@
         pac: avg(m.pac.map(x=>x.score)),
         ordenanzas: avg(m.ordenanzas.map(x=>x.score)),
         reuniones: avg(m.reuniones.map(x=>x.score)),
-        redes: totalCodes.redes.size ? (d.codes.redes.size/totalCodes.redes.size)*100 : 0,
-        eventos: totalCodes.eventos.size ? (d.codes.eventos.size/totalCodes.eventos.size)*100 : 0,
-        apoyo: totalCodes.apoyo.size ? (d.codes.apoyo.size/totalCodes.apoyo.size)*100 : 0
+        redes: totalCodes.redes.size ? d.codes.redes.size/totalCodes.redes.size*100 : 0,
+        eventos: totalCodes.eventos.size ? d.codes.eventos.size/totalCodes.eventos.size*100 : 0,
+        apoyo: totalCodes.apoyo.size ? d.codes.apoyo.size/totalCodes.apoyo.size*100 : 0
       };
-      d.themes={
-        planificacion: avg([d.moduleScores.pac,d.moduleScores.ordenanzas]),
-        ejecucion: avg([d.moduleScores.reuniones,d.moduleScores.apoyo]),
-        participacion: avg([d.moduleScores.redes,d.moduleScores.eventos])
-      };
+      d.themes={planificacion:avg([d.moduleScores.pac,d.moduleScores.ordenanzas]), ejecucion:avg([d.moduleScores.reuniones,d.moduleScores.apoyo]), participacion:avg([d.moduleScores.redes,d.moduleScores.eventos])};
       d.general=avg([d.themes.planificacion,d.themes.ejecucion,d.themes.participacion]);
     });
     state.summary={
-      general: avg(state.directions.map(d=>d.general)),
-      planificacion: avg(state.directions.map(d=>d.themes.planificacion)),
-      ejecucion: avg(state.directions.map(d=>d.themes.ejecucion)),
-      participacion: avg(state.directions.map(d=>d.themes.participacion)),
-      direcciones: state.directions.length,
-      alertas: state.alerts.length,
-      totalCodes,
-      presupuestado: state.raw.pac.reduce((a,r)=>a+parseNum(key(r,['Monto Presupuestado'])),0),
-      contratado: state.raw.pac.reduce((a,r)=>a+parseNum(key(r,['Monto Contratado'])),0),
-      devengado: state.raw.pac.reduce((a,r)=>a+parseNum(key(r,['Monto devengado','Monto Devengado'])),0)
+      general:avg(state.directions.map(d=>d.general)), planificacion:avg(state.directions.map(d=>d.themes.planificacion)), ejecucion:avg(state.directions.map(d=>d.themes.ejecucion)), participacion:avg(state.directions.map(d=>d.themes.participacion)), alertas:state.alerts.length, direcciones:state.directions.length,
+      totalCodes, presupuestado:state.raw.pac.reduce((a,r)=>a+parseNum(key(r,['Monto Presupuestado'])),0), devengado:state.raw.pac.reduce((a,r)=>a+parseNum(key(r,['Monto devengado','Monto Devengado'])),0)
     };
   }
 
-  function barHTML(value){ return `<div class="bar" aria-label="${fmtPct(value)}"><span style="width:${pct(value)}%"></span></div>`; }
-  function kpiCard(id,title,value,sub,barVal){
-    const isPct=typeof value==='number';
-    return `<article class="card kpiCard" data-detail="${id}">
-      <div class="kpiTitle">${title}</div>
-      <div class="kpiValue">${isPct?fmtPct(value):value}</div>
-      ${barVal!==undefined?barHTML(barVal):''}
-      <div class="kpiSub">${sub}</div>
-    </article>`;
-  }
+  function barHTML(v, thin=false){ return `<div class="bar ${thin?'thin':''}"><span style="width:${pct(v)}%"></span></div>`; }
+  function compactRow(name,val){ return `<div class="compactRow"><b>${name}</b>${barHTML(val,true)}<div class="pct">${fmtPct(val)}</div></div>`; }
+  function kpi(id,title,val,sub){ return `<article class="card kpi" data-kpi="${id}"><div class="kpiTitle">${title}</div><div class="kpiVal">${typeof val==='number'?fmtPct(val):val}</div>${typeof val==='number'?barHTML(val):''}<div class="kpiSub">${sub||'Clic para ver detalle'}</div></article>`; }
   function renderGeneral(){
     const s=state.summary;
-    const execPres = s.presupuestado ? (s.devengado/s.presupuestado)*100 : 0;
-    document.getElementById('generalKpis').innerHTML = [
-      kpiCard('general','Índice general municipal',s.general,'Promedio de los tres temas',s.general),
-      kpiCard('planificacion','Planificación',s.planificacion,'PAC y ordenanzas',s.planificacion),
-      kpiCard('ejecucion','Ejecución y Monitoreo',s.ejecucion,'Reuniones y apoyo institucional',s.ejecucion),
-      kpiCard('participacion','Participación Ciudadana',s.participacion,'Redes institucionales y eventos',s.participacion),
-      kpiCard('presupuesto','Ejecución presupuestaria',execPres,`${money(s.devengado)} devengado de ${money(s.presupuestado)}`,execPres),
-      kpiCard('alertas','Alertas activas',String(s.alertas),'Clic para ver detalle',Math.min(100,s.alertas*10))
+    document.getElementById('generalKpis').innerHTML=[
+      kpi('general','Índice general municipal',s.general,'Direcciones monitoreadas: '+s.direcciones),
+      kpi('planificacion','Planificación',s.planificacion,'PAC y Ordenanzas'),
+      kpi('ejecucion','Ejecución y Monitoreo',s.ejecucion,'Reuniones y Apoyo Institucional'),
+      kpi('participacion','Participación Ciudadana',s.participacion,'Redes Institucionales y Eventos'),
+      kpi('alertas','Alertas principales',String(s.alertas),'Clic para desplegar')
     ].join('');
-    document.querySelectorAll('.kpiCard').forEach(el=>el.addEventListener('click',()=>toggleGeneralDetail(el.dataset.detail)));
+    document.querySelectorAll('[data-kpi]').forEach(el=>el.onclick=()=>toggleGeneral(el.dataset.kpi,el));
   }
-  function toggleGeneralDetail(id){
-    const panel=document.getElementById('generalDetails');
-    if(panel.dataset.open===id){ panel.classList.remove('open'); panel.dataset.open=''; panel.innerHTML=''; return; }
-    panel.dataset.open=id; panel.classList.add('open');
-    if(id==='alertas'){
-      panel.innerHTML = `<h3>Alertas activas</h3>${state.alerts.length ? state.alerts.slice(0,80).map(a=>`<div class="alertLine"><b>${a.module}</b> · ${a.dir?state.dirData[a.dir]?.name || a.dir:'General'}<br>${a.message}</div>`).join('') : '<div class="empty">No hay alertas.</div>'}`;
-      return;
+  function toggleGeneral(id,el){
+    const box=document.getElementById('generalDetail');
+    document.querySelectorAll('[data-kpi]').forEach(k=>k.classList.remove('active'));
+    if(box.dataset.open===id){box.dataset.open='';box.classList.remove('open');box.innerHTML='';return;}
+    box.dataset.open=id; box.classList.add('open'); el.classList.add('active');
+    if(id==='general'){
+      const dirs=[...state.directions].sort((a,b)=>b.general-a.general);
+      box.innerHTML=`<h3 class="detailTitle">Índice general municipal por Dirección</h3><div class="compactRows">${dirs.map(d=>compactRow(d.name,d.general)).join('')}</div>`;
+    } else if(id==='planificacion'){
+      const pac=avg(state.directions.map(d=>d.moduleScores.pac)), ord=avg(state.directions.map(d=>d.moduleScores.ordenanzas));
+      box.innerHTML=`<h3 class="detailTitle">Planificación</h3><div class="compactRows">${compactRow('PAC',pac)}${compactRow('Ordenanzas',ord)}</div>`;
+    } else if(id==='ejecucion'){
+      const reu=avg(state.directions.map(d=>d.moduleScores.reuniones)), apo=avg(state.directions.map(d=>d.moduleScores.apoyo));
+      box.innerHTML=`<h3 class="detailTitle">Ejecución y Monitoreo</h3><div class="compactRows">${compactRow('Reuniones',reu)}${compactRow('Apoyo institucional',apo)}</div>`;
+    } else if(id==='participacion'){
+      const red=avg(state.directions.map(d=>d.moduleScores.redes)), eve=avg(state.directions.map(d=>d.moduleScores.eventos));
+      box.innerHTML=`<h3 class="detailTitle">Participación Ciudadana</h3><div class="compactRows">${compactRow('Redes institucionales',red)}${compactRow('Eventos',eve)}</div>`;
+    } else if(id==='alertas'){
+      box.innerHTML=`<h3 class="detailTitle">Alertas principales</h3>${state.alerts.length?state.alerts.slice(0,100).map(a=>`<div class="alert"><b>${a.module}</b> · ${state.dirData[a.dir]?.name||a.dir}<br>${a.msg}</div>`).join(''):'<div class="empty">No hay alertas activas.</div>'}`;
     }
-    const labels = { general:'Índice general municipal', planificacion:'Planificación', ejecucion:'Ejecución y Monitoreo', participacion:'Participación Ciudadana', presupuesto:'Ejecución presupuestaria' };
-    if(id==='presupuesto'){
-      panel.innerHTML = `<h3>${labels[id]}</h3>
-        <div class="grid three">
-          <div class="card"><b>Presupuestado</b><div class="kpiValue">${money(state.summary.presupuestado)}</div></div>
-          <div class="card"><b>Contratado</b><div class="kpiValue">${money(state.summary.contratado)}</div></div>
-          <div class="card"><b>Devengado</b><div class="kpiValue">${money(state.summary.devengado)}</div></div>
-        </div>`;
-      return;
-    }
-    const key = id==='general' ? 'general' : id;
-    const dirs = [...state.directions].sort((a,b)=>(key==='general'?b.general-a.general:b.themes[key]-a.themes[key])).slice(0,10);
-    panel.innerHTML = `<h3>${labels[id]}</h3><div class="rows">${dirs.map((d,i)=>dirRowHTML(d,i,key)).join('')}</div>`;
   }
 
-  function themeScoreHTML(moduleScores, mods){
-    return mods.map(m=>`<div class="moduleMini"><div class="barLabel"><span>${MODULE_LABEL[m]}</span><span>${fmtPct(moduleScores[m])}</span></div>${barHTML(moduleScores[m])}</div>`).join('');
-  }
-  function renderThemeSummary(){
-    document.getElementById('themeSummary').innerHTML = Object.entries(THEMES).map(([k,t])=>{
-      const val=state.summary[k];
-      const moduleAvg={}; t.modules.forEach(m=>moduleAvg[m]=avg(state.directions.map(d=>d.moduleScores[m])));
-      const registros=t.modules.reduce((a,m)=>a+(state.raw[m]?.length||0),0);
-      return `<article class="card themeCard" data-theme="${k}">
-        <div class="themeHead"><div><h3 class="themeName">${t.label}</h3><div class="muted">${registros} registros vinculados</div></div><div class="themePct">${fmtPct(val)}</div></div>
-        ${barHTML(val)}
-        ${themeScoreHTML(moduleAvg,t.modules)}
-        <div class="detailPanel" id="themeDetail_${k}"></div>
-      </article>`;
+  function directionBar(d,theme){ const val=d.themes[theme]; return `<div class="barLine"><div class="name" title="${d.name}">${shortDir(d.name)}</div>${barHTML(val)}<div class="pct">${fmtPct(val)}</div></div>`; }
+  function renderThemePanels(){
+    document.getElementById('themePanels').innerHTML=Object.entries(THEMES).map(([k,t])=>{
+      const dirs=[...state.directions].sort((a,b)=>b.themes[k]-a.themes[k]);
+      return `<section class="themePanel"><button class="themeBtn" data-theme="${k}"><strong>${t.label}</strong><span>${fmtPct(state.summary[k])} · ver comparativo</span></button><div class="themeBody" id="theme_${k}"><div class="card"><h3 class="detailTitle">Comparativo de direcciones · ${t.label}</h3>${dirs.map(d=>directionBar(d,k)).join('')||'<div class="empty">Sin datos.</div>'}</div></div></section>`;
     }).join('');
-    document.querySelectorAll('.themeCard').forEach(c=>c.addEventListener('click',(ev)=>{
-      if(ev.target.closest('a,button,select,input')) return;
-      const k=c.dataset.theme; const d=document.getElementById(`themeDetail_${k}`);
-      d.classList.toggle('open');
-      if(d.classList.contains('open')) d.innerHTML=themeDetailHTML(k); else d.innerHTML='';
-    }));
-  }
-  function themeDetailHTML(k){
-    const t=THEMES[k];
-    return `<div class="muted"><b>Módulos:</b> ${t.modules.map(m=>MODULE_LABEL[m]).join(' · ')}</div>
-      <div style="margin-top:10px" class="rows">${[...state.directions].sort((a,b)=>b.themes[k]-a.themes[k]).slice(0,8).map((d,i)=>dirRowHTML(d,i,k)).join('')}</div>`;
+    document.querySelectorAll('[data-theme]').forEach(btn=>btn.onclick=()=>document.getElementById('theme_'+btn.dataset.theme).classList.toggle('open'));
   }
 
-  function dirRowHTML(d,i,mode='general'){
-    const total = mode==='general' ? d.general : (d.themes[mode] ?? d.general);
-    return `<div class="dirRow">
-      <div class="rank">${i+1}</div>
-      <div class="dirName" title="${d.name}">${shortDir(d.name)}</div>
-      <div class="subBars">
-        <div class="subBar"><span>Índice total</span>${barHTML(d.general)}<span>${fmtPct(d.general)}</span></div>
-        <div class="subBar"><span>Planificación</span>${barHTML(d.themes.planificacion)}<span>${fmtPct(d.themes.planificacion)}</span></div>
-        <div class="subBar"><span>Ejecución</span>${barHTML(d.themes.ejecucion)}<span>${fmtPct(d.themes.ejecucion)}</span></div>
-        <div class="subBar"><span>Participación</span>${barHTML(d.themes.participacion)}<span>${fmtPct(d.themes.participacion)}</span></div>
-      </div>
-      <div class="pct">${fmtPct(total)}</div>
-    </div>`;
+  function renderDirectionTab(){
+    const sel=document.getElementById('dirSelect');
+    sel.innerHTML='<option value="">Seleccione una dirección</option>'+state.directions.map(d=>`<option value="${dirKey(d.name)}">${d.name}</option>`).join('');
+    sel.onchange=()=>renderDirectionSummary(sel.value);
   }
-  function renderThemeTracking(){
-    document.getElementById('themeTracking').innerHTML = Object.entries(THEMES).map(([k,t])=>`
-      <div class="accItem">
-        <button class="accHead" data-acc="${k}"><strong>${t.label}</strong><span>${fmtPct(state.summary[k])} · Ver detalle</span></button>
-        <div class="accBody" id="acc_${k}">
-          <div class="grid two">
-            <div class="card"><h3>Avance por Dirección</h3><div class="rows">${[...state.directions].sort((a,b)=>b.themes[k]-a.themes[k]).map((d,i)=>dirRowHTML(d,i,k)).join('')}</div></div>
-            <div class="card"><h3>Registros del tema</h3>${themeTablesHTML(t.modules)}</div>
-          </div>
-        </div>
-      </div>`).join('');
-    document.querySelectorAll('.accHead').forEach(b=>b.addEventListener('click',()=>{
-      const body=document.getElementById(`acc_${b.dataset.acc}`); body.classList.toggle('open');
-    }));
+  function renderDirectionSummary(k){
+    const box=document.getElementById('dirContent');
+    if(!k){box.className='empty';box.innerHTML='Seleccione una Dirección para visualizar el resumen.';return;}
+    const d=state.dirData[k]; if(!d){box.className='empty';box.innerHTML='No hay datos para la Dirección seleccionada.';return;}
+    box.className='';
+    box.innerHTML=`<div class="card"><h3 class="detailTitle">${d.name}</h3><div class="grid six" id="moduleKpis">${Object.keys(MODULE_LABEL).map(m=>moduleKpiHTML(d,m)).join('')}</div><div id="moduleDetail" class="moduleDetails"></div></div>`;
+    document.querySelectorAll('[data-module]').forEach(el=>el.onclick=()=>toggleModuleDetail(d,el.dataset.module,el));
   }
-  function themeTablesHTML(mods){
-    return mods.map(m=>`<h4>${MODULE_LABEL[m]}</h4>${tableHTML(state.raw[m],m)}`).join('');
+  function moduleKpiHTML(d,m){ const count=d.modules[m]?.length||0; let sub=`${count} registros`; if(m==='redes') sub+=` · ${d.meta.interacciones} interacciones`; if(m==='eventos') sub+=` · ${d.meta.personasEventos} personas`; if(m==='apoyo') sub+=` · ${d.meta.personasApoyo||''}`; return `<article class="card kpi moduleKpi" data-module="${m}"><div class="kpiTitle">${MODULE_LABEL[m]}</div><div class="kpiVal">${fmtPct(d.moduleScores[m])}</div>${barHTML(d.moduleScores[m])}<div class="kpiSub">${sub}</div></article>`; }
+  function filteredRows(module,dir){ return (state.raw[module]||[]).filter(r=>dirsForRow(module,r).some(d=>dirKey(d)===dirKey(dir.name))); }
+  function toggleModuleDetail(d,m,el){
+    const box=document.getElementById('moduleDetail'); document.querySelectorAll('[data-module]').forEach(x=>x.classList.remove('active'));
+    if(box.dataset.open===m){box.dataset.open='';box.innerHTML='';return;}
+    el.classList.add('active'); box.dataset.open=m; const rows=filteredRows(m,d);
+    box.innerHTML=`<h3 class="detailTitle">${MODULE_LABEL[m]} · ${d.name}</h3>${tableHTML(rows,m)}`;
   }
-  function tableHTML(rows,module){
-    if(!rows.length) return '<div class="empty">Sin registros.</div>';
-    const cols = {
-      pac:['Código','Nombre del Proyecto','Dirección Responsable','Etapa Actual','Monto Presupuestado','Monto devengado'],
-      ordenanzas:['Nro. Ordenanza','Dirección Responsable','Direcciones Cooperando','Tema','Etapa Actual'],
-      reuniones:['Código','Tipo de Reunión','Fecha','Tema Tratado','Direcciones Convocadas','Asistencia'],
-      redes:['Código','Fecha de Publicación','Tema de publicación','Dirección que comparte','Nro de Interacciones'],
-      eventos:['Código','Nombre del evento','Fecha','Dirección que Asiste','Cantidad de personas'],
-      apoyo:['Código','Actividad','Fecha','Dirección que apoya','Apoyo Entregado']
-    }[module] || Object.keys(rows[0]).slice(0,6);
-    return `<div class="tableWrap"><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${key(r,[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-  }
-  function renderComparative(){
-    const select=document.getElementById('directionFilter');
-    select.innerHTML='<option value="">Todas las direcciones</option>'+state.directions.map(d=>`<option value="${dirKey(d.name)}">${d.name}</option>`).join('');
-    select.onchange=renderDirectionRows;
-    renderDirectionRows();
-  }
-  function renderDirectionRows(){
-    const v=document.getElementById('directionFilter').value;
-    let dirs=[...state.directions].sort((a,b)=>b.general-a.general);
-    if(v) dirs=dirs.filter(d=>dirKey(d.name)===v);
-    document.getElementById('directionComparison').innerHTML = dirs.length ? dirs.map((d,i)=>dirRowHTML(d,i,'general')).join('') : '<div class="empty">No hay datos para la Dirección seleccionada.</div>';
+  function tableHTML(rows,module){ if(!rows.length) return '<div class="empty">Sin registros para esta Dirección.</div>'; const cols={
+      pac:['Código','Nombre del Proyecto','Etapa Actual','Monto Presupuestado','Monto devengado','Fecha límite','Observaciones','Evidencias'],
+      ordenanzas:['# Trámite','Nro. Ordenanza','Tema','Etapa Actual','Dirección Responsable','Direcciones Cooperando','Observaciones','Evidencias'],
+      reuniones:['Código','Tipo de Reunión','Fecha','Tema Tratado','Direcciones Convocadas','Asistencia','Compromisos generados','Observaciones'],
+      redes:['Código','Fecha de Publicación','Tema de publicación','Dirección que comparte','Nro de Interacciones','Evidencias','Observaciones'],
+      eventos:['Código','Nombre del evento','Tipo','Fecha','Dirección que Asiste','Cantidad de personas','Observaciones','Evidencias'],
+      apoyo:['Código','Actividad','Fecha','Tipo','Dirección que apoya','Apoyo Entregado','Observaciones','Evidencias']
+    }[module] || Object.keys(rows[0]).slice(0,8);
+    return `<div class="tableWrap small"><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${key(r,[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   }
 
-  function setupTabs(){
-    document.querySelectorAll('.tabBtn').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.tabBtn').forEach(b=>b.classList.remove('active'));
-      document.querySelectorAll('.tabPanel').forEach(p=>p.classList.remove('active'));
-      btn.classList.add('active'); document.getElementById(btn.dataset.tab).classList.add('active');
-    }));
-  }
-
+  function setupTabs(){ document.querySelectorAll('.tabBtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabBtn').forEach(x=>x.classList.remove('active')); document.querySelectorAll('.tabPanel').forEach(x=>x.classList.remove('active')); b.classList.add('active'); document.getElementById(b.dataset.tab).classList.add('active');}); }
   async function init(){
-    try{
-      const entries=await Promise.all(Object.entries(CSV_FILES).map(async([k,path])=>[k,await fetchCSV(path)]));
-      entries.forEach(([k,rows])=>state.raw[k]=rows);
-      processData();
-      renderGeneral(); renderThemeSummary(); renderThemeTracking(); renderComparative(); setupTabs();
-      console.log('Dashboard Alcaldía V11', Object.fromEntries(Object.entries(state.raw).map(([k,v])=>[k,v.length])), state.summary);
-    } catch(err){
-      document.body.innerHTML = `<main class="wrap"><div class="card"><h1>No se pudieron cargar los CSV</h1><p>${err.message}</p><p>Verifica que la carpeta <b>data</b> tenga los seis archivos CSV publicados en GitHub Pages.</p></div></main>`;
-      console.error(err);
-    }
+    try{ const entries=await Promise.all(Object.entries(CSV_FILES).map(async([k,p])=>[k,await fetchCSV(p)])); entries.forEach(([k,v])=>state.raw[k]=v); processData(); renderGeneral(); renderThemePanels(); renderDirectionTab(); setupTabs(); console.log('Dashboard V12',Object.fromEntries(Object.entries(state.raw).map(([k,v])=>[k,v.length])),state.summary); }
+    catch(err){document.body.innerHTML=`<main class="wrap"><div class="card"><h1>No se pudieron cargar los CSV</h1><p>${err.message}</p><p>Verifica que la carpeta <b>data</b> tenga los seis CSV publicados.</p></div></main>`; console.error(err);}
   }
   init();
 })();
