@@ -1,3 +1,3 @@
-# Dashboard Alcaldía V14
+# Dashboard Alcaldía V15
 
-Ajustes: el KPI Índice general municipal no es interactivo; los KPI interactivos tienen fondo diferenciado.
+Ajuste visual: KPI más altos y detalle por tema reorganizado en una sola vista sin espacios vacíos.

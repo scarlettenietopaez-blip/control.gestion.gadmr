@@ -1,1 +1,1 @@
-// JavaScript integrado en index.html para evitar problemas de caché o carga en GitHub Pages.
+/* Script integrado en index.html */

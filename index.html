@@ -43,12 +43,12 @@
     .sixGrid{grid-template-columns:repeat(6,minmax(0,1fr))}
     .twoGrid{grid-template-columns:1fr 1fr}
     .card{background:var(--card);border:1px solid var(--linea);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
-    .kpiCard{cursor:default;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;transition:.15s transform,.15s border-color;background:#fff}
-    .kpiCard.interactive{cursor:pointer;background:linear-gradient(135deg,#f4f9ff 0%,#ffffff 54%,#fff5f5 100%);border-color:#bfd2e7}
-    .kpiCard.interactive::before{content:"Clic para desplegar";align-self:flex-end;margin:-8px -4px 4px 0;padding:5px 9px;border-radius:999px;background:#eef5ff;color:var(--azul);font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.35px}
+    .kpiCard{cursor:default;min-height:168px;display:flex;flex-direction:column;justify-content:space-between;transition:.15s transform,.15s border-color;background:#fff;padding:22px}
+    .kpiCard.interactive{cursor:pointer;position:relative;padding-top:38px;background:linear-gradient(135deg,#f4f9ff 0%,#ffffff 54%,#fff5f5 100%);border-color:#bfd2e7}
+    .kpiCard.interactive::before{content:"Clic para desplegar";position:absolute;right:16px;top:12px;margin:0;padding:6px 11px;border-radius:999px;background:#eef5ff;color:var(--azul);font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.35px}
     .kpiCard.interactive:hover{transform:translateY(-2px);border-color:#b84a4a;box-shadow:0 12px 30px rgba(198,40,40,.12)}
     .kpiCard.active{outline:2px solid rgba(198,40,40,.20);border-color:#c62828;background:linear-gradient(135deg,#fff7f7 0%,#ffffff 55%,#f2f7ff 100%)}
-    .kpiTitle{text-transform:uppercase;letter-spacing:.4px;color:#52677d;font-weight:950;font-size:12px}.kpiVal{text-align:center;font-size:38px;font-weight:950;color:#061d33;line-height:1}.kpiSub{text-align:center;color:var(--muted);font-size:12px}
+    .kpiTitle{text-transform:uppercase;letter-spacing:.4px;color:#52677d;font-weight:950;font-size:12px;line-height:1.25}.kpiVal{text-align:center;font-size:44px;font-weight:950;color:#061d33;line-height:1}.kpiSub{text-align:center;color:var(--muted);font-size:12px;line-height:1.25}
     .bar{height:12px;background:#e7eef6;border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--azul2),var(--rojo));width:0%}.bar.thin{height:8px}
     .barLine{display:grid;grid-template-columns:minmax(150px,1fr) minmax(210px,2.5fr) 56px;gap:12px;align-items:center;margin:10px 0;font-weight:850;font-size:13px}.barLine .name{text-transform:uppercase;line-height:1.2;color:#17344f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.barLine .pct{text-align:right;font-size:16px;font-weight:950;color:#061d33}
     .barLine.rank{grid-template-columns:46px minmax(180px,1.2fr) minmax(240px,2.3fr) 58px}.rankNo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--azul),var(--rojo));color:#fff;display:grid;place-items:center;font-weight:950}
@@ -57,12 +57,18 @@
     .simpleList{display:grid;gap:8px}.simpleRow{display:grid;grid-template-columns:minmax(280px,1fr) 72px;gap:12px;align-items:center;padding:11px 12px;border:1px solid #e0e8f1;border-radius:13px;background:#fff}.simpleRow b{font-size:12px;text-transform:uppercase;line-height:1.25;color:#17344f}.simpleRow .pct{text-align:right;font-size:18px;font-weight:950;color:#061d33}
     .compactRows{display:grid;gap:7px}.compactRow{display:grid;grid-template-columns:minmax(220px,1fr) 1fr 54px;gap:12px;align-items:center;padding:10px 12px;border:1px solid #e0e8f1;border-radius:13px;background:#fff}.compactRow b{font-size:12px;text-transform:uppercase;line-height:1.25;color:#17344f}.compactRow .pct{text-align:right;font-size:17px;font-weight:950}
     .themeDetailGrid{display:grid;grid-template-columns:minmax(280px,.7fr) minmax(520px,1.3fr);gap:16px;align-items:start}.themeMini{display:grid;gap:8px}.themeMini .compactRow{grid-template-columns:minmax(130px,.8fr) minmax(130px,1.2fr) 54px}
+    .themeFullPanel{display:grid;gap:16px;align-items:start}
+    .subModuleGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .subMetric{border:1px solid #dce7f2;border-radius:16px;background:linear-gradient(180deg,#fff,#fbfdff);padding:15px 16px;display:grid;gap:10px;min-height:96px}
+    .subMetricHeader{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .subMetricHeader b{text-transform:uppercase;color:#17344f;font-size:13px;line-height:1.2}.subMetricHeader span{font-size:25px;font-weight:950;color:#061d33}
+    .themeCompareFull{min-height:unset}.themeCompareFull .compareBody{max-height:420px}
     .tableWrap{max-height:265px;overflow:auto;border:1px solid #dce6f0;border-radius:14px;background:#fff}.tableWrap.small{max-height:245px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 12px;border-bottom:1px solid #eef3f8;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#f3f7fb;color:#143b5e;font-weight:950;z-index:1}tr:hover td{background:#fbfdff}
     .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}select{min-width:330px;background:#fff;border:1px solid #cbd9e8;border-radius:12px;padding:12px;font-weight:800;color:#102b44}
     .empty{padding:18px;border:1px dashed #c8d6e6;border-radius:14px;text-align:center;color:var(--muted);background:#fbfdff}.alert{padding:10px 12px;border:1px solid #efc2c2;background:#fff7f7;color:#5d2222;border-radius:12px;margin:8px 0;font-size:13px}.alert b{color:var(--rojo)}
-    .moduleKpi{min-height:130px}.moduleKpi .kpiVal{font-size:30px}.moduleDetails{margin-top:16px}.footer{margin-top:28px;text-align:right;color:#627489;font-size:12px}
+    .moduleKpi{min-height:150px}.moduleKpi .kpiVal{font-size:32px}.moduleDetails{margin-top:16px}.footer{margin-top:28px;text-align:right;color:#627489;font-size:12px}
     @media(max-width:1250px){.topGrid{grid-template-columns:1fr}.kpiGrid{grid-template-columns:repeat(2,1fr)}.sixGrid{grid-template-columns:repeat(3,1fr)}.themeDetailGrid{grid-template-columns:1fr}}
-    @media(max-width:760px){.wrap{padding:12px}.hero{flex-direction:column;align-items:flex-start}.heroTag{white-space:normal}.nav{flex-direction:column;position:relative}h1{font-size:25px}.kpiGrid,.sixGrid,.twoGrid{grid-template-columns:1fr}.sectionTitle{display:block}.sectionTitle p{text-align:left;margin-top:4px}.logo{width:56px;height:56px}.barLine,.barLine.rank{grid-template-columns:1fr}.simpleRow,.compactRow{grid-template-columns:1fr}.simpleRow .pct,.compactRow .pct{text-align:left}}
+    @media(max-width:760px){.wrap{padding:12px}.hero{flex-direction:column;align-items:flex-start}.heroTag{white-space:normal}.nav{flex-direction:column;position:relative}h1{font-size:25px}.kpiGrid,.sixGrid,.twoGrid,.subModuleGrid{grid-template-columns:1fr}.sectionTitle{display:block}.sectionTitle p{text-align:left;margin-top:4px}.logo{width:56px;height:56px}.barLine,.barLine.rank{grid-template-columns:1fr}.simpleRow,.compactRow{grid-template-columns:1fr}.simpleRow .pct,.compactRow .pct{text-align:left}}
   </style>
 </head>
 <body>
@@ -228,6 +234,9 @@
   function simpleRow(name,val){ return `<div class="simpleRow"><b>${name}</b><div class="pct">${fmtPct(val)}</div></div>`; }
   function compactRow(name,val){ return `<div class="compactRow"><b>${name}</b>${barHTML(val,true)}<div class="pct">${fmtPct(val)}</div></div>`; }
   function kpiHTML(id,title,val,sub){ return `<article class="card kpiCard interactive" data-kpi="${id}"><div class="kpiTitle">${title}</div><div class="kpiVal">${typeof val==='number'?fmtPct(val):val}</div>${typeof val==='number'?barHTML(val):''}<div class="kpiSub">${sub||'Clic para ver detalle'}</div></article>`; }
+  function subMetricHTML(name,val){ return `<div class="subMetric"><div class="subMetricHeader"><b>${name}</b><span>${fmtPct(val)}</span></div>${barHTML(val,true)}</div>`; }
+  function themeDetailHTML(title,theme,items){ return `<h3 class="detailTitle">${title}</h3><div class="themeFullPanel"><div class="subModuleGrid">${items.map(([name,val])=>subMetricHTML(name,val)).join('')}</div><div class="card themeCompareFull"><h3 class="detailTitle">Comparativo por Dirección · ${title}</h3>${themeCompare(theme)}</div></div>`; }
+
   function directionBar(d,theme='general',rank=false){ const val=theme==='general'?d.general:d.themes[theme]; return `<div class="barLine ${rank?'rank':''}">${rank?`<div class="rankNo">${rank}</div>`:''}<div class="name" title="${d.name}">${shortDir(d.name)}</div>${barHTML(val)}<div class="pct">${fmtPct(val)}</div></div>`; }
   function themeCompare(theme){ const dirs=[...state.directions].sort((a,b)=>b.themes[theme]-a.themes[theme]); return `<div class="compareBody">${dirs.map((d,i)=>directionBar(d,theme,i+1)).join('') || '<div class="empty">Sin datos.</div>'}</div>`; }
 
@@ -253,13 +262,13 @@
       box.innerHTML=`<h3 class="detailTitle">Índice general municipal por Dirección</h3><div class="simpleList">${dirs.map(d=>simpleRow(d.name,d.general)).join('')}</div>`;
     } else if(id==='planificacion'){
       const pac=avg(state.directions.map(d=>d.moduleScores.pac)), ord=avg(state.directions.map(d=>d.moduleScores.ordenanzas));
-      box.innerHTML=`<h3 class="detailTitle">Planificación</h3><div class="themeDetailGrid"><div class="themeMini">${compactRow('PAC',pac)}${compactRow('Ordenanzas',ord)}</div><div class="card"><h3 class="detailTitle">Comparativo por Dirección · Planificación</h3>${themeCompare('planificacion')}</div></div>`;
+      box.innerHTML=themeDetailHTML('Planificación','planificacion', [['PAC',pac],['Ordenanzas',ord]]);
     } else if(id==='ejecucion'){
       const reu=avg(state.directions.map(d=>d.moduleScores.reuniones)), apo=avg(state.directions.map(d=>d.moduleScores.apoyo));
-      box.innerHTML=`<h3 class="detailTitle">Ejecución y Monitoreo</h3><div class="themeDetailGrid"><div class="themeMini">${compactRow('Reuniones',reu)}${compactRow('Apoyo institucional',apo)}</div><div class="card"><h3 class="detailTitle">Comparativo por Dirección · Ejecución y Monitoreo</h3>${themeCompare('ejecucion')}</div></div>`;
+      box.innerHTML=themeDetailHTML('Ejecución y Monitoreo','ejecucion', [['Reuniones',reu],['Apoyo institucional',apo]]);
     } else if(id==='participacion'){
       const red=avg(state.directions.map(d=>d.moduleScores.redes)), eve=avg(state.directions.map(d=>d.moduleScores.eventos));
-      box.innerHTML=`<h3 class="detailTitle">Participación Ciudadana</h3><div class="themeDetailGrid"><div class="themeMini">${compactRow('Redes institucionales',red)}${compactRow('Eventos',eve)}</div><div class="card"><h3 class="detailTitle">Comparativo por Dirección · Participación Ciudadana</h3>${themeCompare('participacion')}</div></div>`;
+      box.innerHTML=themeDetailHTML('Participación Ciudadana','participacion', [['Redes institucionales',red],['Eventos',eve]]);
     } else if(id==='alertas'){
       box.innerHTML=`<h3 class="detailTitle">Alertas principales</h3>${state.alerts.length?state.alerts.slice(0,150).map(a=>`<div class="alert"><b>${a.module}</b> · ${state.dirData[a.dir]?.name||a.dir}<br>${a.msg}</div>`).join(''):'<div class="empty">No hay alertas activas.</div>'}`;
     }
@@ -298,7 +307,7 @@
   }
   function setupTabs(){ document.querySelectorAll('.tabBtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabBtn').forEach(x=>x.classList.remove('active')); document.querySelectorAll('.tabPanel').forEach(x=>x.classList.remove('active')); b.classList.add('active'); document.getElementById(b.dataset.tab).classList.add('active');}); }
   async function init(){
-    try{ const entries=await Promise.all(Object.entries(CSV_FILES).map(async([k,p])=>[k,await fetchCSV(p)])); entries.forEach(([k,v])=>state.raw[k]=v); processData(); renderGeneral(); renderDirectionTab(); setupTabs(); console.log('Dashboard V14',Object.fromEntries(Object.entries(state.raw).map(([k,v])=>[k,v.length])),state.summary); }
+    try{ const entries=await Promise.all(Object.entries(CSV_FILES).map(async([k,p])=>[k,await fetchCSV(p)])); entries.forEach(([k,v])=>state.raw[k]=v); processData(); renderGeneral(); renderDirectionTab(); setupTabs(); console.log('Dashboard V15',Object.fromEntries(Object.entries(state.raw).map(([k,v])=>[k,v.length])),state.summary); }
     catch(err){document.body.innerHTML=`<main class="wrap"><div class="card"><h1>No se pudieron cargar los CSV</h1><p>${err.message}</p><p>Verifica que la carpeta <b>data</b> tenga los seis CSV publicados.</p></div></main>`; console.error(err);}
   }
   init();
